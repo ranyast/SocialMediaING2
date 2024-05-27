@@ -5,6 +5,8 @@
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" /> <!-- mettre un logo en .ico de ECE -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         #nav{}
         #footer{}
@@ -14,16 +16,24 @@
 </head>
 <body>
 <div id="wrapper">
-    <h1 class="logo">ECE In</h1> <!-- mettre un logo de ECE -->
     <div id="nav">
-        <nav>
-            <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100"></a>
-            <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100"></a>
-            <a href="vous.html"><img src="logo/moi.jpg" height="56" width="100"></a>
-            <a href="notifications.html"><img src="logo/notification2.jpg" height="56" width="100"></a>
-            <a href="messagerie.html"><img src="logo/messagerie.jpg" height="56" width="100"></a>
-            <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100"></a>
-        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                </div>
+                <div class="col-sm-11" id="logos">
+                    <nav>
+                        <a href="accueil.html"><img src="logo/accueil2.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.html"><img src="logo/moi.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.html"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="leftcolumn">
         <p>
