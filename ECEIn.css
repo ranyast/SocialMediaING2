@@ -4,15 +4,27 @@
     height: 790px;
     margin: 0 auto;
     padding: 10px;
-    text-align: center;
+
 }
 #nav { font-weight: bold;
     font-size: 1.2em;
     background-color: lightgreen;
+    text-align: center;
+}
+#leftcolumn{
+    float: left;
+    width: 150px;
+    background-color: lavender;
+}
+#rightcolumn{
+    float: right;
+    width: 150px;
+    background-color: lavender;
 }
 #section{
     background-color: lightyellow;
     text-align: left;
+    width: 1250px;
 }
 #footer { font-size: 0.70em;
     font-style: italic;
