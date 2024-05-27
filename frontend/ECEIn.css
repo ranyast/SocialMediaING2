@@ -1,4 +1,3 @@
-
 #wrapper{
     background-color: pink;
     width: 1400px;
@@ -38,13 +37,6 @@
 
     background-color: lavender;
 }
-
-#footer {
-     font-size: 0.70em;
-     font-style: italic;
-     padding: 0 0 0;
-}
-
 #section{
     background-color: lightyellow;
     text-align: left;
@@ -52,6 +44,23 @@
     padding: 10px;
 
     width: 1250px;
+}
+#footer {
+     font-size: 0.70em;
+     font-style: italic;
+     padding: 0 0 0;
+}
+
+#carrousel {
+    position: relative;
+    height: 500px;
+    width: 700px;
+    margin: auto;
+}
+#carrousel ul li{
+    position: absolute;
+    top: 50px;
+    left: 150px;
 }
 
 
