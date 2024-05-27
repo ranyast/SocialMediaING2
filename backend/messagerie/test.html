@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messagerie - ECE In</title>
+    <meta charset="utf-8"/>
+    <link href="ECEIn.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        #chatrooms, #chatroom-messages {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+        .message:last-child {
+            border-bottom: none;
+        }
+        .message strong {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="nav">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                </div>
+                <div class="col-sm-11" id="logos">
+                    <nav>
+                        <a href="accueil.html"><img src="logo/accueil2.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.html"><img src="logo/moi.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.html"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="leftcolumn">
+        <p>
+            Mot de blabla sur ECE In
+        </p>
+    </div>
+    <div id="rightcolumn">
+        <footer>
+            Coordonnées du "propriétaire"
+            mail si problème !
+        </footer>
+    </div>
+    <div id="section">
+        <div id="chatrooms">
+            <h2>Chatrooms</h2>
+            <ul id="chatroom-list">
+
+            </ul>
+            <form id="create-chatroom" action="create_chatroom.php" method="post">
+                <input type="text" name="nom" placeholder="Nom de la chatroom" required>
+                <button type="submit" class="btn btn-primary">Créer une chatroom</button>
+            </form>
+        </div>
+        
+        <div id="chatroom-messages">
+            <h2>Messages</h2>
+            <div id="messages">
+                <!-- Les messages seront affichés ici -->
+            </div>
+            <form id="send-message" action="send_message.php" method="post">
+                <input type="hidden" name="id_chatroom" id="id_chatroom">
+                <textarea name="contenu" placeholder="Votre message" required></textarea>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer">
+        <footer>
+            <p>ECE In Corporation &copy; 2024</p>
+            <p>Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</p>
+        </footer>
+    </div>
+</div>
+
+<script>
+    document.getElementById('create-chatroom').onsubmit = function(event) {
+        event.preventDefault();
+        var form = event.target;
+        var data = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: data
+        }).then(response => response.text()).then(data => {
+            alert('Chatroom créée!');
+            location.reload();
+        });
+    };
+
+    document.getElementById('send-message').onsubmit = function(event) {
+        event.preventDefault();
+        var form = event.target;
+        var data = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: data
+        }).then(response => response.text()).then(data => {
+            alert('Message envoyé!');
+            location.reload();
+        });
+    };
+
+    function loadChatrooms() {
+        fetch('get_chatrooms.php').then(response => response.json()).then(data => {
+            var chatroomList = document.getElementById('chatroom-list');
+            chatroomList.innerHTML = '';
+            data.forEach(chatroom => {
+                var li = document.createElement('li');
+                li.textContent = chatroom.nom;
+                li.onclick = function() {
+                    loadMessages(chatroom.id_chatroom);
+                };
+                chatroomList.appendChild(li);
+            });
+        });
+    }
+
+    function loadMessages(chatroomId) {
+        document.getElementById('id_chatroom').value = chatroomId;
+        fetch('get_messages.php?id_chatroom=' + chatroomId).then(response => response.json()).then(data => {
+            var messages = document.getElementById('messages');
+            messages.innerHTML = '';
+            data.forEach(message => {
+                var div = document.createElement('div');
+                div.className = 'message';
+                div.innerHTML = '<strong>' + message.nom + ' ' + message.prenom + ':</strong> ' + message.contenu + ' <em>(' + message.envoi + ')</em>';
+                messages.appendChild(div);
+            });
+        });
+    }
+
+    loadChatrooms();
+</script>
+</body>
+</html>
