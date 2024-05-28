@@ -11,24 +11,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `mydb` ;
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb3 ;
 USE `mydb` ;
 
--- -----------------------------------------------------
--- Table `mydb`.`utilisateur`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`utilisateur` (
-  `id_utilisateur` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`ami`
@@ -37,7 +22,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ami` (
   `id_ami` INT NOT NULL AUTO_INCREMENT,
   `id_utilisateur1` INT NULL DEFAULT NULL,
   `id_utilisateur2` INT NULL DEFAULT NULL,
-  `relation` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id_ami`),
   INDEX `fk_ami_utilisateur1` (`id_utilisateur1` ASC) VISIBLE,
   INDEX `fk_ami_utilisateur2` (`id_utilisateur2` ASC) VISIBLE,
@@ -46,9 +30,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ami` (
     REFERENCES `mydb`.`utilisateur` (`id_utilisateur`),
   CONSTRAINT `fk_ami_utilisateur2`
     FOREIGN KEY (`id_utilisateur2`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
+    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
 
 -- -----------------------------------------------------
 -- Table `mydb`.`emploi`
@@ -64,9 +50,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`emploi` (
   `CDD` TINYINT(1) NOT NULL,
   `alternance` TINYINT(1) NOT NULL,
   `stage` TINYINT(1) NOT NULL,
-  PRIMARY KEY (`id_emploi`))
+  PRIMARY KEY (`id_emploi`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
 
 -- -----------------------------------------------------
 -- Table `mydb`.`candidature`
@@ -84,19 +72,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`candidature` (
     REFERENCES `mydb`.`emploi` (`id_emploi`),
   CONSTRAINT `fk_candidature_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
+    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
--- -----------------------------------------------------
--- Table `mydb`.`chatroom`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`chatroom` (
-  `id_chatroom` INT NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`id_chatroom`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`evenement`
@@ -106,80 +86,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`evenement` (
   `titre` VARCHAR(45) NOT NULL,
   `description` LONGTEXT NOT NULL,
   `date` DATE NOT NULL,
-  PRIMARY KEY (`id_evenement`))
+  PRIMARY KEY (`id_evenement`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
--- -----------------------------------------------------
--- Table `mydb`.`formation`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`formation` (
-  `id_formation` INT NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` INT NULL DEFAULT NULL,
-  `nom_formation` VARCHAR(45) NULL DEFAULT NULL,
-  `institution` VARCHAR(45) NULL DEFAULT NULL,
-  `debut` DATE NULL DEFAULT NULL,
-  `fin` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id_formation`),
-  INDEX `fk_formation_utilisateur` (`id_utilisateur` ASC) VISIBLE,
-  CONSTRAINT `fk_formation_utilisateur`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
--- -----------------------------------------------------
--- Table `mydb`.`profil`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`profil` (
-  `id_profil` INT NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` INT NOT NULL,
-  `nom` VARCHAR(191) NOT NULL,
-  `prenom` VARCHAR(191) NOT NULL,
-  `etudiant` TINYINT(1) NOT NULL,
-  `date_de_naissance` DATE NOT NULL,
-  `cv` VARCHAR(200) NOT NULL,
-  `photo` VARCHAR(200) NOT NULL,
-  `admin` TINYINT(1) NOT NULL,
-  `prof` TINYINT(1) NOT NULL,
-  `terminale` TINYINT(1) NOT NULL,
-  `bac_plus_1` TINYINT(1) NOT NULL,
-  `bac_plus_2` TINYINT(1) NOT NULL,
-  `bac_plus_3` TINYINT(1) NOT NULL,
-  `bac_plus_4` TINYINT(1) NOT NULL,
-  `bac_plus_5` TINYINT(1) NOT NULL,
-  `autre` TINYINT(1) NOT NULL,
-  `email` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `password_verification` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_profil`),
-  INDEX `fk_profil_utilisateur` (`id_utilisateur` ASC) VISIBLE,
-  CONSTRAINT `fk_profil_utilisateur`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
--- -----------------------------------------------------
--- Table `mydb`.`message`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`message` (
-  `id_message` INT NOT NULL AUTO_INCREMENT,
-  `id_chatroom` INT NULL DEFAULT NULL,
-  `id_utilisateur` INT NULL DEFAULT NULL,
-  `contenu` TEXT NULL DEFAULT NULL,
-  `envoi` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id_message`),
-  INDEX `fk_message_chatroom` (`id_chatroom` ASC) VISIBLE,
-  INDEX `fk_message_utilisateur` (`id_utilisateur` ASC) VISIBLE,
-  CONSTRAINT `fk_message_chatroom`
-    FOREIGN KEY (`id_chatroom`)
-    REFERENCES `mydb`.`chatroom` (`id_chatroom`),
-  CONSTRAINT `fk_message_utilisateur`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`notifications`
@@ -199,47 +110,103 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notifications` (
   PRIMARY KEY (`id_notification`),
   INDEX `fk_notifications_utilisateur` (`id_utilisateur` ASC) VISIBLE,
   INDEX `fk_notifications_evenement` (`id_evenement` ASC) VISIBLE,
-  INDEX `fk_notifications_emploi` (`id_emploi` ASC) VISIBLE,
-  INDEX `fk_notifications_message` (`id_message` ASC) VISIBLE,
-  CONSTRAINT `fk_notifications_utilisateur`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`),
-  CONSTRAINT `fk_notifications_evenement`
-    FOREIGN KEY (`id_evenement`)
-    REFERENCES `mydb`.`evenement` (`id_evenement`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notifications_emploi`
-    FOREIGN KEY (`id_emploi`)
-    REFERENCES `mydb`.`emploi` (`id_emploi`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notifications_message`
-    FOREIGN KEY (`id_message`)
-    REFERENCES `mydb`.`message` (`id_message`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `fk_notifications_emploi` (id_emploi ASC) VISIBLE,
+INDEX fk_notifications_message (id_message ASC) VISIBLE,
+CONSTRAINT fk_notifications_utilisateur
+FOREIGN KEY (id_utilisateur)
+REFERENCES mydb.utilisateur (id_utilisateur),
+CONSTRAINT fk_notifications_evenement
+FOREIGN KEY (id_evenement)
+REFERENCES mydb.evenement (id_evenement)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT fk_notifications_emploi
+FOREIGN KEY (id_emploi)
+REFERENCES mydb.emploi (id_emploi)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT fk_notifications_message
+FOREIGN KEY (id_message)
+REFERENCES mydb.message (id_message)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
--- -----------------------------------------------------
--- Table `mydb`.`projet`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`projet` (
-  `id_projet` INT NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` INT NULL DEFAULT NULL,
-  `titre` VARCHAR(45) NULL DEFAULT NULL,
-  `description` LONGTEXT NULL DEFAULT NULL,
-  `debut` DATE NULL DEFAULT NULL,
-  `fin` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id_projet`),
-  INDEX `fk_projet_utilisateur` (`id_utilisateur` ASC) VISIBLE,
-  CONSTRAINT `fk_projet_utilisateur`
-    FOREIGN KEY (`id_utilisateur`)
-    REFERENCES `mydb`.`utilisateur` (`id_utilisateur`))
+-- Table mydb.utilisateur
+
+CREATE TABLE IF NOT EXISTS mydb.utilisateur (
+id_utilisateur INT NOT NULL AUTO_INCREMENT,
+nom VARCHAR(45) NOT NULL,
+prenom VARCHAR(45) NOT NULL,
+email VARCHAR(45) NOT NULL,
+mot_de_passe VARCHAR(45) NOT NULL,
+date_naissance DATE NOT NULL,
+adresse VARCHAR(45) NOT NULL,
+ville VARCHAR(45) NOT NULL,
+code_postal VARCHAR(45) NOT NULL,
+telephone VARCHAR(45) NOT NULL,
+photo VARCHAR(45) NOT NULL,
+description LONGTEXT NOT NULL,
+terminale TINYINT(1) NOT NULL,
+bac_plus_1 TINYINT(1) NOT NULL,
+bac_plus_2 TINYINT(1) NOT NULL,
+bac_plus_3 TINYINT(1) NOT NULL,
+bac_plus_4 TINYINT(1) NOT NULL,
+bac_plus_5 TINYINT(1) NOT NULL,
+autre TINYINT(1) NOT NULL,
+PRIMARY KEY (id_utilisateur)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+-- Table mydb.message
+
+CREATE TABLE IF NOT EXISTS mydb.message (
+id_message INT NOT NULL AUTO_INCREMENT,
+id_chatroom INT NOT NULL,
+id_utilisateur_expediteur INT NULL DEFAULT NULL,
+id_utilisateur_destinataire INT NULL DEFAULT NULL,
+contenu TEXT NULL DEFAULT NULL,
+envoi DATETIME NULL DEFAULT NULL,
+PRIMARY KEY (id_message),
+INDEX fk_message_chatroom (id_chatroom ASC) VISIBLE,
+INDEX fk_message_utilisateur_expediteur (id_utilisateur_expediteur ASC) VISIBLE,
+INDEX fk_message_utilisateur_destinataire (id_utilisateur_destinataire ASC) VISIBLE,
+CONSTRAINT fk_message_utilisateur_expediteur
+FOREIGN KEY (id_utilisateur_expediteur)
+REFERENCES mydb.utilisateur (id_utilisateur),
+CONSTRAINT fk_message_utilisateur_destinataire
+FOREIGN KEY (id_utilisateur_destinataire)
+REFERENCES mydb.utilisateur (id_utilisateur)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+-- Constraints for table message
+DELIMITER //
+
+CREATE TRIGGER message_ami_check BEFORE INSERT ON mydb.message
+FOR EACH ROW
+BEGIN
+    DECLARE ami_count INT;
+
+    -- Vérifier si une relation ami existe entre l'expéditeur et le destinataire
+    SELECT COUNT(*) INTO ami_count
+    FROM mydb.ami
+    WHERE (mydb.ami.id_utilisateur1 = NEW.id_utilisateur_expediteur AND mydb.ami.id_utilisateur2 = NEW.id_utilisateur_destinataire)
+        OR (mydb.ami.id_utilisateur1 = NEW.id_utilisateur_destinataire AND mydb.ami.id_utilisateur2 = NEW.id_utilisateur_expediteur);
+
+    IF ami_count = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La relation ami n\'existe pas entre l\'expéditeur et le destinataire.';
+    END IF;
+END//
+
+DELIMITER ;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
