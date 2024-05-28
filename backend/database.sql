@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`utilisateur` (
   `bac_plus_4` TINYINT(1) NULL,
   `bac_plus_5` TINYINT(1) NULL,
   `autre` TINYINT(1) NULL,
+  `admin` TINYINT(1) NULL,
+  `prof` TINYINT(1) NULL,
+  `eleve` TINYINT(1) NULL,
+
   PRIMARY KEY (`id_utilisateur`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
