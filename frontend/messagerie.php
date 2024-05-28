@@ -4,6 +4,7 @@
     <title>ECE In Messagerie</title>
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <style>
         #nav {}
@@ -19,7 +20,7 @@
         <nav>
             <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100"></a>
             <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100"></a>
-            <a href="vous.html"><img src="logo/moi.jpg" height="56" width="100"></a>
+            <a href="vous.html"><img src="logo/vous.jpg" height="56" width="100"></a>
             <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100"></a>
             <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100"></a>
             <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100"></a>
