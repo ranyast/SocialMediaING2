@@ -175,6 +175,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notifications` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
+DELIMITER //
+
+CREATE TRIGGER message_ami_check BEFORE INSERT ON mydb.message
+FOR EACH ROW
+BEGIN
+    DECLARE ami_count INT;
+
+    -- Vérifier si une relation ami existe entre l'expéditeur et le destinataire
+    SELECT COUNT(*) INTO ami_count
+    FROM mydb.ami
+    WHERE (mydb.ami.id_utilisateur1 = NEW.id_utilisateur_expediteur AND mydb.ami.id_utilisateur2 = NEW.id_utilisateur_destinataire)
+        OR (mydb.ami.id_utilisateur1 = NEW.id_utilisateur_destinataire AND mydb.ami.id_utilisateur2 = NEW.id_utilisateur_expediteur);
+
+    IF ami_count = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La relation ami n\'existe pas entre l\'expéditeur et le destinataire.';
+    END IF;
+END;//
+
+DELIMITER ;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
