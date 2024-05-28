@@ -137,6 +137,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`profil` (
   `nom` VARCHAR(191) NOT NULL,
   `prenom` VARCHAR(191) NOT NULL,
   `etudiant` TINYINT(1) NOT NULL,
+  `cv` VARCHAR(200) NOT NULL,
+  `photo` VARCHAR(200) NOT NULL,
   `admin` TINYINT(1) NOT NULL,
   `prof` TINYINT(1) NOT NULL,
   `terminale` TINYINT(1) NOT NULL,
