@@ -27,13 +27,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`utilisateur` (
   `nom` VARCHAR(191) NULL,
   `prenom` VARCHAR(191) NULL,
   `description` LONGTEXT NULL,
-  `cv` TEXT(200) NULL,
+  `cv` TEXT NULL,
   `email` VARCHAR(50) NULL,
   `password` VARCHAR(45) NULL,
-  `profil` ENUM('enseignant', 'élève', 'employé') NULL,
   `photo` VARCHAR(145) NULL,
-  PRIMARY KEY (`id_utilisateur`))
-ENGINE = InnoDB;
+  `prof` BOOLEAN NULL,
+  `etudiant` BOOLEAN NULL,
+  `admin` BOOLEAN NULL,
+  PRIMARY KEY (`id_utilisateur`)
+) ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
