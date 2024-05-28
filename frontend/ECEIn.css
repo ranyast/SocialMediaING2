@@ -42,8 +42,8 @@
     margin-left: 310px;
     margin-right: 310px;
     padding: 10px;
-    height: 650px;
-    width: 880px;
+    height: auto;
+    width: auto;
     ;
 }
 #footer {
