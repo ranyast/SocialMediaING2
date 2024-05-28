@@ -11,22 +11,7 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <!-- Formulaire de connexion -->
-                <form action="login.php" method="post" class="sign-in-form">
-                    <h2 class="title">Connexion</h2>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="email" placeholder="Adresse e-mail" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="mot_de_passe" placeholder="Mot de passe" required />
-                    </div>
-                    <input type="submit" value="Login" class="btn solid" />
-                </form>
-
-                <!-- Formulaire d'inscription -->
-                <form action="register.php" method="post" class="sign-up-form">
+                <form action="register.php" method="POST" class="sign-up-form">
                     <h2 class="title">Inscription</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
@@ -74,9 +59,9 @@
                         </select>
                     </div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="admin" value="1" /> Admin</label>
-                        <label><input type="checkbox" name="eleve" value="1" /> Élève</label>
-                        <label><input type="checkbox" name="prof" value="1" /> Professeur</label>
+                        <label><input type="checkbox" name="role[]" value="admin" /> Admin</label>
+                        <label><input type="checkbox" name="role[]" value="eleve" /> Élève</label>
+                        <label><input type="checkbox" name="role[]" value="prof" /> Professeur</label>
                     </div>
                     <input type="submit" value="Sign Up" class="btn solid" />
                 </form>
