@@ -87,4 +87,9 @@ body { background-color: #003366;
     height: 160px;
 }
 
+.case {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+}
 
