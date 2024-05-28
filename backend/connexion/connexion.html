@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ECE In: Sign In </title>
+    <title>ECE In: Sign In</title>
     <link rel="stylesheet" type="text/css" href="./connexion.css" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
@@ -11,56 +11,58 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="" class="sign-in-form">
+                <!-- Formulaire de connexion -->
+                <form action="login.php" method="post" class="sign-in-form">
                     <h2 class="title">Connexion</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Adresse e-mail" />
+                        <input type="text" name="email" placeholder="Adresse e-mail" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Mot de passe" />
+                        <input type="password" name="mot_de_passe" placeholder="Mot de passe" required />
                     </div>
                     <input type="submit" value="Login" class="btn solid" />
                 </form>
 
-                <form action="" class="sign-up-form">
+                <!-- Formulaire d'inscription -->
+                <form action="register.php" method="post" class="sign-up-form">
                     <h2 class="title">Inscription</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Nom" />
+                        <input type="text" name="nom" placeholder="Nom" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Prénom" />
+                        <input type="text" name="prenom" placeholder="Prénom" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Adresse e-mail" />
+                        <input type="email" name="email" placeholder="Adresse e-mail" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Mot de passe" />
+                        <input type="password" name="mot_de_passe" placeholder="Mot de passe" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-calendar"></i>
-                        <input type="date" placeholder="Date de naissance" />
+                        <input type="date" name="date_naissance" placeholder="Date de naissance" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-map-pin"></i>
-                        <input type="text" placeholder="Code postal" />
+                        <input type="text" name="code_postal" placeholder="Code postal" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-phone"></i>
-                        <input type="text" placeholder="Téléphone" />
+                        <input type="text" name="telephone" placeholder="Téléphone" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-image"></i>
-                        <input type="text" placeholder="Photo URL" />
+                        <input type="text" name="photo" placeholder="Photo URL" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-graduation-cap"></i>
-                        <select>
+                        <select name="niveau_etudes" required>
                             <option value="" disabled selected>Niveau d'études</option>
                             <option value="terminale">Terminale</option>
                             <option value="bac_plus_1">Bac +1</option>
@@ -72,9 +74,9 @@
                         </select>
                     </div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="role" value="admin" /> Admin</label>
-                        <label><input type="checkbox" name="role" value="eleve" /> Élève</label>
-                        <label><input type="checkbox" name="role" value="prof" /> Professeur</label>
+                        <label><input type="checkbox" name="admin" value="1" /> Admin</label>
+                        <label><input type="checkbox" name="eleve" value="1" /> Élève</label>
+                        <label><input type="checkbox" name="prof" value="1" /> Professeur</label>
                     </div>
                     <input type="submit" value="Sign Up" class="btn solid" />
                 </form>
