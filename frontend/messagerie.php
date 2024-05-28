@@ -26,15 +26,41 @@
             <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100"></a>
         </nav>
     </div>
-    <div id="leftcolumn">
-        <p>
-            Mot de blabla sur ECE In
-        </p>
-    </div>
+
     <div id="rightcolumn">
+        <h3>A Propos de nous:</h3>
+        <p>
+            ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
+        </p>
+        <p>
+            Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
+        </p>
+        <ul>
+            <li>
+                Poster différentes choses
+            </li>
+            <li>
+                Postuler à des offres d'emploi diverses
+            </li>
+            <li>
+                Développement de votre réseau
+            </li>
+            <li>
+                Discuter en live avec vos amis !
+            </li>
+            <li>
+                Et bien d'autres ...
+            </li>
+        </ul>
+        <p>
+            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+        </p>
+        <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
+    </div>
+
+    <div id="leftcolumn">
         <footer>
-            Coordonnées du "propriétaire"
-            mail si problème !
+            ICI LES DISCUSSIONS DE L'UTILISATEUR
         </footer>
     </div>
     <div id="section">
