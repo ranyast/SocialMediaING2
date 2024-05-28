@@ -1,24 +1,11 @@
-let tabs = document.querySelectorAll(".tab-link:not(.desactive)");
+const sign_in_btn = document.querySelector("#sign-in-btn");
+const sign_up_btn = document.querySelector("#sign-up-btn");
+const container = document.querySelector(".container");
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    unSelectAll();
-    tab.classList.add("active");
-    let ref = tab.getAttribute("data-ref");
-    document
-      .querySelector(`.tab-body[data-id="${ref}"]`)
-      .classList.add("active");
-  });
+sign_up_btn.addEventListener('click', () =>{
+    container.classList.add("sign-up-mode");
 });
 
-function unSelectAll() {
-  tabs.forEach((tab) => {
-    tab.classList.remove("active");
-  });
-  let tabbodies = document.querySelectorAll(".tab-body");
-  tabbodies.forEach((tab) => {
-    tab.classList.remove("active");
-  });
-}
-
-document.querySelector(".tab-link.active").click();
+sign_in_btn.addEventListener('click', () =>{
+    container.classList.remove("sign-up-mode");
+});
