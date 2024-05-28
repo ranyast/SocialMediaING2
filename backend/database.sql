@@ -81,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`emploi` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-
 -- -----------------------------------------------------
 -- Table `mydb`.`candidature`
 -- -----------------------------------------------------
