@@ -1,48 +1,46 @@
 <?php
-session_start(); // Démarrer la session
+session_start();
 
-// Vérifier si l'utilisateur est connecté
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
-    header("Location: login.php"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: login.php"); // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
     exit();
 }
 
-$id_user = $_SESSION['id_user'];
+// Assurez-vous que les données de session existent avant de les utiliser
+$nom = $_SESSION['nom'] ?? '';
+$prenom = $_SESSION['prenom'] ?? '';
+$date_naissance = $_SESSION['date_naissance'] ?? '1970-01-01';
+$email = $_SESSION['email'] ?? '';
+$statut = $_SESSION['statut'] ?? '';
 
+//inserer les informations de l'utilisateur dans la base de données
 $servername = "localhost";
 $username = "root";
 $password_db = "";
 $dbname = "ece_in";
 
-// Créer une connexion
 $conn = new mysqli($servername, $username, $password_db, $dbname);
 
-// Vérifier la connexion
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Préparer et exécuter la requête SQL
-$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom, utilisateur.date_naissance, utilisateur.statut, profil.photo_profil, profil.description, profil.experience, profil.etudes, profil.sexe, profil.competences FROM utilisateur JOIN profil ON utilisateur.id_user = profil.id_user WHERE utilisateur.id_user = ?;");
-$stmt->bind_param("isssississs", $id_user, $nom, $prenom, $date_naissance, $email, $mot_de_passe, $statut, $photo_profil, $description, $etudes, $sexe);
+$stmt = $conn->prepare("SELECT nom,prenom,date_naissance, email, statut FROM utilisateur WHERE id_user = ?");
+$stmt->bind_param("i", $_SESSION['id_user']);
 $stmt->execute();
-$stmt->bind_result($nom, $prenom, $date_naissance, $statut, $photo_profil, $description, $etudes, $sexe, $competences);
+$stmt->store_result();
+$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut);
+
 $stmt->fetch();
-$stmt->close();
-$conn->close();
 
-// Définir les rôles
-$roles = ["Admin", "Prof", "Élève"];
-$role_name = isset($statut) ? $roles[$statut] : 'Inconnu';
-
-
-$nom = $nom ?? '';
-$prenom = $prenom ?? '';
-$date_naissance = $date_naissance ?? '1970-01-01'; 
-$photo_profil = $photo_profil ?? 'path/to/default/profile/photo.png'; 
-$etudes = $etudes ?? 0;
-$sexe = $sexe ?? 0;
-$competences = $competences ?? '';
+if ($statut == '0') {
+    $statut = 'Administrateur';
+} else if ($statut == '1'){
+    $statut = 'Professeur';
+} else if ($statut == '2'){
+    $statut = 'Etudiant';
+} 
 
 ?>
 
@@ -56,7 +54,6 @@ $competences = $competences ?? '';
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 
     <style>
         #nav{}
@@ -123,103 +120,42 @@ $competences = $competences ?? '';
         </p>
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
-
-
     <div id="section">
-
         <div class="media">
             <div class="media-left">
                 <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil" >
             </div>
             <div class="media-body">
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <h2 class="media-heading"> 
-                    <?php echo $prenom . ' ' . $nom; ?>
-                </h2>
-                <p style="color: gray;"> <?php echo $role_name; ?> </p>
-             </p>
+                <br><br><br><br>
+                <!-- Affichez le nom et le prénom de l'utilisateur -->
+                <h2 class="media-heading"><?php echo $prenom . ' ' . $nom; ?></h2>
+                <!-- Affichez le statut de l'utilisateur -->
+                <p style="color: gray;"><?php echo $statut; ?></p>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-8 case"  id="description">
+                <div class="col-sm-8 case" id="description">
                     <h3> Description </h3>
-                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
+                    <textarea>Écrivez votre commentaire ici...</textarea>
                 </div>
                 <div class="col-sm-3 case">
                     <h3> Informations Personnelles </h3>
-                    <p> Date de naissance : <?php echo $date_naissance; ?> </p>
-                    <p> Niveau d'etude :
-                        <?php
-                        switch ($etudes) {
-                            case 1:
-                                echo "Bac";
-                                break;
-                            case 2:
-                                echo "Bac +2";
-                                break;
-                            case 3:
-                                echo "Bac +3";
-                                break;
-                            case 4:
-                                echo "Bac +4";
-                                break;
-                            case 5:
-                                echo "Bac +5";
-                                break;
-                            default:
-                                echo "Inconnu";
-                        }
-                        ?>
-                    </p>
-
-                </div>
-
-                <div class="col-sm-11 case" id="experience">
-                    <h3> Experience </h3>
-                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
-                </div>
-
-                <div class="col-sm-11  case"  id="Formation">
-                    <h3> Formation </h3>
-                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
+                    <!-- Affichez la date de naissance de l'utilisateur -->
+                    <p>Date de naissance: <?php echo $date_naissance; ?></p>
+                    <!-- Affichez l'email de l'utilisateur -->
+                    <p>Email: <?php echo $email; ?></p>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div id="footer">
         <footer>
-            <h3>Nous Contacter: </h3>
-            <table>
-                <td style="padding-right:350px;padding-left:310px;">
-                    <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
-            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
-            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu"><img src="logo/carte_map.PNG" width="500" height="280"></a>
-                </td>
-
-                <td style="font-size: 18px; text-align: right; padding :20px;">
-                    <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
-                    <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
-                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
-            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
-            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
-                </td>
-            </table>
-
-
-            <p>ECE In Corporation &copy; 2024</p>
-
-
+            <p><font size="-1">ECE In, un site créé par des étudiants de l'ECE Paris</font></p>
         </footer>
     </div>
-
-
 </div>
 </body>
 </html>
+
+
