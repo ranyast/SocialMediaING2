@@ -5,26 +5,35 @@
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <style>
-        #nav {}
-        #footer {}
-        #wrapper {}
-        #section {}
-    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 <div id="wrapper">
-    <h1 class="logo">ECE In</h1>
     <div id="nav">
-        <nav>
-            <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100"></a>
-            <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100"></a>
-            <a href="vous.html"><img src="logo/vous.jpg" height="56" width="100"></a>
-            <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100"></a>
-            <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100"></a>
-            <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100"></a>
-        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                </div>
+                <div class="col-sm-11" id="logos">
+                    <nav>
+                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.html"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leftcolumn">
+        <footer>
+            ICI LES DISCUSSIONS DE L'UTILISATEUR
+        </footer>
     </div>
 
     <div id="rightcolumn">
@@ -58,11 +67,7 @@
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
-    <div id="leftcolumn">
-        <footer>
-            ICI LES DISCUSSIONS DE L'UTILISATEUR
-        </footer>
-    </div>
+
     <div id="section">
         <p>
             Carrousel avec les événements futurs de l'école
@@ -74,7 +79,7 @@
             $logout_message = "<div class='msgln'><span class='left-info'>User <b class='user-name-left'>" .
                 $_SESSION['name'] . "</b> a quitté la session de chat.</span><br></div>";
 
-            $myfile = fopen(__DIR__ . "/log.html", "a") or die("Impossible d'ouvrir le fichier!" . __DIR__ . "/log.html");
+            $myfile = fopen(_DIR_ . "/log.html", "a") or die("Impossible d'ouvrir le fichier!" . _DIR_ . "/log.html");
             fwrite($myfile, $logout_message);
             fclose($myfile);
             session_destroy();
@@ -107,7 +112,7 @@
             loginForm();
         } else {
             ?>
-            <div id="wrapper">
+            <div id="wrapper2">
                 <div id="menu">
                     <p class="welcome">Bienvenue, <b><?php echo $_SESSION['name']; ?></b></p>
                     <p class="logout"><a id="exit" href="#">Quitter la conversation</a></p>
@@ -163,6 +168,33 @@
         <?php
         }
         ?>
+    </div>
+    <br>
+    <br>
+    <div id="footer">
+
+        <footer>
+            <h3>Nous Contacter: </h3>
+            <table>
+                <td>
+                    <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
+                    <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
+                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
+            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
+            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
+                </td>
+                <td>
+                    <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
+            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
+            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu"><img src="logo/carte_map.PNG" width="500" height="280"></a>
+                </td>
+            </table>
+
+
+            <p>ECE In Corporation &copy; 2024</p>
+
+
+        </footer>
     </div>
 </div>
 </body>
