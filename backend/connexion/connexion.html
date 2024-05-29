@@ -67,9 +67,11 @@
                         </select>
                     </div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="role[]" value="admin" required /> Admin</label>
-                        <label><input type="checkbox" name="role[]" value="eleve" required /> Élève</label>
-                        <label><input type="checkbox" name="role[]" value="prof" required /> Professeur</label>
+                        <label for="role">Rôle:</label><br>
+                            <input type="radio" id="role_admin" name="role" value="admin"> <label for="role_admin">Admin</label><br>
+                            <input type="radio" id="role_prof" name="role" value="prof"> <label for="role_prof">Prof</label><br>
+                            <input type="radio" id="role_eleve" name="role" value="eleve"> <label for="role_eleve">Élève</label><br>
+
                     </div>
                     <input type="submit" value="Sign Up" class="btn solid" />
                 </form>
