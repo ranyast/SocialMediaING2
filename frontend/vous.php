@@ -23,11 +23,8 @@ if ($conn->connect_error) {
 }
 
 // Préparer et exécuter la requête SQL
-$stmt = $conn->prepare("SELECT u.nom, u.prenom, u.date_naissance, u.statut, p.photo_profil, p.description, p.etudes, p.sexe, p.competences 
-                        FROM utilisateur u 
-                        JOIN profil p ON u.id_user = p.id_user 
-                        WHERE u.id_user = ?");
-$stmt->bind_param("i", $id_user);
+$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom, utilisateur.date_naissance, utilisateur.statut, profil.photo_profil, profil.description, profil.experience, profil.etudes, profil.sexe, profil.competences FROM utilisateur JOIN profil ON utilisateur.id_user = profil.id_user WHERE utilisateur.id_user = ?;");
+$stmt->bind_param("isssississs", $id_user, $nom, $prenom, $date_naissance, $email, $mot_de_passe, $statut, $photo_profil, $description, $etudes, $sexe);
 $stmt->execute();
 $stmt->bind_result($nom, $prenom, $date_naissance, $statut, $photo_profil, $description, $etudes, $sexe, $competences);
 $stmt->fetch();
@@ -38,26 +35,29 @@ $conn->close();
 $roles = ["Admin", "Prof", "Élève"];
 $role_name = isset($statut) ? $roles[$statut] : 'Inconnu';
 
-// Utiliser des valeurs par défaut si les variables sont nulles
+
 $nom = $nom ?? '';
 $prenom = $prenom ?? '';
-$date_naissance = $date_naissance ?? '1970-01-01'; // date par défaut
-$photo_profil = $photo_profil ?? 'path/to/default/profile/photo.png'; // chemin par défaut de l'image
-$description = $description ?? '';
-$etudes = $etudes ?? 0; // niveau d'études par défaut
-$sexe = $sexe ?? 0; // sexe par défaut
+$date_naissance = $date_naissance ?? '1970-01-01'; 
+$photo_profil = $photo_profil ?? 'path/to/default/profile/photo.png'; 
+$etudes = $etudes ?? 0;
+$sexe = $sexe ?? 0;
+$competences = $competences ?? '';
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ECE In - Profil</title>
+    <title>ECE In</title>
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
     <style>
         #nav{}
         #footer{}
@@ -68,70 +68,130 @@ $sexe = $sexe ?? 0; // sexe par défaut
 <body>
 <div id="wrapper">
     <div id="nav">
-        <div class="row">
-            <div class="col-4 col-sm-2">
-                <img src="logo/logo_ece.PNG" alt="ECE In Logo" class="logo img-fluid">
-            </div>
-            <div class="col-4 col-sm-5"></div>
-            <div class="col-4 col-sm-5" style="padding-top:15px;">
-                <a href="vous.php" style="padding-right: 30px;"> Profil </a>
-                <a href="reseau.html" style="padding-right: 30px;"> Réseau </a>
-                <a href="emplois.html" style="padding-right: 30px;"> Emplois </a>
-                <a href="messagerie.html" style="padding-right: 30px;"> Messagerie </a>
-                <a href="notifications.html" style="padding-right: 30px;"> Notifications </a>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                </div>
+                <div class="col-sm-11" id="logos">
+                    <nav>
+                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.html"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="section" style="padding-left:10px;">
-        <form method="POST" action="update_profile.php" enctype="multipart/form-data">
+    <div id="leftcolumn">
+        <h3> Mes compétences </h3>
+        <textarea> ="Écrivez votre commentaire ici..."></textarea>
+    </div>
+
+    <div id="rightcolumn">
+
+        <h3>A Propos de nous:</h3>
+        <p>
+            ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
+        </p>
+        <p>
+            Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
+        </p>
+        <ul>
+            <li>
+                Poster différentes choses
+            </li>
+            <li>
+                Postuler à des offres d'emploi diverses
+            </li>
+            <li>
+                Développement de votre réseau
+            </li>
+            <li>
+                Discuter en live avec vos amis !
+            </li>
+            <li>
+                Et bien d'autres ...
+            </li>
+        </ul>
+        <p>
+            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+        </p>
+        <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
+    </div>
+
+
+    <div id="section">
+
+        <div class="media">
+            <div class="media-left">
+                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil" >
+            </div>
+            <div class="media-body">
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <h2 class="media-heading"> 
+                    <?php echo $prenom . ' ' . $nom; ?>
+                </h2>
+                <p style="color: gray;"> <?php echo $role_name; ?> </p>
+             </p>
+            </div>
+        </div>
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2" id="photo_profil">
-                    <h3> Ma Photo de profil </h3>
-                    <img src="<?php echo htmlspecialchars($photo_profil); ?>" alt="Photo de profil" width="150">
-                    <input type="file" name="photo_profil" accept="image/*">
-                </div>
-                <div class="col-sm-10" id="description">
+                <div class="col-sm-8 case"  id="description">
                     <h3> Description </h3>
-                    <textarea name="description"><?php echo htmlspecialchars($description); ?></textarea>
+                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
                 </div>
-                <div class="col-sm-11 case" id="Informations_generales">
-                    <h3> Informations générales </h3>
-                    <p> Nom: <input type="text" name="nom" value="<?php echo htmlspecialchars($nom); ?>"></p>
-                    <p> Prénom: <input type="text" name="prenom" value="<?php echo htmlspecialchars($prenom); ?>"></p>
-                    <p> Date de naissance: <input type="date" name="date_naissance" value="<?php echo htmlspecialchars(date('Y-m-d', strtotime($date_naissance))); ?>"></p>
-                    <p> Niveau d'étude: 
-                        <select name="etudes">
-                            <option value="0" <?php echo $etudes == 0 ? 'selected' : ''; ?>>Niveau 0</option>
-                            <option value="1" <?php echo $etudes == 1 ? 'selected' : ''; ?>>Niveau 1</option>
-                            <option value="2" <?php echo $etudes == 2 ? 'selected' : ''; ?>>Niveau 2</option>
-                            <option value="3" <?php echo $etudes == 3 ? 'selected' : ''; ?>>Niveau 3</option>
-                            <option value="4" <?php echo $etudes == 4 ? 'selected' : ''; ?>>Niveau 4</option>
-                            <option value="5" <?php echo $etudes == 5 ? 'selected' : ''; ?>>Niveau 5</option>
-                            <option value="6" <?php echo $etudes == 6 ? 'selected' : ''; ?>>Niveau 6</option>
-                        </select>
+                <div class="col-sm-3 case">
+                    <h3> Informations Personnelles </h3>
+                    <p> Date de naissance : <?php echo $date_naissance; ?> </p>
+                    <p> Niveau d'etude :
+                        <?php
+                        switch ($etudes) {
+                            case 1:
+                                echo "Bac";
+                                break;
+                            case 2:
+                                echo "Bac +2";
+                                break;
+                            case 3:
+                                echo "Bac +3";
+                                break;
+                            case 4:
+                                echo "Bac +4";
+                                break;
+                            case 5:
+                                echo "Bac +5";
+                                break;
+                            default:
+                                echo "Inconnu";
+                        }
+                        ?>
                     </p>
-                    <p> Sexe: 
-                        <select name="sexe">
-                            <option value="0" <?php echo $sexe == 0 ? 'selected' : ''; ?>>Non spécifié</option>
-                            <option value="1" <?php echo $sexe == 1 ? 'selected' : ''; ?>>Masculin</option>
-                            <option value="2" <?php echo $sexe == 2 ? 'selected' : ''; ?>>Féminin</option>
-                        </select>
-                    </p>
-                    <p> Statut: <?php echo htmlspecialchars($role_name); ?></p>
+
                 </div>
-                <div class="col-sm-11 case" id="Experience">
-                    <h3> Expérience </h3>
-                    <textarea name="experience">Écrivez votre expérience ici...</textarea>
+
+                <div class="col-sm-11 case" id="experience">
+                    <h3> Experience </h3>
+                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
                 </div>
-                <div class="col-sm-11 case" id="Formation">
+
+                <div class="col-sm-11  case"  id="Formation">
                     <h3> Formation </h3>
-                    <textarea name="formation">Écrivez votre formation ici...</textarea>
+                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
-        </form>
+        </div>
     </div>
+
 
     <div id="footer">
         <footer>
@@ -146,14 +206,20 @@ $sexe = $sexe ?? 0; // sexe par défaut
                 <td style="font-size: 18px; text-align: right; padding :20px;">
                     <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
                     <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
-                    <p>En Nos Locaux: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
+                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
             @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
             8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
                 </td>
             </table>
+
+
             <p>ECE In Corporation &copy; 2024</p>
+
+
         </footer>
     </div>
+
+
 </div>
 </body>
 </html>
