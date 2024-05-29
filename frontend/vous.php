@@ -3,18 +3,17 @@ session_start();
 
 // Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
-    header("Location: login.php"); // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: connexion.html");
     exit();
 }
 
-// Assurez-vous que les données de session existent avant de les utiliser
+
 $nom = $_SESSION['nom'] ?? '';
 $prenom = $_SESSION['prenom'] ?? '';
 $date_naissance = $_SESSION['date_naissance'] ?? '1970-01-01';
 $email = $_SESSION['email'] ?? '';
 $statut = $_SESSION['statut'] ?? '';
 
-//inserer les informations de l'utilisateur dans la base de données
 $servername = "localhost";
 $username = "root";
 $password_db = "";
@@ -26,12 +25,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$stmt = $conn->prepare("SELECT nom,prenom,date_naissance, email, statut FROM utilisateur WHERE id_user = ?");
+// Préparation et exécution de la requête SQL pour récupérer les données de l'utilisateur
+$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom, utilisateur.date_naissance, utilisateur.email, utilisateur.statut, profil.description, profil.experience FROM utilisateur LEFT JOIN profil ON utilisateur.id_user = profil.id_user WHERE utilisateur.id_user = ?");
 $stmt->bind_param("i", $_SESSION['id_user']);
 $stmt->execute();
 $stmt->store_result();
-$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut);
-
+$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $description, $experience);
 $stmt->fetch();
 
 if ($statut == '0') {
@@ -138,6 +137,8 @@ if ($statut == '0') {
                 <div class="col-sm-8 case" id="description">
                     <h3> Description </h3>
                     <textarea>Écrivez votre commentaire ici...</textarea>
+                    <br>
+                    <button type="button" class="btn btn-primary">Enregistrer</button>
                 </div>
                 <div class="col-sm-3 case">
                     <h3> Informations Personnelles </h3>
