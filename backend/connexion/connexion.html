@@ -33,45 +33,11 @@
                         <i class="fas fa-calendar"></i>
                         <input type="date" name="date_naissance" required />
                     </div>
-                    <div class="input-field">
-                        <i class="fas fa-map-pin"></i>
-                        <input type="text" name="adresse" placeholder="Adresse" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-city"></i>
-                        <input type="text" name="ville" placeholder="Ville" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-map-pin"></i>
-                        <input type="text" name="code_postal" placeholder="Code postal" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-phone"></i>
-                        <input type="text" name="telephone" placeholder="Téléphone" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-info-circle"></i>
-                        <textarea name="description" placeholder="Description" required></textarea>
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-graduation-cap"></i>
-                        <select name="niveau_etudes" required>
-                            <option value="" disabled selected>Niveau d'études</option>
-                            <option value="terminale">Terminale</option>
-                            <option value="bac_plus_1">Bac +1</option>
-                            <option value="bac_plus_2">Bac +2</option>
-                            <option value="bac_plus_3">Bac +3</option>
-                            <option value="bac_plus_4">Bac +4</option>
-                            <option value="bac_plus_5">Bac +5</option>
-                            <option value="autre">Autre</option>
-                        </select>
-                    </div>
                     <div class="checkbox-group">
                         <label for="role">Rôle:</label><br>
-                            <input type="radio" id="role_admin" name="role" value="admin"> <label for="role_admin">Admin</label><br>
-                            <input type="radio" id="role_prof" name="role" value="prof"> <label for="role_prof">Prof</label><br>
-                            <input type="radio" id="role_eleve" name="role" value="eleve"> <label for="role_eleve">Élève</label><br>
-
+                        <input type="radio" id="role_admin" name="role" value="0"> <label for="role_admin">Admin</label><br>
+                        <input type="radio" id="role_prof" name="role" value="1"> <label for="role_prof">Prof</label><br>
+                        <input type="radio" id="role_eleve" name="role" value="2"> <label for="role_eleve">Élève</label><br>
                     </div>
                     <input type="submit" value="Sign Up" class="btn solid" />
                 </form>
