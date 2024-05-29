@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `ville` VARCHAR(45) NOT NULL,
   `code_postal` VARCHAR(45) NOT NULL,
   `telephone` VARCHAR(45) NOT NULL,
-  `photo` VARCHAR(140) NOT NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
   `terminale` TINYINT(1) NULL DEFAULT NULL,
   `bac_plus_1` TINYINT(1) NULL DEFAULT NULL,
