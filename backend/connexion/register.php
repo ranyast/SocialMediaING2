@@ -41,129 +41,59 @@ if ($db_found) {
                 if (strpos($roles, ',') !== false) {
                     $erreur = true;
                     $messageErreur .= "<p>Veuillez sélectionner un seul rôle.</p>";
-            
-                $sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, date_naissance, code_postal, telephone, terminale, bac_plus_1, bac_plus_2, bac_plus_3, bac_plus_4, bac_plus_5, autre, admin, prof, eleve) VALUES ('$nom', '$prenom', '$email', '$mot_de_passe', '$date_naissance', '$code_postal', '$telephone',";
 
-                switch ($niveau_etudes) {
-                    case 'terminale':
-                        $sql .= "1, 0, 0, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_1':
-                        $sql .= "0, 1, 0, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_2':
-                        $sql .= "0, 0, 1, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_3':
-                        $sql .= "0, 0, 0, 1, 0, 0, 0";
-                        break;
-                    case 'bac_plus_4':
-                        $sql .= "0, 0, 0, 0, 1, 0, 0";
-                        break;
-                    case 'bac_plus_5':
-                        $sql .= "0, 0, 0, 0, 0, 1, 0";
-                        break;re                    case 'bac_plus_5':
-                        $sql .= "0, 0, 0, 0, 0, 1, 0";
-                        break;
-                    case 'autre':
-                        $sql .= "0, 0, 0, 0, 0, 0, 1";
-                        break;
-                    default:
-                        $sql .= "0, 0, 0, 0, 0, 0, 0";
-                        break;
-                }
+                    $sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, date_naissance, code_postal, telephone, terminale, niveau_etudes, roles) VALUES ('$nom','$prenom','$email','$mot_de_passe','$date_naissance','$code_postal','$telephone','$niveau_etudes','$roles')";
 
-                $sql .= ", ";
-                if (in_array("admin", $roles)) {
-                    $sql .= "1, 0, 0";
-                } elseif (in_array("prof", $roles)) {
-                    $sql .= "0, 1, 0";
-                } elseif (in_array("eleve", $roles)) {
-                    $sql .= "0, 0, 1";
-                }
+                    switch ($niveau_etudes) {
+                        case 'terminale':
+                            $sql .= "1, 0, 0, 0, 0, 0, 0";
+                            break;
+                        case 'bac_plus_1':
+                            $sql .= "0, 1, 0, 0, 0, 0, 0";
+                            break;
+                        case 'bac_plus_2':
+                            $sql .= "0, 0, 1, 0, 0, 0, 0";
+                            break;
+                        case 'bac_plus_3':
+                            $sql .= "0, 0, 0, 1, 0, 0, 0";
+                            break;
+                        case 'bac_plus_4':
+                            $sql .= "0, 0, 0, 0, 1, 0, 0";
+                            break;
+                        case 'bac_plus_5':
+                            $sql .= "0, 0, 0, 0, 0, 1, 0";
+                            break;
+                        case 'autre':
+                            $sql .= "0, 0, 0, 0, 0, 0, 1";
+                            break;
+                        default:
+                            $sql .= "0, 0, 0, 0, 0, 0, 0";
+                            break;
+                    }
 
-                $sql .= ")";
+                    $sql .= ", ";
+                    if (in_array("admin", $roles)) {
+                        $sql .= "1, 0, 0";
+                    } elseif (in_array("prof", $roles)) {
+                        $sql .= "0, 1, 0";
+                    } elseif (in_array("eleve", $roles)) {
+                        $sql .= "0, 0, 1";
+                    }
 
-                // Exécuter la requête
-                if (mysqli_query($db_handle, $sql)) {
-                    echo "Enregistrement réussi.";
-                } else {
-                    echo "Erreur: " . $sql . "<br>" . mysqli_error($db_handle);
-                }
-            }
-        }
-    }
-} else {
-    echo "Database not found";
-}
-?>
-nom == "" || $email == "" || $mot_de_passe == "" || $date_naissance == "" || $code_postal == "" || $telephone == "" || $niveau_etudes == "" || empty($roles)) {
-            $erreur = true;
-            $messageErreur .= "<p>Tous les champs sont obligatoires.</p>";
-        } else {
+                    $sql .= ")";
 
-            if (empty($roles)) {
-                $erreur = true;
-                $messageErreur .= "<p>Veuillez sélectionner au moins un rôle.</p>";
-            } else {
-
-                if (strpos($roles, ',') !== false) {
-                    $erreur = true;
-                    $messageErreur .= "<p>Veuillez sélectionner un seul rôle.</p>";
-            
-                $sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, date_naissance, code_postal, telephone, terminale, bac_plus_1, bac_plus_2, bac_plus_3, bac_plus_4, bac_plus_5, autre, admin, prof, eleve) VALUES ('$nom', '$prenom', '$email', '$mot_de_passe', '$date_naissance', '$code_postal', '$telephone',";
-
-                switch ($niveau_etudes) {
-                    case 'terminale':
-                        $sql .= "1, 0, 0, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_1':
-                        $sql .= "0, 1, 0, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_2':
-                        $sql .= "0, 0, 1, 0, 0, 0, 0";
-                        break;
-                    case 'bac_plus_3':
-                        $sql .= "0, 0, 0, 1, 0, 0, 0";
-                        break;
-                    case 'bac_plus_4':
-                        $sql .= "0, 0, 0, 0, 1, 0, 0";
-                        break;
-                    case 'bac_plus_5':
-                        $sql .= "0, 0, 0, 0, 0, 1, 0";
-                        break;
-                    case 'autre':
-                        $sql .= "0, 0, 0, 0, 0, 0, 1";
-                        break;
-                    default:
-                        $sql .= "0, 0, 0, 0, 0, 0, 0";
-                        break;
-                }
-
-            
-                $sql .= ", ";
-                if (in_array("admin", $roles)) {
-                    $sql .= "1, 0, 0";
-                } elseif (in_array("prof", $roles)) {
-                    $sql .= "0, 1, 0";
-                } elseif (in_array("eleve", $roles)) {
-                    $sql .= "0, 0, 1";
-                }
-
-                $sql .= ")";
-
-                // Exécuter la requête
-                if (mysqli_query($db_handle, $sql)) {                 
-                    echo "Enregistrement réussi.";
-                } else {
-                    echo "Erreur: " . $sql . "<br>" . mysqli_error($db_handle);
+                    // Exécuter la requête
+                    if (mysqli_query($db_handle, $sql)) {
+                        echo "Enregistrement réussi.";
+                    } else {
+                        echo "Erreur: " . $sql . "<br>" . mysqli_error($db_handle);
+                    }
                 }
             }
         }
     }
-} else {
+}
+    else {
     echo "Database not found";
 }
-}
-
 ?>
