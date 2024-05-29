@@ -5,6 +5,8 @@ CREATE TABLE utilisateur (
     date_naissance DATE NOT NULL,
     email VARCHAR(191) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(200) NOT NULL
+    statut INT NOT NULL,
+    CONSTRAINT CHK_statut CHECK (statut IN (0, 1, 2))
 );
 
 CREATE TABLE profil (
