@@ -2,12 +2,15 @@ CREATE TABLE utilisateur (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
-    date_naissance DATETIME NOT NULL,
+    date_naissance DATE NOT NULL,
     email VARCHAR(191) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE profil (
+    FK_nom VARCHAR(100) NOT NULL,
+    FK_prenom VARCHAR(100) NOT NULL,
+    FK_date_naissance DATE NOT NULL,
     id_profil INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
     photo_profil VARCHAR(191),
