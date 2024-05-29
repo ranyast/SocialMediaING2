@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ECE In</title>
+    <meta charset="utf-8"/>
+    <link href="ECEIn.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+</head>
+<body>
 <?php
 
 $email = $_POST['email'];
@@ -21,8 +33,8 @@ $sql = "SELECT * FROM utilisateur WHERE email='$email' AND mot_de_passe='$mot_de
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
- 
-    echo "Connexion réussie!";
+    header("Location: /ProjetPiscine/frontend/accueil.html");
+    exit();
 } else {
 
     echo "Adresse e-mail ou mot de passe incorrect.";
@@ -30,3 +42,5 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
+</body>
+</html>
