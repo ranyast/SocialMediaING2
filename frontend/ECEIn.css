@@ -51,6 +51,8 @@
     font-style: italic;
     padding: 10px;
     background-color: lightsalmon;
+    width: auto;
+    height: auto;
 }
 
 #carrousel {
