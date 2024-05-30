@@ -90,12 +90,12 @@ $conn->close();
                 </div>
                 <div class="col-sm-11" id="logos">
                     <nav>
-                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
-                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
-                        <a href="vous.html"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
-                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
-                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
                 </div>
             </div>
@@ -103,9 +103,7 @@ $conn->close();
     </div>
 
     <div id="leftcolumn">
-        <h3> Mes compétences </h3>
-        <textarea><?php echo htmlspecialchars($competences); ?></textarea>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+
     </div>
 
     <div id="rightcolumn">
@@ -156,7 +154,7 @@ $conn->close();
             <div class="row">
                     <form method="post" action="">
                         <div id="infoprofil">
-                            <div class="col-sm-8 case" id="description">
+                            <div class="col-sm-6 case" id="description">
                                 <h3>Description</h3>
                                 <?php echo htmlspecialchars($description); ?>
                             </div>
@@ -184,21 +182,27 @@ $conn->close();
                             </div>
                         </div>
                         <div class="col-sm-12 case2" id="modifprofil">
+                            <h1 style="text-align: center; color: white;  "> Modification </h1>
+                            <br>
 
                                 <form method="post" action="">
                                     <div class="col-sm-8 case" id="description">
                                         <h3>Description</h3>
-                                        <textarea name="description"><?php echo htmlspecialchars($description); ?></textarea>
+                                        <textarea name="description"></textarea>
                                     </div>
 
                                     <div class="col-sm-8 case" id="experience">
                                         <h3>Experience</h3>
-                                        <textarea name="experience"><?php echo htmlspecialchars($experience); ?></textarea>
+                                        <textarea name="experience"></textarea>
+                                    </div>
+                                    <div class="col-sm-8 case" id="formation">
+                                        <h3>Formation</h3>
+                                        <textarea name="formation"></textarea>
                                     </div>
 
-                                    <div class="col-sm-8 case" id="description">
+                                    <div class="col-sm-8 case" id="competences">
                                         <h3>Compétences</h3>
-                                        <textarea name="competences"><?php echo htmlspecialchars($competences); ?></textarea>
+                                        <textarea name="competences"></textarea>
                                     </div>
 
                                     <div class="col-sm-8 case" id="etude">
@@ -211,10 +215,10 @@ $conn->close();
                                             <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
                                             <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
                                             <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Bac +6</option>
-                                            <?php echo htmlspecialchars($etudes); ?>" min="0" max="6">
+                                            " min="0" max="6">
                                         </select>
                                     </div>
-                                    <br>
+
                                     <div class="col-sm-3 case" id="sexe">
                                         <h3>Sexe</h3>
                                         <label><input type="radio" name="sexe" value="0" <?php if ($sexe == '0') echo 'checked'; ?>>Homme</label>
@@ -222,19 +226,17 @@ $conn->close();
                                         <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>>Autre</label>
                                     </div>
 
+                                    <br>
+
                                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                                 </form>
                             </div>
                             <div class="col-sm-3 case">
-                                <h3>Generer mon CV</h3>
-                                <!-- Affichez la date de naissance de l'utilisateur -->
-                                <p>Date de naissance: <?php echo htmlspecialchars($date_naissance); ?></p>
-                                <!-- Affichez l'email de l'utilisateur -->
-                                <p>Email: <?php echo htmlspecialchars($email); ?></p>
+                                <button type="submit" class="btn btn-primary">Generer mon CV</button>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+
                     </form>
                 </div>
 
