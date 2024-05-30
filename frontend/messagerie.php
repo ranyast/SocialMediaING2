@@ -1,119 +1,122 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_user'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ece_in";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$current_user_id = $_SESSION['id_user'];
+
+$sql = "SELECT id_user, nom, prenom FROM utilisateur WHERE id_user != ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $current_user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$friends = [];
+while ($row = $result->fetch_assoc()) {
+    $friends[] = $row;
+}
+
+$stmt->close();
+$conn->close();
+?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>ECE In Messagerie</title>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
+    <title>Messagerie</title>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#message_form").submit(function(e){
-                e.preventDefault();
-                var usermsg = $("#usermsg").val();
-                $.post("post.php", { usermsg: usermsg }, function(){
-                    $("#usermsg").val("");
-                    loadChat();
-                });
-            });
 
-            function loadChat() {
-                $.ajax({
-                    url: "log.html",
-                    cache: false,
-                    success: function(html){
-                        $("#chatbox").html(html);
-                    }
-                });
-            }
-
-            setInterval(loadChat, 1000); // Rafraîchit le chat toutes les secondes
-
-            loadChat(); // Charge le chat au démarrage
-        });
-    </script>
+    
 </head>
 <body>
-    
+    <div id="container">
     <div id="wrapper">
-        <div id="nav">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-1" id="logo">
-                        <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
-                    </div>
-                    <div class="col-sm-11" id="logos">
-                        <nav>
-                            <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
-                            <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
-                            <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
-                            <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
-                            <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
-                            <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
-                        </nav>
-                    </div>
+    <div id="nav">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                </div>
+                <div class="col-sm-11" id="logos">
+                    <nav>
+                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                    </nav>
                 </div>
             </div>
         </div>
-
+    </div>
         <div id="leftcolumn">
-            <footer>
-                ICI LES DISCUSSIONS RECENTES DE L'UTILISATEUR
-            </footer>
+            <h3>Discussions Récentes</h3>
+            <ul>
+                <?php foreach ($friends as $friend) { ?>
+                    <li class="friend" data-id="<?php echo $friend['id_user']; ?>">
+                        <?php echo $friend['nom'] . " " . $friend['prenom']; ?>
+                    </li>
+                <?php } ?>
+            </ul>
         </div>
 
         <div id="rightcolumn">
-            <h3>A Propos de nous:</h3>
-            <p>
-                ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
-            </p>
-            <p>
-                Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
-            </p>
-            <ul>
-                <li>
-                    Poster différentes choses
-                </li>
-                <li>
-                    Postuler à des offres d'emploi diverses
-                </li>
-                <li>
-                    Développement de votre réseau
-                </li>
-                <li>
-                    Discuter en live avec vos amis !
-                </li>
-                <li>
-                    Et bien d'autres ...
-                </li>
-            </ul>
-            <p>
-                N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
-            </p>
-            <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
-        </div>
+        <h3>A Propos de nous:</h3>
+        <p>
+            ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
+        </p>
+        <p>
+            Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
+        </p>
+        <ul>
+            <li>
+                Poster différentes choses
+            </li>
+            <li>
+                Postuler à des offres d'emploi diverses
+            </li>
+            <li>
+                Développement de votre réseau
+            </li>
+            <li>
+                Discuter en live avec vos amis !
+            </li>
+            <li>
+                Et bien d'autres ...
+            </li>
+        </ul>
+        <p>
+            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+        </p>
+        <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
+    </div>
 
         <div id="section">
-            <h1> Conversation </h1>
-
-            <div id="chatbox">
-                <!-- La zone de discussion sera affichée ici -->
-                <?php
-                // Affichage du contenu de log.html
-                $log_content = file_get_contents("log.html");
-                echo $log_content;
-                ?>
-            </div>
+            <h1>Conversation</h1>
+            <div id="chatbox"></div>
+            <form id="message_form">
+                <input name="usermsg" type="text" id="usermsg" />
+                <input type="submit" value="Envoyer" />
+                <input type="hidden" id="recipient_id" />
+            </form>
         </div>
-    
-        <form name="message" id="message_form" action="post.php" method="post">
-            <input name="usermsg" type="text" id="usermsg" />
-            <input type="submit" id="submitmsg" value="Envoyer" />
-        </form>
-        <br>
-    </div>
-    <div id="footer">
+        <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
             <table>
@@ -137,7 +140,51 @@
             <p>ECE In Corporation &copy; 2024</p>
         </footer>
     </div>
+    </div>
 
+    <script>
+        document.querySelectorAll('.friend').forEach(friend => {
+            friend.addEventListener('click', function() {
+                document.getElementById('recipient_id').value = this.getAttribute('data-id');
+                loadMessages();
+            });
+        });
 
+        document.getElementById('message_form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+
+        function loadMessages() {
+            const recipientId = document.getElementById('recipient_id').value;
+            if (!recipientId) return;
+
+            fetch(`load_messages.php?friend_id=${recipientId}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('chatbox').innerHTML = data;
+                });
+        }
+
+        function sendMessage() {
+            const recipientId = document.getElementById('recipient_id').value;
+            const usermsg = document.getElementById('usermsg').value;
+
+            if (!recipientId || !usermsg) return;
+
+            const formData = new FormData();
+            formData.append('message', usermsg);
+            formData.append('recipient_id', recipientId);
+
+            fetch('post.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(() => {
+                document.getElementById('usermsg').value = '';
+                loadMessages();
+            });
+        }
+    </script>
 </body>
 </html>

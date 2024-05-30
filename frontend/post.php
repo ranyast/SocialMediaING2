@@ -1,29 +1,25 @@
 <?php
 session_start();
+if (isset($_SESSION['id_user']) && isset($_POST['message']) && isset($_POST['recipient_id'])) {
+    $message = $_POST['message'];
+    $recipient_id = $_POST['recipient_id'];
+    $sender_id = $_SESSION['id_user'];
 
-if (isset($_SESSION['name'])) {
-    $text = $_POST['usermsg'];
-    
-    // Configurer le fuseau horaire
-    date_default_timezone_set('Europe/Paris');
-    
-    // Sanitize user input
-    $safe_text = htmlspecialchars(stripslashes($text));
-    
-    // Format the message
-    $current_time = date("H:i");
-    $username = htmlspecialchars($_SESSION['name']);
-    $text_message = "<div class='msgln'><span class='chat-time'>$current_time</span> <b class='user-name'>$username</b>: $safe_text<br></div>";
-    
-    // Append the message to log.html
-    $file_path = __DIR__ . "/log.html";
-    $myfile = fopen($file_path, "a");
-    
-    if ($myfile) {
-        fwrite($myfile, $text_message);
-        fclose($myfile);
-    } else {
-        die("Impossible d'ouvrir le fichier $file_path");
+    $servername = "localhost";
+    $username = "root";
+    $password_db = "";
+    $dbname = "ece_in";
+
+    $conn = new mysqli($servername, $username, $password_db, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+
+    $stmt = $conn->prepare("INSERT INTO messages (sender, recipient, message) VALUES (?, ?, ?)");
+    $stmt->bind_param("iis", $sender_id, $recipient_id, $message);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
 }
 ?>
