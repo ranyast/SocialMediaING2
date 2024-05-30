@@ -26,7 +26,7 @@ if ($conn->connect_error) {
 }
 
 // Préparation et exécution de la requête SQL pour récupérer les données de l'utilisateur
-$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom FROM utilisateur LEFT JOIN profil ON utilisateur.id_user = profil.id_user WHERE utilisateur.id_user = ?");
+$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom FROM utilisateur WHERE utilisateur.id_user = ?");
 $stmt->bind_param("i", $_SESSION['id_user']);
 $stmt->execute();
 $stmt->store_result();
