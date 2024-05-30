@@ -27,11 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssi", $prenom, $nom, $date_naissance, $email, $hashed_password, $statut);
 
     if ($stmt->execute()) {
-        echo "Inscription réussie";
-
+        header("Location: connexion.html"); // Rediriger vers la page de profil
         exit();
     } else {
         echo "Erreur lors de l'inscription : " . $stmt->error;
+        header("Location: register.php"); // Rediriger vers la page de profil
+        exit();
     }
 
     $stmt->close();
