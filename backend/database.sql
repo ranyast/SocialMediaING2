@@ -123,6 +123,8 @@ CREATE TABLE IF NOT EXISTS utilisateur (
   sexe INT,
   competences TEXT,
   formation TEXT,
+  feeling TEXT,
+  location VARCHAR(255),
   PRIMARY KEY (id_user),
   CONSTRAINT CHK_statut CHECK (statut IN (0, 1, 2)),
   CONSTRAINT CHK_etudes CHECK (etudes IN (0, 1, 2, 3, 4, 5, 6)),
