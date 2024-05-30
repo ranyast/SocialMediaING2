@@ -44,6 +44,26 @@ if($sexe == '0'){
     $sexe = 'Autre';
 }
 
+if ($etudes == '0') {
+    $etudes = 'Bac';
+} else if ($etudes == '1') {
+    $etudes = 'Bac +1';
+} else if ($etudes == '2') {
+    $etudes = 'Bac +2';
+} else if ($etudes == '3') {
+    $etudes = 'Bac +3';
+} else if ($etudes == '4') {
+    $etudes = 'Bac +4';
+} else if ($etudes == '5') {
+    $etudes = 'Bac +5';
+} else if ($etudes == '6') {
+    $etudes = 'Autre';
+}
+ 
+
+
+
+
 // Si le formulaire est soumis, mettez à jour les données dans la table utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
@@ -52,12 +72,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $etudes = $_POST['etudes'];
     $sexe = $_POST['sexe'];
     $competences = $_POST['competences'];
+    $photo_profil = $_POST['photo_profil'];
 
-    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ? WHERE id_user = ?");
-    $stmt->bind_param( $description, $experience, $formation, $etudes, $sexe, $competences, $id_user);
+    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ?, photo_profil = ? WHERE id_user = ?");
+    $stmt->bind_param("ssssissi", $description, $experience, $formation, $etudes, $sexe, $competences, $photo_profil, $id_user);
+
+
     $stmt->execute();
     $stmt->close();
-    header("Location: vous.php"); // Redirige vers la page vous.php après la mise à jour
+    header("Location: ./../vous.php"); // Redirige vers la page vous.php après la mise à jour
     exit();
 }
 
@@ -89,21 +112,15 @@ $conn->close();
                 <div class="col-sm-1" id="logo">
                     <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
                 </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
-                </div>
-                <div class="col-sm-7" id="logos">
+                <div class="col-sm-11" id="logos">
                     <nav>
-                        <a href="accueil.php"><img src="logo/accueil.jpg" height="75" width="133" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="75" width="133" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous2.jpg" height="75" width="133" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification.jpg" height="75" width="133" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="75" width="133" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="75" width="133" alt="Emploi"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
-                </div>
-                <div class="col-sm-1" id="deconnexion">
-                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                 </div>
             </div>
         </div>
@@ -143,7 +160,11 @@ $conn->close();
     <div id="section">
         <div class="media">
             <div class="media-left">
-                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil">
+            <?php if (!empty($photo_profil)): ?>
+                <img src="<?php echo htmlspecialchars($photo_profil); ?>" class="img-circle" alt="Photo profil">
+                    <?php else: ?>
+                            <p>Aucune photo de profil disponible</p>
+             <?php endif; ?>
             </div>
             <div class="media-body">
                 <br><br><br><br>
@@ -188,6 +209,9 @@ $conn->close();
                             <h3>Description</h3>
                             <textarea name="description"></textarea>
                         </div>
+                        <div class="col-sm-8 case" id="photo_profil_modif">
+                            <h3>Photo de profil</h3>
+                            <input type="file" name="photo_profil">
                         <div class="col-sm-8 case" id="experience_modif">
                             <h3>Expérience</h3>
                             <textarea name="experience"></textarea>
@@ -209,7 +233,7 @@ $conn->close();
                                 <option value="3" <?php if ($etudes == '3') echo 'selected'; ?>>Bac +3</option>
                                 <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
                                 <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
-                                <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Bac +6</option>
+                                <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Autre</option>
                             </select>
                         </div>
                         <div class="col-sm-3 case" id="sexe_modif">
@@ -219,7 +243,7 @@ $conn->close();
                             <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>> Autre</label>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
                     </form>
                 </div>
                 <div class="col-sm-3 case">
