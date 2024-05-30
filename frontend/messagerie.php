@@ -6,7 +6,6 @@
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 <body>
 <div id="wrapper">
@@ -18,10 +17,17 @@
                 </div>
                 <div class="col-sm-11" id="logos">
                     <nav>
+<<<<<<< HEAD
+                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+=======
                         <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
                         <a href="monreseau.php"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
                         <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
                         <a href="notifications.php"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+>>>>>>> 9ddb121bd4432863440c247042afa0d2cd9b0fae
                         <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
@@ -67,14 +73,17 @@
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
-
     <div id="section">
-        <p>
-            Carrousel avec les événements futurs de l'école
-        </p>
-        <?php
-        session_start();
+        <p>Carrousel avec les événements futurs de l'école</p>
 
+<<<<<<< HEAD
+        <div id="chatbox">
+            <!-- La zone de discussion sera affichée ici -->
+            <?php
+            // Affichage du contenu de log.html
+            $log_content = file_get_contents("log.html");
+            echo $log_content;
+=======
         if (isset($_GET['logout'])) {
             $logout_message = "<div class='msgln'><span class='left-info'>User <b class='user-name-left'>" .
                 $_SESSION['name'] . "</b> a quitté la session de chat.</span><br></div>";
@@ -111,66 +120,21 @@
         if (!isset($_SESSION['name'])) {
             loginForm();
         } else {
+>>>>>>> 9ddb121bd4432863440c247042afa0d2cd9b0fae
             ?>
-            <div id="wrapper2">
-                <div id="menu">
-                    <p class="welcome">Bienvenue, <b><?php echo $_SESSION['name']; ?></b></p>
-                    <p class="logout"><a id="exit" href="#">Quitter la conversation</a></p>
-                </div>
-                <div id="chatbox">
-                    <?php
-                    if (file_exists("log.html") && filesize("log.html") > 0) {
-                        $contents = file_get_contents("log.html");
-                        echo $contents;
-                    }
-                    ?>
-                </div>
-                <form name="message" action="">
-                    <input name="usermsg" type="text" id="usermsg" />
-                    <input name="submitmsg" type="submit" id="submitmsg" value="Envoyer" />
-                </form>
-            </div>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#submitmsg").click(function () {
-                        var clientmsg = $("#usermsg").val();
-                        $.post("post.php", { text: clientmsg });
-                        $("#usermsg").val("");
-                        return false;
-                    });
-
-                    function loadLog() {
-                        var oldscrollHeight = $("#chatbox")[0].scrollHeight - 20;
-                        $.ajax({
-                            url: "log.html",
-                            cache: false,
-                            success: function (html) {
-                                $("#chatbox").html(html);
-                                var newscrollHeight = $("#chatbox")[0].scrollHeight - 20;
-                                if (newscrollHeight > oldscrollHeight) {
-                                    $("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal');
-                                }
-                            }
-                        });
-                    }
-
-                    setInterval(loadLog, 1000);
-
-                    $("#exit").click(function () {
-                        var exit = confirm("Voulez-vous vraiment mettre fin à la session ?");
-                        if (exit == true) {
-                            window.location = "messagerie.php?logout=true";
-                        }
-                    });
-                });
-            </script>
-        <?php
-        }
-        ?>
+        </div>
     </div>
+<<<<<<< HEAD
+    
+    <form name="message" id="message_form" action="post.php" method="post">
+        <input name="usermsg" type="text" id="usermsg" />
+        <input type="submit" id="submitmsg" value="Envoyer" />
+    </form>
+
+=======
     <br>
     <br>
+>>>>>>> 9ddb121bd4432863440c247042afa0d2cd9b0fae
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
@@ -192,13 +156,37 @@
             8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
                 </td>
             </table>
-
-
             <p>ECE In Corporation &copy; 2024</p>
-
-
         </footer>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#message_form").submit(function(e){
+        e.preventDefault();
+        var usermsg = $("#usermsg").val();
+        $.post("post.php", { usermsg: usermsg }, function(){
+            $("#usermsg").val("");
+            loadChat();
+        });
+    });
+
+    function loadChat() {
+        $.ajax({
+            url: "log.html",
+            cache: false,
+            success: function(html){
+                $("#chatbox").html(html);
+            }
+        });
+    }
+
+    setInterval(loadChat, 1000); // Rafraîchit le chat toutes les secondes
+
+    loadChat(); // Charge le chat au démarrage
+});
+</script>
 </body>
 </html>
