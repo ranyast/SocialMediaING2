@@ -6,24 +6,25 @@ CREATE TABLE utilisateur (
     email VARCHAR(191) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(200) NOT NULL,
     statut INT NOT NULL,
-    CONSTRAINT CHK_statut CHECK (statut IN (0, 1, 2))
-);
-
-CREATE TABLE profil (
-    FK_nom VARCHAR(100) NOT NULL,
-    FK_prenom VARCHAR(100) NOT NULL,
-    FK_date_naissance DATE NOT NULL,
-    id_profil INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT NOT NULL,
     photo_profil VARCHAR(191),
     description TEXT,
     experience TEXT,
     etudes INT,
     sexe INT,
     competences TEXT,
-    FOREIGN KEY (id_user) REFERENCES utilisateur(id_user),
+    formation TEXT,
+    CONSTRAINT CHK_statut CHECK (statut IN (0, 1, 2)),
     CONSTRAINT CHK_etudes CHECK (etudes IN (0, 1, 2, 3, 4, 5, 6)),
     CONSTRAINT CHK_sexe CHECK (sexe IN (0, 1, 2))
 );
 
-
+CREATE TABLE amitie ( 
+    id_amitie INT AUTO_INCREMENT PRIMARY KEY, 
+    id_user1 INT NOT NULL, 
+    id_user2 INT NOT NULL,
+    est_ami1 BOOLEAN NOT NULL, 
+    est_ami2 BOOLEAN NOT NULL,
+    est_ami BOOLEAN AS (est_ami1 AND est_ami2) STORED,
+    CONSTRAINT FK_user1 FOREIGN KEY (id_user1) REFERENCES utilisateur(id_user), 
+    CONSTRAINT FK_user2 FOREIGN KEY (id_user2) REFERENCES utilisateur(id_user)
+);

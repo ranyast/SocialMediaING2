@@ -9,7 +9,7 @@
 #nav {
     font-weight: bold;
     font-size: 1.2em;
-    background-color: lightgreen;
+    background-color: white;
     text-align: center;
     padding-top: 10px;
 }
@@ -51,6 +51,8 @@
     font-style: italic;
     padding: 10px;
     background-color: lightsalmon;
+    width: auto;
+    height: auto;
 }
 
 #carrousel {
@@ -86,6 +88,12 @@ body {
 
 .case {
     background-color: white;
+    margin: 10px;
+    padding: 10px;
+}
+
+.case2 {
+    background-color: #028E98;
     margin: 10px;
     padding: 10px;
 }

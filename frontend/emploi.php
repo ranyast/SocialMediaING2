@@ -6,15 +6,8 @@
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 
     <style>
-        #nav{}
-        #footer{}
-        #wrapper{}
-        #section{}
     </style>
 </head>
 <body>
@@ -27,25 +20,18 @@
                 </div>
                 <div class="col-sm-11" id="logos">
                     <nav>
-                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
-                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
-                        <a href="vous.html"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
-                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
-                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                        <a href="emploi.php"><img src="logo/emploi2.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="leftcolumn">
-        <h3> Mes compétences </h3>
-        <textarea> ="Écrivez votre commentaire ici..."></textarea>
-    </div>
-
-    <div id="rightcolumn">
-
         <h3>A Propos de nous:</h3>
         <p>
             ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
@@ -76,60 +62,30 @@
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
-
     <div id="section">
+        <p>
+            Offres d'emploi, sous forme de bullet !
+        </p>
+        <br>
+        <br>
+        <br>
 
-        <div class="media">
-            <div class="media-left">
-                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil" >
-            </div>
-            <div class="media-body">
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <h2 class="media-heading">NOM Prénom</h2>
-                <p style="color: gray;"> STATUT  </p>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-8 case"  id="description">
-                    <h3> Description </h3>
-                </div>
-                <div class="col-sm-3 case">
-                    <h3> Informations Personnelles </h3>
-                    <p> Date de naissance:  </p>
-                    <p> Niveau d'étude:  </p>
-
-                </div>
-
-                <div class="col-sm-11 case" id="Experience">
-                    <h3> Experience </h3>
-                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
-                </div>
-
-                <div class="col-sm-11  case"  id="Formation">
-                    <h3> Formation </h3>
-                    <textarea> ="Écrivez votre commentaire ici..."></textarea>
-                </div>
-            </div>
-        </div>
     </div>
-
 
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
             <table>
-                <td style="padding-right:350px;padding-left:310px;">
-                    <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
-            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
-            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu"><img src="logo/carte_map.PNG" width="500" height="280"></a>
+                <td style="padding-right:350px;padding-left:210px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.372438613096!2d2.285962676518711!
+                    3d48.85110800121897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b486bb253%3A0x61e9cc6979f93f
+                    ae!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1716991235930!5m2!1sfr!2sfr"
+                            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </td>
 
-                <td style="font-size: 18px; text-align: right; padding :20px;">
+                <td style="font-size: 18px; text-align: center; padding :20px;">
                     <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
                     <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
                     <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
@@ -149,3 +105,4 @@
 </div>
 </body>
 </html>
+<?php
