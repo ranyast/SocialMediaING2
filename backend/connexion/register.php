@@ -27,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssi", $prenom, $nom, $date_naissance, $email, $hashed_password, $statut);
 
     if ($stmt->execute()) {
-        header("Location: connexion.html");
+        echo "Inscription réussie";
+
         exit();
     } else {
         echo "Erreur lors de l'inscription : " . $stmt->error;
