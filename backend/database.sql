@@ -86,7 +86,9 @@ CREATE TABLE IF NOT EXISTS messages (
 DROP TABLE IF EXISTS posts;
 CREATE TABLE IF NOT EXISTS posts (
   id_posts int NOT NULL AUTO_INCREMENT,
-  username varchar(255) NOT NULL,
+  id_user int NOT NULL,
+  nom varchar(255) NOT NULL,
+  prenom varchar(255) NOT NULL,
   content text NOT NULL,
   location varchar(255) DEFAULT NULL,
   datetime datetime NOT NULL,
@@ -124,7 +126,6 @@ CREATE TABLE IF NOT EXISTS utilisateur (
   competences TEXT,
   formation TEXT,
   feeling TEXT,
-  location VARCHAR(255),
   PRIMARY KEY (id_user),
   CONSTRAINT CHK_statut CHECK (statut IN (0, 1, 2)),
   CONSTRAINT CHK_etudes CHECK (etudes IN (0, 1, 2, 3, 4, 5, 6)),
