@@ -1,40 +1,40 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $date_naissance = $_POST['date_naissance'];
+    $email = $_POST['email'];
+    $mot_de_passe = $_POST['mot_de_passe'];
+    $statut = $_POST['role']; // Récupérer le statut
 
-$nom = $_POST['nom'];
-$prenom = $_POST['prenom'];
-$email = $_POST['email'];
-$mot_de_passe = $_POST['mot_de_passe'];
-$date_naissance = $_POST['date_naissance'];
-$code_postal = $_POST['code_postal'];
-$telephone = $_POST['telephone'];
-$photo = $_POST['photo'];
-$description = isset($_POST['description']) ? $_POST['description'] : null;
+    // Hash the password
+    $hashed_password = password_hash($mot_de_passe, PASSWORD_DEFAULT);
 
+    $servername = "localhost";
+    $username = "root";
+    $password_db = "";
+    $dbname = "ece_in";
 
-$terminale = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'terminale' ? 1 : 0;
-$bac_plus_1 = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'bac_plus_1' ? 1 : 0;
-$bac_plus_2 = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'bac_plus_2' ? 1 : 0;
-$bac_plus_3 = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'bac_plus_3' ? 1 : 0;
-$bac_plus_4 = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'bac_plus_4' ? 1 : 0;
-$bac_plus_5 = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'bac_plus_5' ? 1 : 0;
-$autre = isset($_POST['niveau_etudes']) && $_POST['niveau_etudes'] == 'autre' ? 1 : 0;
+    // Create connection
+    $conn = new mysqli($servername, $username, $password_db, $dbname);
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-$admin = isset($_POST['role']) && in_array('admin', $_POST['role']) ? 1 : 0;
-$eleve = isset($_POST['role']) && in_array('eleve', $_POST['role']) ? 1 : 0;
-$prof = isset($_POST['role']) && in_array('prof', $_POST['role']) ? 1 : 0;
+    // Prepare and bind the statement
+    $stmt = $conn->prepare("INSERT INTO utilisateur (prenom, nom, date_naissance, email, mot_de_passe, statut) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $prenom, $nom, $date_naissance, $email, $hashed_password, $statut);
 
+    if ($stmt->execute()) {
+        echo "Inscription réussie";
 
-$servername = "localhost";
-$username = "root";
-$password_db = "";
-$dbname = "social_media";
+        exit();
+    } else {
+        echo "Erreur lors de l'inscription : " . $stmt->error;
+    }
 
-$conn = new mysqli($servername, $username, $password_db, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Connexion réussie!";
+    $stmt->close();
+    $conn->close();
 }
+?>

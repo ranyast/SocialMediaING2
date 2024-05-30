@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ECE In: Sign In</title>
+    <title>ECE In: Inscription</title>
     <link rel="stylesheet" type="text/css" href="./connexion.css" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="register.php" method="POST" class="sign-up-form">
+                <form action="register.php" method="POST" class="sign-up-form" enctype="multipart/form-data">
                     <h2 class="title">Inscription</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
@@ -31,39 +31,15 @@
                     </div>
                     <div class="input-field">
                         <i class="fas fa-calendar"></i>
-                        <input type="date" name="date_naissance" placeholder="Date de naissance" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-map-pin"></i>
-                        <input type="text" name="code_postal" placeholder="Code postal" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-phone"></i>
-                        <input type="text" name="telephone" placeholder="Téléphone" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-image"></i>
-                        <input type="file" name="photo" placeholder="Photo URL" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-graduation-cap"></i>
-                        <select name="niveau_etudes" required>
-                            <option value="" disabled selected>Niveau d'études</option>
-                            <option value="terminale">Terminale</option>
-                            <option value="bac_plus_1">Bac +1</option>
-                            <option value="bac_plus_2">Bac +2</option>
-                            <option value="bac_plus_3">Bac +3</option>
-                            <option value="bac_plus_4">Bac +4</option>
-                            <option value="bac_plus_5">Bac +5</option>
-                            <option value="autre">Autre</option>
-                        </select>
+                        <input type="date" name="date_naissance" required />
                     </div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="role[]" value="admin" /> Admin</label>
-                        <label><input type="checkbox" name="role[]" value="eleve" /> Élève</label>
-                        <label><input type="checkbox" name="role[]" value="prof" /> Professeur</label>
+                        <label for="role">Rôle:</label><br>
+                        <input type="radio" id="role_admin" name="role" value="0"> <label for="role_admin">Admin</label><br>
+                        <input type="radio" id="role_prof" name="role" value="1"> <label for="role_prof">Prof</label><br>
+                        <input type="radio" id="role_eleve" name="role" value="2"> <label for="role_eleve">Élève</label><br>
                     </div>
-                    <input type="submit" value="Sign Up" class="btn solid" />
+                    <input type="submit" value="S'inscrire" class="btn solid" />
                 </form>
 
                 <form action="login.php" method="POST" class="sign-in-form">
@@ -76,7 +52,7 @@
                         <i class="fas fa-lock"></i>
                         <input type="password" name="mot_de_passe" placeholder="Mot de passe" required />
                     </div>
-                    <input type="submit" value="Sign In" class="btn solid" />
+                    <input type="submit" value="Se connecter" class="btn solid" />
                 </form>
             </div>
         </div>
@@ -86,7 +62,7 @@
                 <div class="content">
                     <h3>Vous êtes nouveau ?</h3>
                     <p>Rejoignez dès maintenant la communauté ECE In !</p>
-                    <button class="btn transparent" id="sign-up-btn">Sign Up</button>
+                    <button class="btn transparent" id="sign-up-btn">S'inscrire</button>
                 </div>
                 <img src="./img/log.svg" class="image" alt="">
             </div>
