@@ -26,7 +26,7 @@ $stmt->bind_param("sssi", $nom, $prenom, $date_naissance, $statut);
 // Exécution de la requête
 if ($stmt->execute() === TRUE) {
     // Redirection vers la page de connexion
-    header("Location: login.php");
+    header("Location: connexion.html");
 } else {
     echo "Erreur lors de l'inscription : " . $conn->error;
 }
