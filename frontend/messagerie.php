@@ -46,23 +46,6 @@ $conn->close();
 <body>
     <div id="container">
     <div id="wrapper">
-<<<<<<< HEAD
-    <div id="nav">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-1" id="logo">
-                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
-                </div>
-                <div class="col-sm-11" id="logos">
-                    <nav>
-                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
-                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
-                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
-                    </nav>
-=======
         <div id="nav">
             <div class="container-fluid">
                 <div class="row">
@@ -85,7 +68,7 @@ $conn->close();
                     <div class="col-sm-1" id="deconnexion">
                         <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                     </div>
->>>>>>> ce8d1ccd24a13a19b1282fd2ff763404218ab251
+
                 </div>
             </div>
         </div>
