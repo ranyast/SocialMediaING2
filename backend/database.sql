@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
   id_user INT NOT NULL AUTO_INCREMENT,
   nom varchar(255) NOT NULL,
   prenom varchar(255) NOT NULL,
+  date_naissance DATE NOT NULL,
   email varchar(100) NOT NULL UNIQUE,
   mot_de_passe varchar(255) NOT NULL,
   statut INT NOT NULL,
