@@ -135,8 +135,12 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
                 <div class="col-sm-1" id="logo">
                     <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
                 </div>
-                <div class="col-sm-11" id="logos">
+                <div class="col-sm-2" id="recherche" style="text-align: right">
+                    <p>Recherche</p>
+                </div>
+                <div class="col-sm-7" id="logos">
                     <nav>
+<<<<<<< HEAD
                         <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
                         <a href="monreseau.php"><img src="logo/reseau2.jpg" height="56" width="100" alt="Réseau"></a>
                         <a href="vous.php"><img src="logo/vous.jpg" height="56" width="100" alt="Vous"></a>
@@ -147,7 +151,18 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
                             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" name="query">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
                         </form>
+=======
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="75" width="133" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="75" width="133" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="75" width="133" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="75" width="133" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="75" width="133" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="75" width="133" alt="Emploi"></a>
+>>>>>>> fdace78a47e7ba56a4afc5e704542f894e47012f
                     </nav>
+                </div>
+                <div class="col-sm-1" id="deconnexion">
+                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                 </div>
             </div>
         </div>
