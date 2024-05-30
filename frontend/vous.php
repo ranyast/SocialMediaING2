@@ -7,12 +7,7 @@ if (!isset($_SESSION['id_user'])) {
     exit();
 }
 
-
-$nom = $_SESSION['nom'] ?? '';
-$prenom = $_SESSION['prenom'] ?? '';
-$date_naissance = $_SESSION['date_naissance'] ?? '1970-01-01';
-$email = $_SESSION['email'] ?? '';
-$statut = $_SESSION['statut'] ?? '';
+$id_user = $_SESSION['id_user'];
 
 $servername = "localhost";
 $username = "root";
@@ -25,13 +20,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Préparation et exécution de la requête SQL pour récupérer les données de l'utilisateur
-$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom, utilisateur.date_naissance, utilisateur.email, utilisateur.statut, profil.description, profil.experience FROM utilisateur LEFT JOIN profil ON utilisateur.id_user = profil.id_user WHERE utilisateur.id_user = ?");
-$stmt->bind_param("i", $_SESSION['id_user']);
+$stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
+$stmt->bind_param("i", $id_user);
 $stmt->execute();
 $stmt->store_result();
-$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $description, $experience);
+$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profil, $description, $experience, $formation, $etudes, $sexe, $competences);
 $stmt->fetch();
+$stmt->close();
 
 if ($statut == '0') {
     $statut = 'Administrateur';
@@ -39,10 +34,34 @@ if ($statut == '0') {
     $statut = 'Professeur';
 } else if ($statut == '2'){
     $statut = 'Etudiant';
-} 
+}
 
+if($sexe == '0'){
+    $sexe = 'Homme';
+} else if($sexe == '1'){
+    $sexe = 'Femme';
+} else if($sexe == '2'){
+    $sexe = 'Autre';
+}
+
+// Si le formulaire est soumis, mettez à jour les données dans la table utilisateur
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $description = $_POST['description'];
+    $experience = $_POST['experience'];
+    $etudes = $_POST['etudes'];
+    $sexe = $_POST['sexe'];
+    $competences = $_POST['competences'];
+
+    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ? WHERE id_user = ?");
+    $stmt->bind_param("ssiiii", $description, $experience, $formation, $etudes, $sexe, $competences, $id_user);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: vous.php"); // Redirige vers la page vous.php après la mise à jour
+    exit();
+}
+
+$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,12 +90,12 @@ if ($statut == '0') {
                 </div>
                 <div class="col-sm-11" id="logos">
                     <nav>
-                        <a href="accueil.html"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
-                        <a href="monreseau.html"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
-                        <a href="vous.html"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
-                        <a href="notifications.html"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="56" width="100" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="56" width="100" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous2.jpg" height="56" width="100" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="56" width="100" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="56" width="100" alt="Messagerie"></a>
-                        <a href="emploi.html"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
                 </div>
             </div>
@@ -84,12 +103,10 @@ if ($statut == '0') {
     </div>
 
     <div id="leftcolumn">
-        <h3> Mes compétences </h3>
-        <textarea> ="Écrivez votre commentaire ici..."></textarea>
+
     </div>
 
     <div id="rightcolumn">
-
         <h3>A Propos de nous:</h3>
         <p>
             ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
@@ -119,35 +136,118 @@ if ($statut == '0') {
         </p>
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
+
     <div id="section">
         <div class="media">
             <div class="media-left">
-                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil" >
+                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil">
             </div>
             <div class="media-body">
                 <br><br><br><br>
                 <!-- Affichez le nom et le prénom de l'utilisateur -->
-                <h2 class="media-heading"><?php echo $prenom . ' ' . $nom; ?></h2>
+                <h2 class="media-heading"><?php echo htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom); ?></h2>
                 <!-- Affichez le statut de l'utilisateur -->
-                <p style="color: gray;"><?php echo $statut; ?></p>
+                <p style="color: gray;"><?php echo htmlspecialchars($statut); ?></p>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-8 case" id="description">
-                    <h3> Description </h3>
-                    <textarea>Écrivez votre commentaire ici...</textarea>
-                    <br>
-                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                    <form method="post" action="">
+                        <div id="infoprofil">
+                            <div class="col-sm-6 case" id="description">
+                                <h3>Description</h3>
+                                <?php echo htmlspecialchars($description); ?>
+                            </div>
+                            <div class="col-sm-3 case">
+                                <h3>Informations Personnelles</h3>
+                                <p>Sexe : <?php echo htmlspecialchars($sexe); ?></p>
+                                <p>Niveau d'etudes : <?php echo htmlspecialchars($etudes); ?></p>
+                                <p>Date de naissance: <?php echo htmlspecialchars($date_naissance); ?></p>
+                                <p>Email: <?php echo htmlspecialchars($email); ?></p>
+                            </div>
+
+                            <div class="col-sm-8 case" id="description">
+                                <h3>Experience</h3>
+                                <?php echo htmlspecialchars($experience); ?>
+                            </div>
+
+                            <div class="col-sm-8 case" id="description">
+                                <h3>Formation</h3>
+                                <?php echo htmlspecialchars($formation); ?>
+                            </div>
+
+                            <div class="col-sm-8 case" id="description">
+                                <h3>Compétences</h3>
+                                <?php echo htmlspecialchars($competences); ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 case2" id="modifprofil">
+                            <h1 style="text-align: center; color: white;  "> Modification </h1>
+                            <br>
+
+                                <form method="post" action="">
+                                    <div class="col-sm-8 case" id="description">
+                                        <h3>Description</h3>
+                                        <textarea name="description"></textarea>
+                                    </div>
+
+                                    <div class="col-sm-8 case" id="experience">
+                                        <h3>Experience</h3>
+                                        <textarea name="experience"></textarea>
+                                    </div>
+                                    <div class="col-sm-8 case" id="formation">
+                                        <h3>Formation</h3>
+                                        <textarea name="formation"></textarea>
+                                    </div>
+
+                                    <div class="col-sm-8 case" id="competences">
+                                        <h3>Compétences</h3>
+                                        <textarea name="competences"></textarea>
+                                    </div>
+
+                                    <div class="col-sm-8 case" id="etude">
+                                        <h3>Etudes</h3>
+                                        <select name= "etudes">
+                                            <option value="0" <?php if ($etudes == '0') echo 'selected'; ?>>Bac</option>
+                                            <option value="1" <?php if ($etudes == '1') echo 'selected'; ?>>Bac +1</option>
+                                            <option value="2" <?php if ($etudes == '2') echo 'selected'; ?>>Bac +2</option>
+                                            <option value="3" <?php if ($etudes == '3') echo 'selected'; ?>>Bac +3</option>
+                                            <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
+                                            <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
+                                            <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Bac +6</option>
+                                            " min="0" max="6">
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3 case" id="sexe">
+                                        <h3>Sexe</h3>
+                                        <label><input type="radio" name="sexe" value="0" <?php if ($sexe == '0') echo 'checked'; ?>>Homme</label>
+                                        <label><input type="radio" name="sexe" value="1" <?php if ($sexe == '1') echo 'checked'; ?>>Femme</label>
+                                        <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>>Autre</label>
+                                    </div>
+
+                                    <br>
+
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-3 case">
+                                <button type="submit" class="btn btn-primary">Generer mon CV</button>
+                            </div>
+                        </div>
+
+
+                    </form>
                 </div>
-                <div class="col-sm-3 case">
-                    <h3> Informations Personnelles </h3>
-                    <!-- Affichez la date de naissance de l'utilisateur -->
-                    <p>Date de naissance: <?php echo $date_naissance; ?></p>
-                    <!-- Affichez l'email de l'utilisateur -->
-                    <p>Email: <?php echo $email; ?></p>
-                </div>
+
             </div>
+        </div>
+    </div>
+</div>
+
+    <div id="section">
+        <div class="container-fluid">
+
         </div>
     </div>
     <div id="footer">
@@ -158,5 +258,3 @@ if ($statut == '0') {
 </div>
 </body>
 </html>
-
-
