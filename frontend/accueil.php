@@ -44,10 +44,12 @@ $stmt->fetch();
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="carrousel.js"></script>
     <script type="text/javascript" src="carrousel2.js"></script>
     <script type="text/javascript" src="carrousel3.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
 
 </head>
 <body>
@@ -78,7 +80,7 @@ $stmt->fetch();
             <li><a href="#carrousel">Evènements de la semaine</a></li>
             <li><a href="#carrousel2">Evènements ECE In</a></li>
             <li><a href="#carrousel3">Evènements des membres</a></li>
-            <li><a href="#post">Nouveaux posts</a></li>
+            <li><a href="#post">Nouvelle Publication</a></li>
         </ul>
     </div>
 
@@ -118,54 +120,144 @@ $stmt->fetch();
         <h4>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h4>
         <div id="carrousel" align="center">
             <h3>Evènements de la semaine</h3>
-            <a href="evenements/welcomeday2.png"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
-            <a href="evenements/remisediplome2.png"><img src="evenements/RDD.jpg" width="700" height="466"></a>
-            <a href="evenements/rugby2.png"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
         </div>
-        <br>
-        <br>
+        <br><br>
         <div id="carrousel2" align="center">
             <h3>Evènements ECE In</h3>
-            <a href="evenements/karting2.png"><img src="evenements/karting.jpeg" width="700" height="392"></a>
-            <a href="evenements/jeece2.png"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
-            <a href="evenements/RencontreEtudiants.jpg"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup4')"><img src="evenements/karting.jpeg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup5')"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup6')"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
         </div>
-        <br>
-        <br>
+        <br><br>
         <div id="carrousel3" align="center">
             <h3>Evènements des membres</h3>
-            <a href="evenements/JPO.jpg"><img src="evenements/JPO.jpg" width="700" height="392"></a>
-            <a href="evenements/soiree2.png"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
-            <a href="evenements/basket2.png"><img src="evenements/basket.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
         </div>
         <br>
         <br>
+
+        <div id="popup1" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup1')">&times;</span>
+                <img src="evenements/welcomeday2.png" width="700" height="466">
+            </div>
+        </div>
+
+        <div id="popup2" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup2')">&times;</span>
+                <img src="evenements/remisediplome2.png" width="700" height="466">
+            </div>
+        </div>
+
+        <div id="popup3" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup3')">&times;</span>
+                <img src="evenements/rugby2.png" width="700" height="356">
+            </div>
+        </div>
+
+        <div id="popup4" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup4')">&times;</span>
+                <img src="evenements/karting2.png" width="700" height="392">
+            </div>
+        </div>
+
+        <div id="popup5" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup5')">&times;</span>
+                <img src="evenements/jeece2.png" width="700" height="466">
+            </div>
+        </div>
+
+        <div id="popup6" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup6')">&times;</span>
+                <img src="evenements/RencontreEtudiants.jpg" width="700" height="356">
+            </div>
+        </div>
+
+        <div id="popup7" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup7')">&times;</span>
+                <img src="evenements/JPO.jpg" width="700" height="392">
+            </div>
+        </div>
+
+        <div id="popup8" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup8')">&times;</span>
+                <img src="evenements/soiree2.png" width="700" height="466">
+            </div>
+        </div>
+
+        <div id="popup9" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popup9')">&times;</span>
+                <img src="evenements/basket2.png" width="700" height="466">
+            </div>
+        </div>
+
+
+
         <div id="post" align="center">
-            <h1>Nouveau Post</h1>
+            <form method="post" action="">
+                <table>
+                    <tr>
+                        <td colspan="2"><h3>Nouvelle Publication</h3></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="showPopup('popupMedia')">Média</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="showPopup('popupEvenement')">Evénement</button>
+                        </td>
+                    </tr>
 
-            <table>
-                <tr>
-                    <td>Titre du post:</td>
-                    <td><input type="text" id="titre" name="titre"></td>
-                </tr>
-                <tr>
-                    <td>Description : </td>
-                    <td><input type="text" id="description" name="description"></td>
-                </tr>
-                <tr>
-                    <td>Photo :</td>
-                    <td><input type="text" id="photo" name="photo"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: center;">
-                        <input type="submit" value="Soumettre">
-                    </td>
-                </tr>
-            </table>
+                </table>
 
-
+            </form>
         </div>
+            <!-- Popup for Media -->
+            <div id="popupMedia" class="popup">
+                <div class="popup-content">
+                    <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
+                    <h2>Ajouter un Média</h2>
+                    <form method="post" action="upload_media.php" enctype="multipart/form-data">
+                        <label for="mediaFile">Choisir une photo ou une vidéo:</label>
+                        <input type="file" id="mediaFile" name="mediaFile" accept="image/*,video/*">
+                        <br><br>
+                        <button type="submit" class="btn btn-primary">Charger</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Popup for Event -->
+            <div id="popupEvenement" class="popup">
+                <div class="popup-content">
+                    <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
+                    <h2>Créer un Evénement</h2>
+                    <form method="post" action="create_event.php">
+                        <label for="eventDate">Date de l'événement:</label>
+                        <input type="date" id="eventDate" name="eventDate">
+                        <br><br>
+                        <label for="eventDescription">Description:</label>
+                        <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
+                        <br><br>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                    </form>
+                </div>
+            </div>
     </div>
+</div>
+
 
     <div id="footer">
         <footer>
