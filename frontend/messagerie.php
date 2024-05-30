@@ -46,6 +46,7 @@ $conn->close();
 <body>
     <div id="container">
     <div id="wrapper">
+<<<<<<< HEAD
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
@@ -61,6 +62,30 @@ $conn->close();
                         <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="56" width="100" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="56" width="100" alt="Emploi"></a>
                     </nav>
+=======
+        <div id="nav">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-1" id="logo">
+                        <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                    </div>
+                    <div class="col-sm-2" id="recherche" style="text-align: right">
+                        <p>Recherche</p>
+                    </div>
+                    <div class="col-sm-7" id="logos">
+                        <nav>
+                            <a href="accueil.php"><img src="logo/accueil.jpg" height="75" width="133" alt="Accueil"></a>
+                            <a href="monreseau.php"><img src="logo/reseau.jpg" height="75" width="133" alt="Réseau"></a>
+                            <a href="vous.php"><img src="logo/vous.jpg" height="75" width="133" alt="Vous"></a>
+                            <a href="notifications.php"><img src="logo/notification.jpg" height="75" width="133" alt="Notifications"></a>
+                            <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="75" width="133" alt="Messagerie"></a>
+                            <a href="emploi.php"><img src="logo/emploi.jpg" height="75" width="133" alt="Emploi"></a>
+                        </nav>
+                    </div>
+                    <div class="col-sm-1" id="deconnexion">
+                        <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
+                    </div>
+>>>>>>> ce8d1ccd24a13a19b1282fd2ff763404218ab251
                 </div>
             </div>
         </div>
