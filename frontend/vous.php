@@ -20,6 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Récupère les informations de l'utilisateur connecté
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -44,6 +45,26 @@ if($sexe == '0'){
     $sexe = 'Autre';
 }
 
+if ($etudes == '0') {
+    $etudes = 'Bac';
+} else if ($etudes == '1') {
+    $etudes = 'Bac +1';
+} else if ($etudes == '2') {
+    $etudes = 'Bac +2';
+} else if ($etudes == '3') {
+    $etudes = 'Bac +3';
+} else if ($etudes == '4') {
+    $etudes = 'Bac +4';
+} else if ($etudes == '5') {
+    $etudes = 'Bac +5';
+} else if ($etudes == '6') {
+    $etudes = 'Autre';
+}
+ 
+
+
+
+
 // Si le formulaire est soumis, mettez à jour les données dans la table utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
@@ -52,12 +73,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $etudes = $_POST['etudes'];
     $sexe = $_POST['sexe'];
     $competences = $_POST['competences'];
+    $photo_profil = $_POST['photo_profil'];
 
-    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ? WHERE id_user = ?");
-    $stmt->bind_param( $description, $experience, $formation, $etudes, $sexe, $competences, $id_user);
+    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ?, photo_profil = ? WHERE id_user = ?");
+    $stmt->bind_param("ssssissi", $description, $experience, $formation, $etudes, $sexe, $competences, $photo_profil, $id_user);
+
+
     $stmt->execute();
     $stmt->close();
-    header("Location: vous.php"); // Redirige vers la page vous.php après la mise à jour
+    header("Location: ./../vous.php"); // Redirige vers la page vous.php après la mise à jour
     exit();
 }
 
@@ -137,7 +161,11 @@ $conn->close();
     <div id="section">
         <div class="media">
             <div class="media-left">
-                <img src="logo/photoprofil.png" class="img-circle" alt="Photo profil">
+            <?php if (!empty($photo_profil)): ?>
+                <img src="<?php echo htmlspecialchars($photo_profil); ?>" class="img-circle" alt="Photo profil">
+                    <?php else: ?>
+                            <p>Aucune photo de profil disponible</p>
+             <?php endif; ?>
             </div>
             <div class="media-body">
                 <br><br><br><br>
@@ -182,6 +210,9 @@ $conn->close();
                             <h3>Description</h3>
                             <textarea name="description"></textarea>
                         </div>
+                        <div class="col-sm-8 case" id="photo_profil_modif">
+                            <h3>Photo de profil</h3>
+                            <input type="file" name="photo_profil">
                         <div class="col-sm-8 case" id="experience_modif">
                             <h3>Expérience</h3>
                             <textarea name="experience"></textarea>
@@ -203,7 +234,7 @@ $conn->close();
                                 <option value="3" <?php if ($etudes == '3') echo 'selected'; ?>>Bac +3</option>
                                 <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
                                 <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
-                                <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Bac +6</option>
+                                <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Autre</option>
                             </select>
                         </div>
                         <div class="col-sm-3 case" id="sexe_modif">
@@ -213,7 +244,7 @@ $conn->close();
                             <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>> Autre</label>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
                     </form>
                 </div>
                 <div class="col-sm-3 case">
