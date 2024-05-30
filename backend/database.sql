@@ -17,6 +17,7 @@ CREATE TABLE profil (
     id_user INT NOT NULL,
     photo_profil VARCHAR(191),
     description TEXT,
+    experience TEXT,
     etudes INT,
     sexe INT,
     competences TEXT,
