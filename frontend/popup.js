@@ -1,4 +1,3 @@
-
 function showPopup(id) {
     document.getElementById(id).style.display = "block";
 }
@@ -6,4 +5,3 @@ function showPopup(id) {
 function closePopup(id) {
     document.getElementById(id).style.display = "none";
 }
-

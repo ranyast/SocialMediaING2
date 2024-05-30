@@ -147,69 +147,68 @@ $stmt->fetch();
         <br>
         <br>
 
-        <div id="popup1" class="popup">
+        <div id="popup1" class="popup popup1">
             <div class="popup-content">
-                <span class="close-btn" onclick="closePopup('popup1')">&times</span>
+                <span class="close-btn" onclick="closePopup('popup1')">&times;</span>
                 <img src="evenements/welcomeday2.png" width="700" height="466">
             </div>
         </div>
 
-        <div id="popup2" class="popup">
+        <div id="popup2" class="popup popup2">
             <div class="popup-content">
-                <span class="close-btn" onclick="closePopup('popup2')">&times</span>
+                <span class="close-btn" onclick="closePopup('popup2')">&times;</span>
                 <img src="evenements/remisediplome2.png" width="700" height="466">
             </div>
         </div>
 
-        <div id="popup3" class="popup">
+        <div id="popup3" class="popup popup3">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup3')">&times;</span>
                 <img src="evenements/rugby2.png" width="700" height="356">
             </div>
         </div>
 
-        <div id="popup4" class="popup">
+        <div id="popup4" class="popup popup4">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup4')">&times;</span>
                 <img src="evenements/karting2.png" width="700" height="392">
             </div>
         </div>
 
-        <div id="popup5" class="popup">
+        <div id="popup5" class="popup popup5">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup5')">&times;</span>
                 <img src="evenements/jeece2.png" width="700" height="466">
             </div>
         </div>
 
-        <div id="popup6" class="popup">
+        <div id="popup6" class="popup popup6">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup6')">&times;</span>
                 <img src="evenements/RencontreEtudiants.jpg" width="700" height="356">
             </div>
         </div>
 
-        <div id="popup7" class="popup">
+        <div id="popup7" class="popup popup7">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup7')">&times;</span>
                 <img src="evenements/JPO.jpg" width="700" height="392">
             </div>
         </div>
 
-        <div id="popup8" class="popup">
+        <div id="popup8" class="popup popup8">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup8')">&times;</span>
                 <img src="evenements/soiree2.png" width="700" height="466">
             </div>
         </div>
 
-        <div id="popup9" class="popup">
+        <div id="popup9" class="popup popup9">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup9')">&times;</span>
                 <img src="evenements/basket2.png" width="700" height="466">
             </div>
         </div>
-
 
 
         <div id="post" align="center">
