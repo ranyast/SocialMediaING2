@@ -26,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
         if (password_verify($mot_de_passe, $hashed_password)) {
             $_SESSION['id_user'] = $id_user; // Stocker l'ID de l'utilisateur dans la session
-            //redirigé vers la page vous.php après connexion avec les bonnes informations                      
-            header("Location: ../../frontend/vous.php");
+            header("Location: accueil.php"); // Rediriger vers la page de profil
             exit();
         } else {
             echo "Adresse e-mail ou mot de passe incorrect.";
+            rest(10);
             header("Location: connexion.html"); // Rediriger vers la page de connexion si le mot de passe est incorrect
         }
     } else {
