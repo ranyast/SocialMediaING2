@@ -3,10 +3,27 @@ session_start();
 
 if (isset($_SESSION['name'])) {
     $text = $_POST['text'];
-    $text_message = "<div class='msgln'><span class='chat-time'>" . date("g:i A") . "</span> <b class='user-name'>" . $_SESSION['name'] . "</b> " . stripslashes(htmlspecialchars($text)) . "<br></div>";
-
-    $myfile = fopen(__DIR__ . "/log.html", "a") or die("Impossible d'ouvrir le fichier " . __DIR__ . "/log.html");
-    fwrite($myfile, $text_message);
-    fclose($myfile);
+    
+    // Configurer le fuseau horaire
+    date_default_timezone_set('Europe/Paris'); // Par exemple pour la France
+    
+    // Sanitize user input
+    $safe_text = htmlspecialchars(stripslashes($text));
+    
+    // Format the message
+    $current_time = date("H:i"); // Formats time in 24-hour format
+    $username = htmlspecialchars($_SESSION['name']);
+    $text_message = "<div class='msgln'><span class='chat-time'>$current_time</span> <b class='user-name'>$username</b>: $safe_text<br></div>";
+    
+    // Append the message to log.html
+    $file_path = __DIR__ . "/log.html";
+    $myfile = fopen($file_path, "a");
+    
+    if ($myfile) {
+        fwrite($myfile, $text_message);
+        fclose($myfile);
+    } else {
+        die("Impossible d'ouvrir le fichier $file_path");
+    }
 }
 ?>

@@ -155,7 +155,7 @@
                         });
                     }
 
-                    setInterval(loadLog, 2500);
+                    setInterval(loadLog, 1000);
 
                     $("#exit").click(function () {
                         var exit = confirm("Voulez-vous vraiment mettre fin à la session ?");
