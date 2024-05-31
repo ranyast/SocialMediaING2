@@ -88,13 +88,7 @@ $conn->close();
     </div>
 
     <div id="leftcolumn">
-        <h2>Sommaire</h2>
-        <ul>
-            <li><a href="#carrousel">Evènements de la semaine</a></li>
-            <li><a href="#carrousel2">Evènements ECE In</a></li>
-            <li><a href="#carrousel3">Evènements des membres</a></li>
-            <li><a href="#post">Nouvelle Publication</a></li>
-        </ul>
+        <a href="#post">Nouvelle Publication</a>
     </div>
 
     <div id="rightcolumn">
@@ -136,23 +130,15 @@ $conn->close();
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
-        </div>
-        <br><br>
-        <div id="carrousel2" align="center">
-            <h3>Evènements ECE In</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup4')"><img src="evenements/karting.jpeg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup5')"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup6')"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
-        </div>
-        <br><br>
-        <div id="carrousel3" align="center">
-            <h3>Evènements des membres</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
+
         </div>
-        <br>
-        <br>
+        <br><br>
 
         <div id="popup1" class="popup popup1">
             <div class="popup-content">
@@ -238,6 +224,20 @@ $conn->close();
             ?>
         </div>
 
+        <div id="carrousel2" align="center">
+            <h3>Evènements de la semaine</h3>
+            <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup4')"><img src="evenements/karting.jpeg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup5')"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup6')"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
+
+        </div>
+
 
         <div id="post" align="center">
             <form method="post" action="">
@@ -291,6 +291,8 @@ $conn->close();
                 </form>
             </div>
         </div>
+
+
 </div>
 
 
