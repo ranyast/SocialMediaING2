@@ -88,7 +88,7 @@ $conn->close();
     </div>
 
     <div id="leftcolumn">
-        <a href="#post">Nouvelle Publication</a>
+        <a href="#post"><button type="submit" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
     </div>
 
     <div id="rightcolumn">
