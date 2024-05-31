@@ -69,6 +69,7 @@
     </div>
 
     <div id="section2">
+        <h1>Offre d'emploi</h1>
         <p>
             Offres d'emploi, sous forme de bullet !
         </p>

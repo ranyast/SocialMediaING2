@@ -200,7 +200,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5" id="partieGauche">
-                    <h2>Mon réseau</h2>
+                    <h1>Mon réseau</h1>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
                     <h3>Rechercher des amis</h3>
