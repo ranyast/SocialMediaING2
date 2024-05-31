@@ -53,6 +53,7 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <script type="text/javascript" src="carrousel.js"></script>
     <script type="text/javascript" src="carrousel2.js"></script>
     <script type="text/javascript" src="carrousel3.js"></script>
@@ -64,11 +65,8 @@ $conn->close();
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1" id="logo">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
-                </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
                 </div>
                 <div class="col-sm-9" id="logos">
                     <nav>
