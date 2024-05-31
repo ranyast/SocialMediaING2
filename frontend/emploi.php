@@ -6,6 +6,7 @@
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 
     <style>
     </style>
