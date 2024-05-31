@@ -41,7 +41,7 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    
+
 </head>
 <body>
     <div id="container">
@@ -59,9 +59,9 @@ $conn->close();
                         <nav>
                             <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
                             <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="128" alt="Réseau"></a>
-                            <a href="vous.php"><img src="logo/vous2.jpg" height="70" width="128" alt="Vous"></a>
+                            <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
                             <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
-                            <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
+                            <a href="messagerie.php"><img src="logo/messagerie2.jpg" height="70" width="128" alt="Messagerie"></a>
                             <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
                         </nav>
                     </div>

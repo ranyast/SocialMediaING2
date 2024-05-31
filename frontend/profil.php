@@ -66,8 +66,8 @@ if($etudes == '0') {
 <div id="wrapper">
     <div id="nav">
         <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
-        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="128" alt="Réseau"></a>
-        <a href="vous.php"><img src="logo/vous2.jpg" height="70" width="128" alt="Vous"></a>
+        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="128" alt="Réseau"></a>
+        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
         <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
         <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
