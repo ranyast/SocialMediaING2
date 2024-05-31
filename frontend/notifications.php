@@ -89,23 +89,21 @@ $notifications = getNotifications($conn);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-1" id="logo">
-                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
+                    <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
                 <div class="col-sm-2" id="recherche" style="text-align: right">
                     <p>Recherche</p>
                 </div>
-                <div class="col-sm-7" id="logos">
+                <div class="col-sm-9" id="logos">
                     <nav>
-                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="128" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification2.jpg" height="70" width="128" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification2.jpg" height="70" width="125" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
+                        <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                     </nav>
-                </div>
-                <div class="col-sm-1" id="deconnexion">
-                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                 </div>
             </div>
         </div>
@@ -179,11 +177,7 @@ $notifications = getNotifications($conn);
             8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
             </td>
         </table>
-
-
         <p>ECE In Corporation &copy; 2024</p>
-
-
     </footer>
 </div>
 </body>
