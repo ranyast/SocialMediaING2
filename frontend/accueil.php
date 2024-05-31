@@ -32,7 +32,14 @@ $stmt->execute();
 $stmt->store_result();
 $stmt->bind_result($nom, $prenom);
 $stmt->fetch();
+$stmt->close();
 
+// Récupérer les posts depuis la base de données
+$sql = "SELECT nom, prenom, content, media_path, datetime FROM posts ORDER BY datetime DESC";
+$result = $conn->query($sql);
+
+// Fermer la connexion à la base de données
+$conn->close();
 
 ?>
 
@@ -81,13 +88,7 @@ $stmt->fetch();
     </div>
 
     <div id="leftcolumn">
-        <h2>Sommaire</h2>
-        <ul>
-            <li><a href="#carrousel">Evènements de la semaine</a></li>
-            <li><a href="#carrousel2">Evènements ECE In</a></li>
-            <li><a href="#carrousel3">Evènements des membres</a></li>
-            <li><a href="#post">Nouvelle Publication</a></li>
-        </ul>
+        <a href="#post">Nouvelle Publication</a>
     </div>
 
     <div id="rightcolumn">
@@ -129,23 +130,15 @@ $stmt->fetch();
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
-        </div>
-        <br><br>
-        <div id="carrousel2" align="center">
-            <h3>Evènements ECE In</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup4')"><img src="evenements/karting.jpeg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup5')"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup6')"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
-        </div>
-        <br><br>
-        <div id="carrousel3" align="center">
-            <h3>Evènements des membres</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
+
         </div>
-        <br>
-        <br>
+        <br><br>
 
         <div id="popup1" class="popup popup1">
             <div class="popup-content">
@@ -210,6 +203,41 @@ $stmt->fetch();
             </div>
         </div>
 
+        <div id="posts">
+            <h3>Actualités des membres</h3>
+            <?php
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '<div class="post">';
+                    echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
+                    echo '<p>' . htmlspecialchars($row['content']) . '</p>';
+                    if (!empty($row['media_path'])) {
+                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 100%;">';
+                    }
+                    echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
+                    echo '</div>';
+                    echo '<hr>';
+                }
+            } else {
+                echo '<p>Aucun post à afficher.</p>';
+            }
+            ?>
+        </div>
+
+        <div id="carrousel2" align="center">
+            <h3>Evènements de la semaine</h3>
+            <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup4')"><img src="evenements/karting.jpeg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup5')"><img src="evenements/jeece.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup6')"><img src="evenements/RencontreEtudiants.jpg" width="700" height="356"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
+            <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
+
+        </div>
+
 
         <div id="post" align="center">
             <form method="post" action="">
@@ -231,36 +259,40 @@ $stmt->fetch();
             </form>
         </div>
             <!-- Popup for Media -->
-            <div id="popupMedia" class="popup">
-                <div class="popup-content">
-                    <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
-                    <h2>Ajouter un Média</h2>
-                    <form method="post" action="upload_media.php" enctype="multipart/form-data">
-                        <label for="mediaFile">Choisir une photo ou une vidéo:</label>
-                        <input type="file" id="mediaFile" name="mediaFile" accept="image/*,video/*">
-                        <br><br>
-                        <button type="submit" class="btn btn-primary">Charger</button>
-                    </form>
-                </div>
+        <div id="popupMedia" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
+                <h2>Ajouter un Média</h2>
+                <form method="post" action="media.php" enctype="multipart/form-data">
+                    <label for="mediaFile">Choisir une photo ou une vidéo:</label>
+                    <input type="file" id="mediaFile" name="media_path" accept="image/*,video/*">
+                    <br><br>
+                    <label for="content">Description:</label>
+                    <textarea id="content" name="content" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Charger</button>
+                </form>
             </div>
+        </div>
 
-            <!-- Popup for Event -->
-            <div id="popupEvenement" class="popup">
-                <div class="popup-content">
-                    <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
-                    <h2>Créer un Evénement</h2>
-                    <form method="post" action="create_event.php">
-                        <label for="eventDate">Date de l'événement:</label>
-                        <input type="date" id="eventDate" name="eventDate">
-                        <br><br>
-                        <label for="eventDescription">Description:</label>
-                        <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
-                        <br><br>
-                        <button type="submit" class="btn btn-primary">Créer</button>
-                    </form>
-                </div>
+        <!-- Popup for Event -->
+        <div id="popupEvenement" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
+                <h2>Créer un Evénement</h2>
+                <form method="post" action="event.php">
+                    <label for="eventDate">Date de l'événement:</label>
+                    <input type="date" id="eventDate" name="eventDate">
+                    <br><br>
+                    <label for="eventDescription">Description:</label>
+                    <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </form>
             </div>
-    </div>
+        </div>
+
+
 </div>
 
 

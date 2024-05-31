@@ -191,4 +191,6 @@ $notifications = getNotifications($conn);
 </div>
 </body>
 </html>
-<?php
+
+
+
