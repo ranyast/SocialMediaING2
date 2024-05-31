@@ -3,7 +3,6 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['id_user'])) {
-    // Redirect to login page
     header("Location: connexion.html");
     exit();
 }
@@ -89,7 +88,7 @@ function searchUsers($query, $id_user, $conn) {
         $stmt2->bind_param("iiii", $id_user, $row['id_user'], $row['id_user'], $id_user);
         $stmt2->execute();
         $stmt2->store_result();
-        if ($stmt2->num_rows > 0)         {
+        if ($stmt2->num_rows > 0) {
             // User is already a friend
             $row['is_friend'] = true;
         } else {
@@ -212,10 +211,13 @@ function respondToFriendRequest($request_id, $response, $conn) {
                             <?php foreach ($searchResults as $result): ?>
                                 <li>
                                     <?= htmlspecialchars($result['prenom']) . ' ' . htmlspecialchars($result['nom']) . ' (' . htmlspecialchars($result['email']) . ')' ?>
-                                    <form action="monreseau.php" method="post" style="display:inline;">
-                                        <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
-                                        <button type="submit" name="sendRequest">Envoyer une demande d'ami</button>
-                                    </form>
+                                    <a href="profil.php?id_user=<?= htmlspecialchars($result['id_user']) ?>">Consulter le profil</a>
+                                    <?php if (!$result['is_friend']): ?>
+                                        <form action="monreseau.php" method="post" style="display:inline;">
+                                            <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
+                                            <button type="submit" name="sendRequest">Envoyer une demande d'ami</button>
+                                        </form>
+                                    <?php endif; ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -260,6 +262,10 @@ function respondToFriendRequest($request_id, $response, $conn) {
                                         <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
                                     </a> 
                                     (<?= htmlspecialchars($friend['email']) ?>)
+                                    <form action="monreseau.php" method="post" style="display:inline;">
+                                        <input type="hidden" name="remove_friend" value="<?= htmlspecialchars($friend['id_user']) ?>">
+                                        <button type="submit" name="removeFriend">Retirer de mes amis</button>
+                                    </form>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -267,8 +273,6 @@ function respondToFriendRequest($request_id, $response, $conn) {
                         <p>Vous n'avez pas encore d'amis.</p>
                     <?php endif; ?>
                 </div>
-</div>
-
             </div>
         </div>
     </div>

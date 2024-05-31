@@ -150,8 +150,6 @@ $notifications = getNotifications($conn);
                          <?php endforeach; ?>
                     </ul>
             </div>
-
-
             </div>
         </div>
     </div>

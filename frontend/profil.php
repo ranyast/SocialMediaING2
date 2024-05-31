@@ -20,6 +20,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Get logged in user status
+$stmt = $conn->prepare("SELECT statut FROM utilisateur WHERE id_user = ?");
+$stmt->bind_param("i", $id_user);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($current_user_statut);
+$stmt->fetch();
+$stmt->close();
+
 // Get profile user information
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $profil_user_id);
@@ -59,7 +68,7 @@ if($statut == '0') {
     $statut = "Professeur";
 } else if($statut == '2') {
     $statut = "Eleve";
-} 
+}
 
 // Get friends of the profile user
 function getFriends($profil_user_id, $conn) {
@@ -82,6 +91,28 @@ function getFriends($profil_user_id, $conn) {
 }
 
 $friends = getFriends($profil_user_id, $conn);
+
+// Handle account deletion
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account']) && $current_user_statut == 0 && $profil_user_id != $id_user && $statut != "Administrateur") {
+    $stmt = $conn->prepare("DELETE FROM utilisateur WHERE id_user = ?");
+    $stmt->bind_param("i", $profil_user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: monreseau.php");
+    exit();
+}
+
+// Handle removing friend
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_friend'])) {
+    $stmt = $conn->prepare("DELETE FROM friends WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)");
+    $stmt->bind_param("iiii", $id_user, $profil_user_id, $profil_user_id, $id_user);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: profil.php?id_user=" . $profil_user_id);
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -115,6 +146,16 @@ $friends = getFriends($profil_user_id, $conn);
             <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
             <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
             <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
+
+            <?php if ($current_user_statut == 0 && $profil_user_id != $id_user && $statut != "Administrateur"): ?>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="delete_account">Supprimer le compte</button>
+                </form>
+            <?php endif; ?>
+
+            <form method="post" style="display: inline;">
+                <button type="submit" name="remove_friend">Supprimer de la liste d'amis</button>
+            </form>
 
             <h2>Amis</h2>
             <ul>
