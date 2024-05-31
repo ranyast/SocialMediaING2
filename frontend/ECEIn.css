@@ -94,10 +94,10 @@ body {
 }
 
 .case2 {
-    background-color: #028E98;
-    margin: 10px;
-    padding: 10px;
+    background-color: #eeeaec;
+    padding-bottom: 10px;
 }
+
 
 
 
@@ -280,3 +280,5 @@ nav a img:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+
