@@ -124,7 +124,7 @@ $conn->close();
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
                 <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
+                    <p><font size="4"> Recherche</font></p>
                 </div>
                 <div class="col-sm-9" id="logos">
                     <nav>
@@ -142,33 +142,36 @@ $conn->close();
     </div>
 
     <div id="rightcolumn">
-        <h3>A Propos de nous:</h3>
-        <p>
-            ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
-        </p>
-        <p>
-            Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
-        </p>
-        <ul>
-            <li>
-                Poster différentes choses
-            </li>
-            <li>
-                Postuler à des offres d'emploi diverses
-            </li>
-            <li>
-                Développement de votre réseau
-            </li>
-            <li>
-                Discuter en live avec vos amis !
-            </li>
-            <li>
-                Et bien d'autres ...
-            </li>
-        </ul>
-        <p>
-            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous !
-        </p>
+        <h3><font size="5">A Propos de nous:</font></h3>
+        <font size="3">
+            <p>
+                ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
+            </p>
+            <p>
+                Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
+            </p>
+            <ul>
+                <li>
+                    Poster différentes choses
+                </li>
+                <li>
+                    Postuler à des offres d'emploi diverses
+                </li>
+                <li>
+                    Développement de votre réseau
+                </li>
+                <li>
+                    Discuter en live avec vos amis !
+                </li>
+                <li>
+                    Et bien d'autres ...
+                </li>
+            </ul>
+            <p>
+                N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+            </p>
+        </font>
+
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
@@ -183,21 +186,23 @@ $conn->close();
             </div>
             <div class="media-body">
                 <br><br><br><br>
-                <h2 class="media-heading"><?php echo htmlspecialchars($prenom ?? '') . ' ' . htmlspecialchars($nom ?? ''); ?></h2>
-                <p style="color: gray;"><?php echo htmlspecialchars($statut ?? ''); ?></p>
+                <h2 class="media-heading"><font size="6"> <?php echo htmlspecialchars($prenom ?? '') . ' ' . htmlspecialchars($nom ?? ''); ?></font></h2>
+                <p style="color: gray;"><font size="3"><?php echo htmlspecialchars($statut ?? ''); ?></font></p>
             </div>
         </div>
         <br>
         <br>
-        <div class="container-fluid">
+        <div class="container-fluid" >
             <div class="row">
+                <font size="3">
                 <form method="post" action="">
                     <div id="infoprofil">
                         <div class="col-sm-8 case3" id="description">
                             <h3>Description</h3>
                             <p><?php echo htmlspecialchars($description ?? ''); ?></p>
+
                         </div>
-                        <div class="col-sm-3 case3">
+                        <div class="col-sm-8 case3">
                             <h3>Informations Personnelles</h3>
                             <p>Sexe: <?php echo htmlspecialchars($sexe ?? ''); ?></p>
                             <p>Niveau d'études: <?php echo htmlspecialchars($etudes ?? ''); ?></p>
@@ -269,14 +274,16 @@ $conn->close();
                         <br>
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
+                    </font>
+                    <button type="submit" class="btn btn-primary" value="validation"><font size="3"> Enregistrer</font></button>
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
                 <form method="post" action="cv/cv.php">
-                    <button type="submit" class="btn btn-primary">Générer mon CV</button>
+                    <button type="submit" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
