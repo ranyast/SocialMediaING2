@@ -291,23 +291,6 @@ $conn->close();
                 </form>
             </div>
         </div>
-
-        <div align="center">
-            <table id="dataTable" border="1">
-                <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Média</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Les nouvelles données seront ajoutées ici -->
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
 
 
