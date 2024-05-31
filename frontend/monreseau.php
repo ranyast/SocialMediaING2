@@ -177,6 +177,9 @@ function respondToFriendRequest($request_id, $response, $conn) {
                 <div class="col-sm-1" id="logo">
                     <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
                 </div>
+                <div class="col-sm-2" id="recherche" style="text-align: right">
+                    <p>Recherche</p>
+                </div>
                 <div class="col-sm-7" id="logos">
                     <nav>
                         <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
@@ -197,7 +200,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5" id="partieGauche">
-                    <h2>Mon réseau</h2>
+                    <h1>Mon réseau</h1>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
                     <h3>Rechercher des amis</h3>
