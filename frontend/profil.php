@@ -20,8 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
-
+// Get profile user information
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $profil_user_id);
 $stmt->execute();
@@ -54,6 +53,36 @@ if($etudes == '0') {
     $etudes = 'Autre';
 }
 
+if($statut == '0') {
+    $statut = "Administrateur";
+} else if($statut == '1') {
+    $statut = "Professeur";
+} else if($statut == '2') {
+    $statut = "Eleve";
+} 
+
+// Get friends of the profile user
+function getFriends($profil_user_id, $conn) {
+    $friends = [];
+    $sql = "SELECT u.id_user, u.nom, u.prenom 
+            FROM utilisateur u
+            INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) 
+            WHERE (f.user1 = ? OR f.user2 = ?) AND u.id_user != ? AND f.status = 'accepted'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $profil_user_id, $profil_user_id, $profil_user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $friends[] = $row;
+    }
+
+    $stmt->close();
+    return $friends;
+}
+
+$friends = getFriends($profil_user_id, $conn);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,48 +103,27 @@ if($etudes == '0') {
     </div>
     <div id="section">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
+            <h1>Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h1>
+            <p><strong>Nom:</strong> <?= htmlspecialchars($nom) ?></p>
+            <p><strong>Prénom:</strong> <?= htmlspecialchars($prenom) ?></p>
+            <p><strong>Date de naissance:</strong> <?= htmlspecialchars($date_naissance) ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+            <p><strong>Statut:</strong> <?= htmlspecialchars($statut) ?></p>
+            <p><strong>Description:</strong> <?= htmlspecialchars($description) ?></p>
+            <p><strong>Experience:</strong> <?= htmlspecialchars($experience) ?></p>
+            <p><strong>Formation:</strong> <?= htmlspecialchars($formation) ?></p>
+            <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
+            <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
+            <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
 
-                </div>
-            </div>
+            <h2>Amis</h2>
+            <ul>
+                <?php foreach ($friends as $friend): ?>
+                    <li><a href="profil.php?id_user=<?= $friend['id_user'] ?>"><?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?></a></li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </div>
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h2>Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h2>
-                    <p>Email: <?= htmlspecialchars($email) ?></p>
-                    <p>Date de naissance: <?= htmlspecialchars($date_naissance) ?></p>
-                    <p>Statut: <?= htmlspecialchars($statut) ?></p>
-                    <p>Description: <?= htmlspecialchars($description) ?></p>
-                    <p>Expérience: <?= htmlspecialchars($experience) ?></p>
-                    <p>Formation: <?= htmlspecialchars($formation) ?></p>
-                    <p>Études: <?= htmlspecialchars($etudes) ?></p>
-                    <p>Sexe: <?= htmlspecialchars($sexe) ?></p>
-                    <p>Compétences: <?= htmlspecialchars($competences) ?></p>

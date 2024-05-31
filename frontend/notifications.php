@@ -144,14 +144,15 @@ $notifications = getNotifications($conn);
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12">
-                    <h1>Notifications</h1>
+            <div class="col-sm-12">
+                 <h1>Notifications</h1>
                     <ul>
                         <?php foreach ($notifications as $notification): ?>
-                            <li><?= htmlspecialchars($notification) ?></li>
-                        <?php endforeach; ?>
+                        <li><a href="monreseau.php"><?= htmlspecialchars($notification) ?></a></li>
+                         <?php endforeach; ?>
                     </ul>
-                </div>
+            </div>
+
 
             </div>
         </div>
