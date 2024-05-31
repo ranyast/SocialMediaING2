@@ -221,28 +221,28 @@ $conn->close();
                 <h1 style="text-align: center;">Modification</h1>
                 <br>
                 <form method="post" action="" enctype="multipart/form-data">
-                    <div class="col-sm-8 case" id="description_modif">
+                    <div class="col-sm-8 case" id="description_modif" required>
                         <h3>Description</h3>
                         <textarea name="description"></textarea>
                     </div>
                     <div class="col-sm-8 case" id="photo_profil_modif">
                         <h3>Photo de profil</h3>
-                        <input type="file" name="photo_profil">
+                        <input type="file" name="photo_profil" required>
                         <div class="col-sm-8 case" id="experience_modif">
                             <h3>Expérience</h3>
                             <textarea name="experience"></textarea>
                         </div>
                         <div class="col-sm-8 case" id="formation_modif">
                             <h3>Formation</h3>
-                            <textarea name="formation"></textarea>
+                            <textarea name="formation" required></textarea>
                         </div>
                         <div class="col-sm-8 case" id="competences_modif">
                             <h3>Compétences</h3>
-                            <textarea name="competences"></textarea>
+                            <textarea name="competences" required></textarea>
                         </div>
                         <div class="col-sm-8 case" id="etudes_modif">
                             <h3>Études</h3>
-                            <select name="etudes">
+                            <select name="etudes" required>
                                 <option value="0" <?php if ($etudes == '0') echo 'selected'; ?>>Bac</option>
                                 <option value="1" <?php if ($etudes == '1') echo 'selected'; ?>>Bac +1</option>
                                 <option value="2" <?php if ($etudes == '2') echo 'selected'; ?>>Bac +2</option>
@@ -252,7 +252,7 @@ $conn->close();
                                 <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Autre</option>
                             </select>
                         </div>
-                        <div class="col-sm-3 case" id="sexe_modif">
+                        <div class="col-sm-3 case" id="sexe_modif" required>
                             <h3>Sexe</h3>
                             <label><input type="radio" name="sexe" value="0" <?php if ($sexe == '0') echo 'checked'; ?>> Homme</label>
                             <label><input type="radio" name="sexe" value="1" <?php if ($sexe == '1') echo 'checked'; ?>> Femme</label>

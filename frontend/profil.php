@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 
-// Get profile user information
+
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $profil_user_id);
 $stmt->execute();

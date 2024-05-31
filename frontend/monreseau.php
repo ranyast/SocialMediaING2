@@ -33,27 +33,27 @@ $stmt->close();
 // Get mutual friends
 $mutuals = getMutualFriends($id_user, $conn);
 
-
+// Handle search query
 $searchResults = [];
 if (isset($_GET['query'])) {
     $query = $_GET['query'];
     $searchResults = searchUsers($query, $id_user, $conn);
 }
 
-
+// Handle friend request sending
 if (isset($_POST['sendRequest'])) {
     $receiver_email = $_POST['receiver'];
     sendFriendRequest($id_user, $receiver_email, $conn);
 }
 
-
+// Handle friend request response
 if (isset($_POST['respondRequest'])) {
     $request_id = $_POST['request_id'];
     $response = $_POST['respondRequest'];
     respondToFriendRequest($request_id, $response, $conn);
 }
 
-
+// Function to get mutual friends
 function getMutualFriends($id_user, $conn) {
     $mutualFriends = array();
     $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email 
@@ -66,12 +66,11 @@ function getMutualFriends($id_user, $conn) {
     $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
-        // Use user id as key to ensure uniqueness
         $mutualFriends[$row['id_user']] = $row;
     }
 
     $stmt->close();
-    return array_values($mutualFriends); // Convert associative array back to indexed array
+    return array_values($mutualFriends);
 }
 
 // Function to search users
@@ -85,6 +84,20 @@ function searchUsers($query, $id_user, $conn) {
     $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
+        // Check if the user is already a friend
+        $stmt2 = $conn->prepare("SELECT 1 FROM friends WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?) AND status = 'accepted'");
+        $stmt2->bind_param("iiii", $id_user, $row['id_user'], $row['id_user'], $id_user);
+        $stmt2->execute();
+        $stmt2->store_result();
+        if ($stmt2->num_rows > 0)         {
+            // User is already a friend
+            $row['is_friend'] = true;
+        } else {
+            // User is not a friend
+            $row['is_friend'] = false;
+        }
+        $stmt2->close();
+
         $searchResults[] = $row;
     }
 
@@ -92,7 +105,7 @@ function searchUsers($query, $id_user, $conn) {
     return $searchResults;
 }
 
-
+// Function to send a friend request
 function sendFriendRequest($sender_id, $receiver_email, $conn) {
     $stmt = $conn->prepare("SELECT id_user FROM utilisateur WHERE email = ?");
     $stmt->bind_param("s", $receiver_email);
@@ -113,7 +126,7 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
     }
 }
 
-// Function to respond to friend request
+// Function to respond to a friend request
 function respondToFriendRequest($request_id, $response, $conn) {
     $status = $response == 'accept' ? 'accepted' : 'rejected';
 
