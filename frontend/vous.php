@@ -61,10 +61,6 @@ if ($etudes == '0') {
     $etudes = 'Autre';
 }
 
-
-
-
-
 // Si le formulaire est soumis, mettez à jour les données dans la table utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
@@ -99,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,7 +139,6 @@ $conn->close();
                 <div class="col-sm-1" id="deconnexion">
                     <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -279,7 +275,9 @@ $conn->close();
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
-                <button type="submit" class="btn btn-primary" >Générer mon CV</button>
+                <form method="post" action="cv/cv.php">
+                    <button type="submit" class="btn btn-primary">Générer mon CV</button>
+                </form>
             </div>
         </div>
     </div>

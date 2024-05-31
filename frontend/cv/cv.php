@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-// Check if user is logged in
+//verifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
-    // Redirect to login page
     header("Location: connexion.html");
     exit();
 }
@@ -21,7 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get user information
+//on recupere les donnees de l'utilisateur
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, photo_profil, description, experience, formation, etudes, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -30,12 +29,12 @@ $stmt->bind_result($nom, $prenom, $date_naissance, $email, $photo_profil, $descr
 $stmt->fetch();
 $stmt->close();
 
-// Calculate age
+//calcul de l'age a partir de la date de naissance
 $birthDate = new DateTime($date_naissance);
 $today = new DateTime();
 $age = $today->diff($birthDate)->y;
 
-// Generate CV HTML content
+//generation du CV en HTML
 $cv_content = "
 <!DOCTYPE html>
 <html lang='fr'>
@@ -92,7 +91,7 @@ $cv_content = "
             <img src='$photo_profil' alt='Photo Profil'>
             <h1>$nom</h1>
             <h2>$prenom</h2>
-            <p>Âge : $age</p>
+            <p>Âge : $age ans</p>
             <p>Email : <a href='mailto:$email'>$email</a></p>
         </div>
         <div class='section'>
@@ -121,7 +120,7 @@ $cv_content = "
 ";
 
 // Save the CV content to an HTML file
-$cv_file = 'cv_' . $id_user . '.html';
+$cv_file = 'cv_' . $nom . '.html';
 file_put_contents($cv_file, $cv_content);
 
 // Redirect to the generated CV file
