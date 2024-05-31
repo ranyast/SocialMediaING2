@@ -68,7 +68,7 @@
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
-    <div id="section">
+    <div id="section2">
         <p>
             Offres d'emploi, sous forme de bullet !
         </p>
