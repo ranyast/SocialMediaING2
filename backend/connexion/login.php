@@ -35,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             echo "Adresse e-mail ou mot de passe incorrect.";
-            rest(10);
             header("Location: connexion.html"); // Rediriger vers la page de connexion si le mot de passe est incorrect
         }
     } else {
