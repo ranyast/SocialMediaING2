@@ -76,14 +76,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] == 0) {
         $photo_profil = 'uploads/' . basename($_FILES['photo_profil']['name']);
-        move_uploaded_file($_FILES['photo_profil']['tmp_name'], $photo_profil);
+        if (move_uploaded_file($_FILES['photo_profil']['tmp_name'], $photo_profil)) {
+            // Update the profile photo only if the upload is successful
+            $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ?, photo_profil = ? WHERE id_user = ?");
+            $stmt->bind_param("ssssissi", $description, $experience, $formation, $etudes, $sexe, $competences, $photo_profil, $id_user);
+        } else {
+            // Handle the error if the file was not uploaded
+            echo "Error uploading the file.";
+            exit();
+        }
     } else {
-        $photo_profil = ''; // Ou une valeur par défaut si aucun fichier n'est téléchargé
+        // Update the profile without changing the profile photo
+        $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ? WHERE id_user = ?");
+        $stmt->bind_param("ssssssi", $description, $experience, $formation, $etudes, $sexe, $competences, $id_user);
     }
-
-    $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ?, photo_profil = ? WHERE id_user = ?");
-    $stmt->bind_param("ssssissi", $description, $experience, $formation, $etudes, $sexe, $competences, $photo_profil, $id_user);
-
 
     $stmt->execute();
     $stmt->close();
@@ -167,7 +173,7 @@ $conn->close();
             </li>
         </ul>
         <p>
-            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous !
         </p>
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
