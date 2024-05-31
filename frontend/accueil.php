@@ -32,7 +32,14 @@ $stmt->execute();
 $stmt->store_result();
 $stmt->bind_result($nom, $prenom);
 $stmt->fetch();
+$stmt->close();
 
+// Récupérer les posts depuis la base de données
+$sql = "SELECT nom, prenom, content, media_path, datetime FROM posts ORDER BY datetime DESC";
+$result = $conn->query($sql);
+
+// Fermer la connexion à la base de données
+$conn->close();
 
 ?>
 
@@ -210,6 +217,27 @@ $stmt->fetch();
             </div>
         </div>
 
+        <div id="posts">
+            <h3>Actualités des membres</h3>
+            <?php
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '<div class="post">';
+                    echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
+                    echo '<p>' . htmlspecialchars($row['content']) . '</p>';
+                    if (!empty($row['media_path'])) {
+                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 100%;">';
+                    }
+                    echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
+                    echo '</div>';
+                    echo '<hr>';
+                }
+            } else {
+                echo '<p>Aucun post à afficher.</p>';
+            }
+            ?>
+        </div>
+
 
         <div id="post" align="center">
             <form method="post" action="">
@@ -231,35 +259,54 @@ $stmt->fetch();
             </form>
         </div>
             <!-- Popup for Media -->
-            <div id="popupMedia" class="popup">
-                <div class="popup-content">
-                    <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
-                    <h2>Ajouter un Média</h2>
-                    <form method="post" action="upload_media.php" enctype="multipart/form-data">
-                        <label for="mediaFile">Choisir une photo ou une vidéo:</label>
-                        <input type="file" id="mediaFile" name="mediaFile" accept="image/*,video/*">
-                        <br><br>
-                        <button type="submit" class="btn btn-primary">Charger</button>
-                    </form>
-                </div>
+        <div id="popupMedia" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
+                <h2>Ajouter un Média</h2>
+                <form method="post" action="media.php" enctype="multipart/form-data">
+                    <label for="mediaFile">Choisir une photo ou une vidéo:</label>
+                    <input type="file" id="mediaFile" name="media_path" accept="image/*,video/*">
+                    <br><br>
+                    <label for="content">Description:</label>
+                    <textarea id="content" name="content" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Charger</button>
+                </form>
             </div>
+        </div>
 
-            <!-- Popup for Event -->
-            <div id="popupEvenement" class="popup">
-                <div class="popup-content">
-                    <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
-                    <h2>Créer un Evénement</h2>
-                    <form method="post" action="create_event.php">
-                        <label for="eventDate">Date de l'événement:</label>
-                        <input type="date" id="eventDate" name="eventDate">
-                        <br><br>
-                        <label for="eventDescription">Description:</label>
-                        <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
-                        <br><br>
-                        <button type="submit" class="btn btn-primary">Créer</button>
-                    </form>
-                </div>
+        <!-- Popup for Event -->
+        <div id="popupEvenement" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
+                <h2>Créer un Evénement</h2>
+                <form method="post" action="event.php">
+                    <label for="eventDate">Date de l'événement:</label>
+                    <input type="date" id="eventDate" name="eventDate">
+                    <br><br>
+                    <label for="eventDescription">Description:</label>
+                    <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </form>
             </div>
+        </div>
+
+        <div align="center">
+            <table id="dataTable" border="1">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Média</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Les nouvelles données seront ajoutées ici -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
