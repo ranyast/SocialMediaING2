@@ -161,6 +161,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
         #nav{}
         #footer{}
@@ -173,11 +174,8 @@ function respondToFriendRequest($request_id, $response, $conn) {
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1" id="logo">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
-                </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
                 </div>
                 <div class="col-sm-9" id="logos">
                     <nav>
@@ -262,10 +260,6 @@ function respondToFriendRequest($request_id, $response, $conn) {
                                         <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
                                     </a> 
                                     (<?= htmlspecialchars($friend['email']) ?>)
-                                    <form action="monreseau.php" method="post" style="display:inline;">
-                                        <input type="hidden" name="remove_friend" value="<?= htmlspecialchars($friend['id_user']) ?>">
-                                        <button type="submit" name="removeFriend">Retirer de mes amis</button>
-                                    </form>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

@@ -121,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_friend'])) {
     <title>Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></title>
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
 <div id="wrapper">

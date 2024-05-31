@@ -38,6 +38,7 @@ $conn->close();
     <title>Messagerie</title>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -49,11 +50,8 @@ $conn->close();
         <div id="nav">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-1" id="logo">
+                    <div class="col-sm-2" id="logo">
                         <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
-                    </div>
-                    <div class="col-sm-2" id="recherche" style="text-align: right">
-                        <p>Recherche</p>
                     </div>
                     <div class="col-sm-9" id="logos">
                         <nav>
