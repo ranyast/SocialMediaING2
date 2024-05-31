@@ -123,7 +123,7 @@ $conn->close();
     <div id="section">
         <h4>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h4>
         <div id="carrousel" align="center">
-            <h3>Evènements de la semaine</h3>
+            <h3>Evénements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -222,7 +222,6 @@ $conn->close();
         </div>
 
         <div id="carrousel2" align="center">
-            <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
