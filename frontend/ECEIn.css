@@ -67,7 +67,8 @@
     font-size: 0.70em;
     font-style: italic;
     padding: 10px;
-    background-color: lightsalmon;
+    background-color: whitesmoke ;
+
     width: auto;
     height: auto;
 }
@@ -123,6 +124,13 @@ body {
     background-color: #eeeaec;
     padding-bottom: 10px;
     padding-top: 10px;
+}
+input[type="file"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 
