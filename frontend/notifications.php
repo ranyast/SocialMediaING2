@@ -1,3 +1,72 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_user'])) {
+    header("Location: connexion.html");
+    exit();
+}
+
+$id_user = $_SESSION['id_user'];
+$profil_user_id = isset($_GET['id_user']) ? intval($_GET['id_user']) : 0;
+
+$servername = "localhost";
+$username = "root";
+$password_db = "";
+$dbname = "ece_in";
+
+$conn = new mysqli($servername, $username, $password_db, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get profile user information
+$stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
+$stmt->bind_param("i", $profil_user_id);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profil, $description, $experience, $formation, $etudes, $sexe, $competences);
+$stmt->fetch();
+$stmt->close();
+
+function getNotifications($conn) {
+    $id_user = $_SESSION['id_user'];
+    $sql = "SELECT sender FROM friend_requests WHERE receiver = ? AND status = 'pending'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $notifications = [];
+    
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $sender = $row['sender'];
+            $sql = "SELECT nom, prenom FROM utilisateur WHERE id_user = ?";
+            $stmt2 = $conn->prepare($sql);
+            $stmt2->bind_param("s", $sender);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+            
+            if ($result2->num_rows > 0) {
+                while ($row2 = $result2->fetch_assoc()) {
+                    $nom = $row2['nom'];
+                    $prenom = $row2['prenom'];
+                    $notifications[] = "Vous avez reçu une demande d'ami de $nom $prenom";
+                }
+            }
+            $stmt2->close();
+        }
+    }
+    
+    $stmt->close();
+    return $notifications;
+}
+
+$notifications = getNotifications($conn);
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,9 +142,20 @@
     </div>
 
     <div id="section">
-        <p>
-            Notifications sous forme de bullet !
-        </p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Notifications</h1>
+                    <ul>
+                        <?php foreach ($notifications as $notification): ?>
+                            <li><?= htmlspecialchars($notification) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+
+
+                            
+
     </div>
 
     <div id="footer">

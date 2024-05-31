@@ -33,27 +33,27 @@ $stmt->close();
 // Get mutual friends
 $mutuals = getMutualFriends($id_user, $conn);
 
-// Handle search query
+
 $searchResults = [];
 if (isset($_GET['query'])) {
     $query = $_GET['query'];
     $searchResults = searchUsers($query, $id_user, $conn);
 }
 
-// Handle friend request sending
+
 if (isset($_POST['sendRequest'])) {
     $receiver_email = $_POST['receiver'];
     sendFriendRequest($id_user, $receiver_email, $conn);
 }
 
-// Handle friend request response
+
 if (isset($_POST['respondRequest'])) {
     $request_id = $_POST['request_id'];
     $response = $_POST['respondRequest'];
     respondToFriendRequest($request_id, $response, $conn);
 }
 
-// Function to get mutual friends
+
 function getMutualFriends($id_user, $conn) {
     $mutualFriends = array();
     $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email 
