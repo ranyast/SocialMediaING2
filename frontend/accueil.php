@@ -292,8 +292,10 @@ $conn->close();
         </div>
 
 
-</div>
+    </div>
 
+    <br>
+    <br>
 
     <div id="footer">
         <footer>

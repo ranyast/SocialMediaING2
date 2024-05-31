@@ -121,6 +121,8 @@ $conn->close();
                 <input type="hidden" id="recipient_id" />
             </form>
         </div>
+        <br>
+        <br>
         <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
