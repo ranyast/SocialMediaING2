@@ -116,15 +116,15 @@ $notifications = getNotifications($conn);
 </head>
 
 <body>
-<<<<<<< HEAD
+
     <div id="wrapper">
-        <div id="nav" class="mb-4">
-            <div class="container-fluid">
-                 <div class="col-sm-2" id="logo">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
                 <div class="col-sm-9" id="logos">
-                <nav class="nav justify-content-end">
+                <nav>
                     <a class="nav-link" href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
                     <a class="nav-link" href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
                     <a class="nav-link" href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
@@ -134,7 +134,6 @@ $notifications = getNotifications($conn);
                     <a class="nav-link" href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                 </nav>
             </div>
-        </div>
     </div>
 </div>
 
@@ -165,9 +164,6 @@ $notifications = getNotifications($conn);
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-2" id="logo">
-                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
-                </div>
             </div>
         </div>
 
@@ -187,9 +183,6 @@ $notifications = getNotifications($conn);
             </footer>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
     <br>
     <br>
 
