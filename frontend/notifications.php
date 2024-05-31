@@ -153,9 +153,8 @@ $notifications = getNotifications($conn);
                     </ul>
                 </div>
 
-
-                            
-
+            </div>
+        </div>
     </div>
 
     <div id="footer">

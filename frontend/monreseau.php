@@ -182,8 +182,8 @@ function respondToFriendRequest($request_id, $response, $conn) {
                 </div>
                 <div class="col-sm-7" id="logos">
                     <nav>
-                        <a href="accueil.php"><img src="logo/accueil2.jpg" height="70" width="128" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="128" alt="Réseau"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="128" alt="Réseau"></a>
                         <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
                         <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
