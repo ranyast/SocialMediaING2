@@ -196,7 +196,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
     <div id="section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2" id="partieGauche">
+                <div class="col-sm-5" id="partieGauche">
                     <h2>Mon réseau</h2>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
@@ -248,7 +248,8 @@ function respondToFriendRequest($request_id, $response, $conn) {
                     <?php endif; ?>
                     <?php $stmt->close(); ?>
                 </div>
-                <div class="col-sm-3" id="partieDroite">
+
+                <div style="margin: 10px; padding: 10px" class="col-sm-12" id="partieDroite">
                     <h3>Mes amis</h3>
                     <?php if ($mutuals): ?>
                         <ul>

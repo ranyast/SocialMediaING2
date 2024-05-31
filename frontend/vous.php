@@ -100,6 +100,7 @@ $conn->close();
     <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -186,30 +187,32 @@ $conn->close();
                 <p style="color: gray;"><?php echo htmlspecialchars($statut ?? ''); ?></p>
             </div>
         </div>
+        <br>
+        <br>
         <div class="container-fluid">
             <div class="row">
                 <form method="post" action="">
                     <div id="infoprofil">
-                        <div class="col-sm-7 case" id="description">
+                        <div class="col-sm-8 case3" id="description">
                             <h3>Description</h3>
                             <p><?php echo htmlspecialchars($description ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-5 case">
+                        <div class="col-sm-3 case3">
                             <h3>Informations Personnelles</h3>
                             <p>Sexe: <?php echo htmlspecialchars($sexe ?? ''); ?></p>
                             <p>Niveau d'études: <?php echo htmlspecialchars($etudes ?? ''); ?></p>
                             <p>Date de naissance: <?php echo htmlspecialchars($date_naissance ?? ''); ?></p>
                             <p>Email: <?php echo htmlspecialchars($email ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-9 case" id="experience">
+                        <div class="col-sm-12 case" id="experience">
                             <h3>Expérience</h3>
                             <p><?php echo htmlspecialchars($experience ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-9 case" id="formation">
+                        <div class="col-sm-12 case" id="formation">
                             <h3>Formation</h3>
                             <p><?php echo htmlspecialchars($formation ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-9 case" id="competences">
+                        <div class="col-sm-12 case" id="competences">
                             <h3>Compétences</h3>
                             <p><?php echo htmlspecialchars($competences ?? ''); ?></p>
                         </div>
@@ -221,45 +224,52 @@ $conn->close();
                 <h1 style="text-align: center;">Modification</h1>
                 <br>
                 <form method="post" action="" enctype="multipart/form-data">
-                    <div class="col-sm-8 case" id="description_modif" required>
+                    <div class="col-sm-7 case" id="description_modif" required>
                         <h3>Description</h3>
                         <textarea name="description"></textarea>
                     </div>
-                    <div class="col-sm-8 case" id="photo_profil_modif">
+                    <div class="col-sm-4 case" id="photo_profil_modif">
                         <h3>Photo de profil</h3>
                         <input type="file" name="photo_profil" required>
-                        <div class="col-sm-8 case" id="experience_modif">
-                            <h3>Expérience</h3>
-                            <textarea name="experience"></textarea>
-                        </div>
-                        <div class="col-sm-8 case" id="formation_modif">
-                            <h3>Formation</h3>
-                            <textarea name="formation" required></textarea>
-                        </div>
-                        <div class="col-sm-8 case" id="competences_modif">
-                            <h3>Compétences</h3>
-                            <textarea name="competences" required></textarea>
-                        </div>
-                        <div class="col-sm-8 case" id="etudes_modif">
-                            <h3>Études</h3>
-                            <select name="etudes" required>
-                                <option value="0" <?php if ($etudes == '0') echo 'selected'; ?>>Bac</option>
-                                <option value="1" <?php if ($etudes == '1') echo 'selected'; ?>>Bac +1</option>
-                                <option value="2" <?php if ($etudes == '2') echo 'selected'; ?>>Bac +2</option>
-                                <option value="3" <?php if ($etudes == '3') echo 'selected'; ?>>Bac +3</option>
-                                <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
-                                <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
-                                <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Autre</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3 case" id="sexe_modif" required>
-                            <h3>Sexe</h3>
-                            <label><input type="radio" name="sexe" value="0" <?php if ($sexe == '0') echo 'checked'; ?>> Homme</label>
-                            <label><input type="radio" name="sexe" value="1" <?php if ($sexe == '1') echo 'checked'; ?>> Femme</label>
-                            <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>> Autre</label>
-                        </div>
+                    </div>
+
+                    <div class="col-sm-7 case" id="experience_modif">
+                        <h3>Expérience</h3>
+                        <textarea name="experience"></textarea>
+                    </div>
+                    <div class="col-sm-4 case" id="etudes_modif">
+                        <h3>Études</h3>
+                        <select name="etudes" required>
+                            <option value="0" <?php if ($etudes == '0') echo 'selected'; ?>>Bac</option>
+                            <option value="1" <?php if ($etudes == '1') echo 'selected'; ?>>Bac +1</option>
+                            <option value="2" <?php if ($etudes == '2') echo 'selected'; ?>>Bac +2</option>
+                            <option value="3" <?php if ($etudes == '3') echo 'selected'; ?>>Bac +3</option>
+                            <option value="4" <?php if ($etudes == '4') echo 'selected'; ?>>Bac +4</option>
+                            <option value="5" <?php if ($etudes == '5') echo 'selected'; ?>>Bac +5</option>
+                            <option value="6" <?php if ($etudes == '6') echo 'selected'; ?>>Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-7 case" id="formation_modif">
+                        <h3>Formation</h3>
+                        <textarea name="formation" required></textarea>
+                    </div>
+                    <div class="col-sm-4 case" id="sexe_modif" required>
+                        <h3>Sexe</h3>
+                        <label><input type="radio" name="sexe" value="0" <?php if ($sexe == '0') echo 'checked'; ?>> Homme</label>
+                        <label><input type="radio" name="sexe" value="1" <?php if ($sexe == '1') echo 'checked'; ?>> Femme</label>
+                        <label><input type="radio" name="sexe" value="2" <?php if ($sexe == '2') echo 'checked'; ?>> Autre</label>
+                    </div>
+
+                    <div class="col-sm-7 case" id="competences_modif">
+                        <h3>Compétences</h3>
+                        <textarea name="competences" required></textarea>
+                    </div>
+                    <div class="col-sm-4">
                         <br>
-                        <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
