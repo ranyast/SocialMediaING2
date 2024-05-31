@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS friends (
   id_friends int NOT NULL AUTO_INCREMENT,
   user1 varchar(255) NOT NULL,
   user2 varchar(255) NOT NULL,
+  status enum('pending','accepted','rejected') DEFAULT 'pending',
   created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id_friends)
 ) ENGINE=InnoDB;
