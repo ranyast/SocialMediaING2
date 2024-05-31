@@ -132,3 +132,4 @@ CREATE TABLE IF NOT EXISTS utilisateur (
   CONSTRAINT CHK_etudes CHECK (etudes IN (0, 1, 2, 3, 4, 5, 6)),
   CONSTRAINT CHK_sexe CHECK (sexe IN (0, 1, 2))
 ) ENGINE=InnoDB;
+
