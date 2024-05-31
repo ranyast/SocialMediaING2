@@ -120,11 +120,8 @@ $conn->close();
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1" id="logo">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
-                </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p><font size="4"> Recherche</font></p>
                 </div>
                 <div class="col-sm-9" id="logos">
                     <nav>
