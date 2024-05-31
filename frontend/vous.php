@@ -60,7 +60,7 @@ if ($etudes == '0') {
 } else if ($etudes == '6') {
     $etudes = 'Autre';
 }
- 
+
 
 
 
@@ -73,7 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $etudes = $_POST['etudes'];
     $sexe = $_POST['sexe'];
     $competences = $_POST['competences'];
-    $photo_profil = $_POST['photo_profil'];
+
+    if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] == 0) {
+        $photo_profil = 'uploads/' . basename($_FILES['photo_profil']['name']);
+        move_uploaded_file($_FILES['photo_profil']['tmp_name'], $photo_profil);
+    } else {
+        $photo_profil = ''; // Ou une valeur par défaut si aucun fichier n'est téléchargé
+    }
 
     $stmt = $conn->prepare("UPDATE utilisateur SET description = ?, experience = ?, formation = ?, etudes = ?, sexe = ?, competences = ?, photo_profil = ? WHERE id_user = ?");
     $stmt->bind_param("ssssissi", $description, $experience, $formation, $etudes, $sexe, $competences, $photo_profil, $id_user);
@@ -118,12 +124,12 @@ $conn->close();
                 </div>
                 <div class="col-sm-7" id="logos">
                     <nav>
-                        <a href="accueil.php"><img src="logo/accueil.jpg" height="75" width="133" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="75" width="133" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous2.jpg" height="75" width="133" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification.jpg" height="75" width="133" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="75" width="133" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="75" width="133" alt="Emploi"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="128" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous2.jpg" height="70" width="128" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
                     </nav>
                 </div>
                 <div class="col-sm-1" id="deconnexion">
@@ -168,11 +174,11 @@ $conn->close();
     <div id="section">
         <div class="media">
             <div class="media-left">
-            <?php if (!empty($photo_profil)): ?>
-                <img src="<?php echo htmlspecialchars($photo_profil); ?>" class="img-circle" alt="Photo profil">
-                    <?php else: ?>
-                            <p>Aucune photo de profil disponible</p>
-             <?php endif; ?>
+                <?php if (!empty($photo_profil)): ?>
+                    <img src="<?php echo htmlspecialchars($photo_profil); ?>" class="img-circle" alt="Photo profil">
+                <?php else: ?>
+                    <img src="frontend/logo/photoprofil.png" class="img-circle" alt="Photo profil">
+                <?php endif; ?>
             </div>
             <div class="media-body">
                 <br><br><br><br>
@@ -184,26 +190,26 @@ $conn->close();
             <div class="row">
                 <form method="post" action="">
                     <div id="infoprofil">
-                        <div class="col-sm-20 case" id="description">
+                        <div class="col-sm-7 case" id="description">
                             <h3>Description</h3>
                             <p><?php echo htmlspecialchars($description ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-10 case">
+                        <div class="col-sm-5 case">
                             <h3>Informations Personnelles</h3>
                             <p>Sexe: <?php echo htmlspecialchars($sexe ?? ''); ?></p>
                             <p>Niveau d'études: <?php echo htmlspecialchars($etudes ?? ''); ?></p>
                             <p>Date de naissance: <?php echo htmlspecialchars($date_naissance ?? ''); ?></p>
                             <p>Email: <?php echo htmlspecialchars($email ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-8 case" id="experience">
+                        <div class="col-sm-9 case" id="experience">
                             <h3>Expérience</h3>
                             <p><?php echo htmlspecialchars($experience ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-8 case" id="formation">
+                        <div class="col-sm-9 case" id="formation">
                             <h3>Formation</h3>
                             <p><?php echo htmlspecialchars($formation ?? ''); ?></p>
                         </div>
-                        <div class="col-sm-8 case" id="competences">
+                        <div class="col-sm-9 case" id="competences">
                             <h3>Compétences</h3>
                             <p><?php echo htmlspecialchars($competences ?? ''); ?></p>
                         </div>
@@ -211,17 +217,17 @@ $conn->close();
                 </form>
             </div>
             <br>
-                <div class="col-sm-12 case2" id="modifprofil">
-                    <h1 style="text-align: center;">Modification</h1>
-                    <br>
-                    <form method="post" action="">
-                        <div class="col-sm-8 case" id="description_modif">
-                            <h3>Description</h3>
-                            <textarea name="description"></textarea>
-                        </div>
-                        <div class="col-sm-8 case" id="photo_profil_modif">
-                            <h3>Photo de profil</h3>
-                            <input type="file" name="photo_profil">
+            <div class="col-sm-12 case2" id="modifprofil">
+                <h1 style="text-align: center;">Modification</h1>
+                <br>
+                <form method="post" action="" enctype="multipart/form-data">
+                    <div class="col-sm-8 case" id="description_modif">
+                        <h3>Description</h3>
+                        <textarea name="description"></textarea>
+                    </div>
+                    <div class="col-sm-8 case" id="photo_profil_modif">
+                        <h3>Photo de profil</h3>
+                        <input type="file" name="photo_profil">
                         <div class="col-sm-8 case" id="experience_modif">
                             <h3>Expérience</h3>
                             <textarea name="experience"></textarea>
@@ -254,14 +260,14 @@ $conn->close();
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
-                    </form>
-                </div>
-                <div class="col-sm-12" style="text-align: right">
-                    <button type="submit" class="btn btn-primary" >Générer mon CV</button>
-                </div>
+                </form>
+            </div>
+            <div class="col-sm-12" style="text-align: right">
+                <button type="submit" class="btn btn-primary" >Générer mon CV</button>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div id="footer">
     <footer>
