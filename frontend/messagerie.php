@@ -195,6 +195,54 @@ $conn->close();
                 loadMessages();
             });
         }
+        document.querySelectorAll('.friend').forEach(friend => {
+    friend.addEventListener('click', function() {
+        // Déselectionne tous les amis
+        document.querySelectorAll('.friend').forEach(f => f.classList.remove('selected'));
+        // Sélectionne l'ami cliqué
+        this.classList.add('selected');
+        // Charge les messages correspondants à cet ami
+        document.getElementById('recipient_id').value = this.getAttribute('data-id');
+        loadMessages();
+    });
+});
+
+document.getElementById('message_form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    sendMessage();
+});
+
+function loadMessages() {
+    const recipientId = document.getElementById('recipient_id').value;
+    if (!recipientId) return;
+
+    fetch(`load_messages.php?friend_id=${recipientId}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('chatbox').innerHTML = data;
+        });
+}
+
+function sendMessage() {
+    const recipientId = document.getElementById('recipient_id').value;
+    const usermsg = document.getElementById('usermsg').value;
+
+    if (!recipientId || !usermsg) return;
+
+    const formData = new FormData();
+    formData.append('message', usermsg);
+    formData.append('recipient_id', recipientId);
+
+    fetch('post.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(() => {
+            document.getElementById('usermsg').value = '';
+            loadMessages();
+        });
+}
+
     </script>
 </body>
 </html>
