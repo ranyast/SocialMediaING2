@@ -277,7 +277,7 @@ $conn->close();
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
-                <form method="post" action="cv/cv.php">
+                <form method="post" action="cv/generercv.php">
                     <button type="submit" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
                 </form>
             </div>
