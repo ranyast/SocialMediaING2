@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get profile user information
+
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $profil_user_id);
 $stmt->execute();
@@ -29,14 +29,14 @@ $stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profi
 $stmt->fetch();
 $stmt->close();
 
-function getNotifications($conn) {
+function AjoutAmi($conn) {
     $id_user = $_SESSION['id_user'];
     $sql = "SELECT sender FROM friend_requests WHERE receiver = ? AND status = 'pending'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
-    $notifications = [];
+    $demande = [];
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -51,7 +51,7 @@ function getNotifications($conn) {
                 while ($row2 = $result2->fetch_assoc()) {
                     $nom = $row2['nom'];
                     $prenom = $row2['prenom'];
-                    $notifications[] = "Vous avez reçu une demande d'ami de $nom $prenom";
+                    $demande[] = "Vous avez reçu une demande d'ami de $nom $prenom";
                 }
             }
             $stmt2->close();
@@ -59,10 +59,12 @@ function getNotifications($conn) {
     }
     
     $stmt->close();
-    return $notifications;
+    return $demande;
 }
 
-$notifications = getNotifications($conn);
+
+
+$demande = AjoutAmi($conn);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -122,10 +124,10 @@ $notifications = getNotifications($conn);
                 <div class="col-sm-12">
                     <h1>Notifications</h1>
                     <ul>
-                        <?php foreach ($notifications as $notification) : ?>
+                        <?php foreach ($demande as $notification) : ?>
                         <li class="notification-item"><a href="monreseau.php"><?= htmlspecialchars($notification) ?></a></li>
                         <?php endforeach; ?>
-                        <?php if (empty($notifications)) : ?>
+                        <?php if (empty($demande)) : ?>
                         <p>Vous n'avez pas de nouvelles notifications</p>
                         <?php endif; ?>
 
