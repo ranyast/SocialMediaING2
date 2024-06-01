@@ -42,7 +42,7 @@ if($sexe == '0') {
     $sexe = 'Homme';
 } else if($sexe == '1') {
     $sexe = 'Femme';
-} else {
+} else if($sexe == '2') {
     $sexe = 'Autre';
 }
 
@@ -120,52 +120,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_friend'])) {
 <head>
     <title>Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></title>
     <meta charset="utf-8"/>
-    <link href="ECEIn.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #028E98;
+        }
+    </style>
 </head>
 <body>
-<div id="wrapper">
-    <div id="nav">
-        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
-        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="128" alt="Réseau"></a>
-        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
-        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
-        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
-        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
-    </div>
-    <div id="section">
-        <div class="container-fluid">
-            <h1>Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h1>
-            <p><strong>Nom:</strong> <?= htmlspecialchars($nom) ?></p>
-            <p><strong>Prénom:</strong> <?= htmlspecialchars($prenom) ?></p>
-            <p><strong>Date de naissance:</strong> <?= htmlspecialchars($date_naissance) ?></p>
-            <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
-            <p><strong>Statut:</strong> <?= htmlspecialchars($statut) ?></p>
-            <p><strong>Description:</strong> <?= htmlspecialchars($description) ?></p>
-            <p><strong>Experience:</strong> <?= htmlspecialchars($experience) ?></p>
-            <p><strong>Formation:</strong> <?= htmlspecialchars($formation) ?></p>
-            <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
-            <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
-            <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h1>
+                    <p><strong>Nom:</strong> <?= htmlspecialchars($nom) ?></p>
+                    <p><strong>Prénom:</strong> <?= htmlspecialchars($prenom) ?></p>
+                    <p><strong>Date de naissance:</strong> <?= htmlspecialchars($date_naissance) ?></p>
+                    <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+                    <p><strong>Statut:</strong> <?= htmlspecialchars($statut) ?></p>
+                    <p><strong>Description:</strong> <?= htmlspecialchars($description) ?></p>
+                    <p><strong>Experience:</strong> <?= htmlspecialchars($experience) ?></p>
+                    <p><strong>Formation:</strong> <?= htmlspecialchars($formation) ?></p>
+                    <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
+                    <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
+                    <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
 
-            <?php if ($current_user_statut == 0 && $profil_user_id != $id_user && $statut != "Administrateur"): ?>
-                <form method="post" style="display: inline;">
-                    <button type="submit" name="delete_account">Supprimer le compte</button>
-                </form>
-            <?php endif; ?>
+                    <?php if ($current_user_statut == 0 && $profil_user_id != $id_user && $statut != "Administrateur"): ?>
+                        <form method="post" class="d-inline">
+                            <button type="submit" name="delete_account" class="btn btn-danger">Supprimer le compte</button>
+                        </form>
+                    <?php endif; ?>
 
-            <form method="post" style="display: inline;">
-                <button type="submit" name="remove_friend">Supprimer de la liste d'amis</button>
-            </form>
+                    <form method="post" class="d-inline">
+                        <button type="submit" name="remove_friend" class="btn btn-danger">Supprimer de la liste d'amis</button>
+                    </form>
 
-            <h2>Amis</h2>
-            <ul>
-                <?php foreach ($friends as $friend): ?>
-                    <li><a href="profil.php?id_user=<?= $friend['id_user'] ?>"><?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?></a></li>
-                <?php endforeach; ?>
-            </ul>
+                    <h2>Amis</h2>
+                    <div class="btn-group">
+                        <?php foreach ($friends as $friend): ?>
+                            <a href="profil.php?id_user=<?= $friend['id_user'] ?>" class="btn btn-primary"><?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?></a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
