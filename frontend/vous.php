@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->execute();
     $stmt->close();
-    header("Location: vous.php"); // Redirige vers la page vous.php après la mise à jour
+    header("Location: vous.php");
     exit();
 }
 
@@ -107,7 +107,6 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <style>
         #nav{}
         #footer{}

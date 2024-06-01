@@ -42,7 +42,7 @@ if($sexe == '0') {
     $sexe = 'Homme';
 } else if($sexe == '1') {
     $sexe = 'Femme';
-} else {
+} else if($sexe == '2') {
     $sexe = 'Autre';
 }
 
