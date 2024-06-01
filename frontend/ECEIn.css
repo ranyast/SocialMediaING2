@@ -214,21 +214,6 @@ input[type="file"] {
     color: white;
 }
 
-/*CSS POUR LES NOMS DES GENS DANS LA CONVERSATION
-A ARRANGER C'EST NUL */
-.msgln b.user-name,
-.msgln b.user-name-left {
-    font-weight: bold;
-    color: #028e98;
-    padding: 2px 4px;
-    font-size: 90%;
-    border-radius: 4px;
-    margin: 0 5px 0 0;
-}
-
-.msgln b.user-name-left {
-    color: orangered;
-}
 /*CSS pour l'effet de click sur la conversation*/
 .friend {
     cursor: pointer;
@@ -244,7 +229,6 @@ A ARRANGER C'EST NUL */
 .friend.selected {
     font-weight: bold;
 }
-
 
 
 /* Styles pour les liens de navigation */
@@ -340,21 +324,6 @@ nav a img:hover {
 .nav-link img {
     transition: transform 0.3s ease;
 }
-<<<<<<< HEAD
-=======
-
-.nav-link img:hover {
-    transform: scale(1.1);
-}
-
-.notification-item {
-    background-color: #4d5156;
-    color: black;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
->>>>>>> e050a9c8662ff6d8bdb408e56518dd5162eed21e
 
 .nav-link img:hover {
     transform: scale(1.1);
