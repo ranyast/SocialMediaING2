@@ -119,11 +119,11 @@ $cv_content = "
 </html>
 ";
 
-// Save the CV content to an HTML file
+// sauvegarde du cv en html
 $cv_file = 'cv_' . $nom . '.html';
 file_put_contents($cv_file, $cv_content);
 
-// Redirect to the generated CV file
+// redirection vers le cv en html
 header("Location: $cv_file");
 exit();
 ?>
