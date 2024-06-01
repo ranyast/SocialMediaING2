@@ -271,10 +271,7 @@ if($statut =='0') {
                             <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
                         </a>
                         (<?= htmlspecialchars($friend['email']) ?>)
-                        <form action="monreseau.php" method="post" style="display:inline;">
-                            <input type="hidden" name="remove_friend" value="<?= htmlspecialchars($friend['id_user']) ?>">
-                            <button type="submit" name="removeFriend">Retirer de mes amis</button>
-                        </form>
+
                     </li>
                 <?php endforeach; ?>
             </ul>
