@@ -214,21 +214,7 @@ input[type="file"] {
     color: white;
 }
 
-/*CSS POUR LES NOMS DES GENS DANS LA CONVERSATION
-A ARRANGER C'EST NUL */
-.msgln b.user-name,
-.msgln b.user-name-left {
-    font-weight: bold;
-    color: #028e98;
-    padding: 2px 4px;
-    font-size: 90%;
-    border-radius: 4px;
-    margin: 0 5px 0 0;
-}
 
-.msgln b.user-name-left {
-    color: orangered;
-}
 /*CSS pour l'effet de click sur la conversation*/
 .friend {
     cursor: pointer;

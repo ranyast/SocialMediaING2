@@ -42,6 +42,8 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
+
+
 <body>
     <div id="container">
         <div id="wrapper">
@@ -202,7 +204,6 @@ $conn->close();
             const isGroup = document.getElementById('isGroup').value;
 
 
-           
             if (!recipientId || !usermsg) return;
 
             const formData = new FormData();
@@ -264,6 +265,7 @@ $conn->close();
                 }
             });
         });
+        
     </script>
 </body>
 </html>
