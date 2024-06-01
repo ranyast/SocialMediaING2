@@ -341,7 +341,6 @@ nav a img:hover {
     transition: transform 0.3s ease;
 }
 
-
 .nav-link img:hover {
     transform: scale(1.1);
 }
