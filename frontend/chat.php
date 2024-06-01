@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_GET['logout'])) {
-    // Message de sortie simple
+
     $logout_message = "<div class='msgln'><span class='left-info'>User <b class='user-name-left'>" .
         $_SESSION['name'] . "</b> a quitté la session de chat.</span><br></div>";
 
@@ -11,7 +11,7 @@ if (isset($_GET['logout'])) {
     fclose($myfile);
     session_destroy();
     sleep(1);
-    header("Location: chat.php"); // Rediriger l'utilisateur
+    header("Location: chat.php"); 
 }
 
 if (isset($_POST['enter'])) {

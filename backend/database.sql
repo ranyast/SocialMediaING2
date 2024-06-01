@@ -48,8 +48,6 @@ CREATE TABLE IF NOT EXISTS friend_requests (
 DROP TABLE IF EXISTS job_offers;
 CREATE TABLE IF NOT EXISTS job_offers (
   id_job_offers int NOT NULL AUTO_INCREMENT,
-  sender_username varchar(255) NOT NULL,
-  receiver_username varchar(255) NOT NULL,
   id_post int NOT NULL,
   id_user int NOT NULL,
   nom varchar(255) NOT NULL,
