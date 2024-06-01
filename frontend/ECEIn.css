@@ -229,6 +229,21 @@ A ARRANGER C'EST NUL */
 .msgln b.user-name-left {
     color: orangered;
 }
+/*CSS pour l'effet de click sur la conversation*/
+.friend {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.friend:hover {
+    font-size: 1.1em;
+    transition: font-size 0.2s;
+}
+
+.friend.selected {
+    font-weight: bold;
+}
 
 
 
@@ -325,6 +340,8 @@ nav a img:hover {
 .nav-link img {
     transition: transform 0.3s ease;
 }
+<<<<<<< HEAD
+=======
 
 .nav-link img:hover {
     transform: scale(1.1);
@@ -337,4 +354,16 @@ nav a img:hover {
     padding: 10px;
     margin-bottom: 10px;
 }
+>>>>>>> e050a9c8662ff6d8bdb408e56518dd5162eed21e
 
+.nav-link img:hover {
+    transform: scale(1.1);
+}
+
+.notification-item {
+    background-color: #4d5156;
+    color: black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
