@@ -352,7 +352,6 @@ nav a img:hover {
     padding: 10px;
     margin-bottom: 10px;
 }
->>>>>>> e050a9c8662ff6d8bdb408e56518dd5162eed21e
 
 .nav-link img:hover {
     transform: scale(1.1);
@@ -364,4 +363,18 @@ nav a img:hover {
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #028e98;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color: #028e98;
 }

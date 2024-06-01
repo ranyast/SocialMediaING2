@@ -1,3 +1,49 @@
+<?php
+session_start();
+
+// Vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['id_user'])) {
+    header("Location: connexion.html");
+    exit();
+}
+
+
+$nom = $_SESSION['nom'] ?? '';
+$prenom = $_SESSION['prenom'] ?? '';
+$date_naissance = $_SESSION['date_naissance'] ?? '1970-01-01';
+$email = $_SESSION['email'] ?? '';
+$statut = $_SESSION['statut'] ?? '';
+
+$servername = "localhost";
+$username = "root";
+$password_db = "";
+$dbname = "ece_in";
+
+$conn = new mysqli($servername, $username, $password_db, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Préparation et exécution de la requête SQL pour récupérer les données de l'utilisateur
+$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom FROM utilisateur WHERE utilisateur.id_user = ?");
+$stmt->bind_param("i", $_SESSION['id_user']);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($nom, $prenom);
+$stmt->fetch();
+$stmt->close();
+
+// Récupérer les posts depuis la base de données
+$sql = "SELECT nom, prenom, media_path, datetime, emploiNom, emploiPoste, emploiProfil, emploiDescription FROM job_offers ORDER BY datetime DESC";
+$result = $conn->query($sql);
+
+// Fermer la connexion à la base de données
+$conn->close();
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +53,26 @@
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script type="text/javascript" src="popup.js"></script>
 
-    <style>
-    </style>
 </head>
+<style>
+    .media-content {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        padding: 10px;
+    }
+
+
+    .post-text {
+        flex: 1;
+    }
+
+    .post {
+        margin-bottom: 20px;
+    }
+</style>
 <body>
 <div id="wrapper">
     <div id="nav">
@@ -69,22 +131,42 @@
     <div id="section2">
             <div id="posts">
                 <h1>Offre d'emploi</h1>
-                <div id="post" align="right">
+                <div id="post">
                     <form method="post" action="">
                         <button type="button" class="btn btn-primary" onclick="showPopup('popupEmploi')">Nouvelle Offre</button>
                     </form>
                 </div>
+                <br>
+                <br>
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="post">';
 
                     echo '<p>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' propose :</p>';
-                    echo '<p>' . htmlspecialchars($row['content']) . '</p>';
+
+                    echo '<div class="media-content">';
                     if (!empty($row['media_path'])) {
-                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 30%;">';
+                        echo '<img class="post-media" src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 10%;">';
                     }
+                    echo '<p class="post-text">' . htmlspecialchars($row['content']) . '</p>';
+                    echo '</div>';
+
                     echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
+
+                    if (!empty($row['emploiNom'])) {
+                        echo '<p><strong>Nom de l\'entreprise :</strong> ' . htmlspecialchars($row['emploiNom']) . '</p>';
+                    }
+                    if (!empty($row['emploiPoste'])) {
+                        echo '<p><strong>Poste à pourvoir :</strong> ' . htmlspecialchars($row['emploiPoste']) . '</p>';
+                    }
+                    if (!empty($row['emploiProfil'])) {
+                        echo '<p><strong>Profil recherché :</strong> ' . htmlspecialchars($row['emploiProfil']) . '</p>';
+                    }
+                    if (!empty($row['emploiDescription'])) {
+                        echo '<p><strong>Description de l\'offre :</strong> ' . htmlspecialchars($row['emploiDescription']) . '</p>';
+                    }
+
                     echo '</div>';
                     echo '<hr>';
                 }
@@ -98,15 +180,35 @@
         <div id="popupEmploi" class="popup">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popupEmploi')">&times;</span>
-                <h2>Créer une nouvelle offre d'empoi</h2>
+                <h2>Créer une nouvelle offre d'emploi</h2>
                 <form method="post" action="newEmploi.php">
-                    <label for="emploiDate">Date de l'événement:</label>
-                    <input type="date" id="emploiDate" name="emploiDate">
-                    <br><br>
-                    <label for="emploiDescription"> Description de l'offre :</label>
-                    <textarea id="emploiDescription" name="emploiDescription" rows="4" cols="50"></textarea>
-                    <br><br>
-                    <button type="submit" class="btn btn-primary"> Poster </button>
+                    <table>
+                        <tr>
+                            <td><label for="mediaFile">Logo de l'entreprise :</label></td>
+                            <td><input type="file" id="mediaFile" name="media_path" accept="image/*"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="emploiNom">Nom de l'entreprise :</label></td>
+                            <td><textarea id="emploiNom" name="emploiNom" rows="1" cols="20"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="emploiPoste">Poste à pourvoir :</label></td>
+                            <td><textarea id="emploiPoste" name="emploiPoste" rows="1" cols="20"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="emploiProfil">Profil recherché :</label></td>
+                            <td><textarea id="emploiProfil" name="emploiProfil" rows="4" cols="50"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="emploiDescription">Description de l'offre :</label></td>
+                            <td><textarea id="emploiDescription" name="emploiDescription" rows="4" cols="50"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center;">
+                                <button type="submit" class="btn btn-primary">Poster</button>
+                            </td>
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>
