@@ -68,7 +68,7 @@ $conn->close();
                 </div>
             </div>
             <div id="leftcolumn">
-                <h3>Discussions Récentes</h3>
+                <h3>Discussions Récentes : </h3>
                 <ul>
                     <?php foreach ($friends as $friend) { ?>
                         <li class="friend" data-id="<?php echo $friend['id_user']; ?>">
@@ -76,6 +76,9 @@ $conn->close();
                         </li>
                     <?php } ?>
                 </ul>
+                <h3>Groupes :</h3>
+                <ul id="groupList"></ul>
+                <button id="creerGroupe">Créer un Groupe</button>
             </div>
             <div id="rightcolumn">
                 <h3>A Propos de nous:</h3>
@@ -114,6 +117,7 @@ $conn->close();
                     <input name="usermsg" type="text" id="usermsg" />
                     <input type="submit" value="Envoyer" />
                     <input type="hidden" id="recipient_id" />
+                    <input type="hidden" id="isGroup" value="0" />
                 </form>
             </div>
             <br><br>
@@ -142,6 +146,26 @@ $conn->close();
             </div>
         </div>
     </div>
+
+    <!-- Modal pour la création de groupe -->
+    <div class="modal" id="groupModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Créer un Groupe</h2>
+            <input type="text" id="groupName" placeholder="Nom du groupe">
+            <h3>Ajouter des amis</h3>
+            <ul>
+                <?php foreach ($friends as $friend) { ?>
+                    <li>
+                        <input type="checkbox" class="group-member" value="<?php echo $friend['id_user']; ?>">
+                        <?php echo $friend['nom'] . " " . $friend['prenom']; ?>
+                    </li>
+                <?php } ?>
+            </ul>
+            <button id="saveGroupButton">Créer le Groupe</button>
+        </div>
+    </div>
+
     <script>
         document.querySelectorAll('.friend').forEach(friend => {
             friend.addEventListener('click', function() {
@@ -162,9 +186,10 @@ $conn->close();
 
         function loadMessages() {
             const recipientId = document.getElementById('recipient_id').value;
+            const isGroup = document.getElementById('isGroup').value;
             if (!recipientId) return;
 
-            fetch(`load_messages.php?friend_id=${recipientId}`)
+            fetch(`load_messages.php?friend_id=${recipientId}&is_group=${isGroup}`)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('chatbox').innerHTML = data;
@@ -174,6 +199,8 @@ $conn->close();
         function sendMessage() {
             const recipientId = document.getElementById('recipient_id').value;
             const usermsg = document.getElementById('usermsg').value;
+            const isGroup = document.getElementById('isGroup').value;
+
 
            
             if (!recipientId || !usermsg) return;
@@ -181,6 +208,7 @@ $conn->close();
             const formData = new FormData();
             formData.append('message', usermsg);
             formData.append('recipient_id', recipientId);
+            formData.append('is_group', isGroup);
 
             fetch('post.php', {
                 method: 'POST',
@@ -191,6 +219,51 @@ $conn->close();
                 loadMessages();
             });
         }
+        // Code pour gérer les groupes
+        document.getElementById('creerGroupe').addEventListener('click', function() {
+            document.getElementById('groupModal').style.display = 'block';
+        });
+
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('groupModal').style.display = 'none';
+        });
+
+        document.getElementById('saveGroupButton').addEventListener('click', function() {
+            const groupName = document.getElementById('groupName').value;
+            const groupMembers = Array.from(document.querySelectorAll('.group-member:checked')).map(cb => cb.value);
+            if (!groupName || groupMembers.length === 0) return;
+
+            const groupId = `group_${Date.now()}`;
+            const group = { id: groupId, name: groupName, members: groupMembers };
+            localStorage.setItem(groupId, JSON.stringify(group));
+            addGroupToUI(group);
+            document.getElementById('groupModal').style.display = 'none';
+        });
+
+        function addGroupToUI(group) {
+            const groupList = document.getElementById('groupList');
+            const li = document.createElement('li');
+            li.textContent = group.name;
+            li.setAttribute('data-id', group.id);
+            li.classList.add('group');
+            li.addEventListener('click', function() {
+                document.querySelectorAll('.friend, .group').forEach(f => f.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('recipient_id').value = group.id;
+                document.getElementById('isGroup').value = '1';
+                loadMessages();
+            });
+            groupList.appendChild(li);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('group_')) {
+                    const group = JSON.parse(localStorage.getItem(key));
+                    addGroupToUI(group);
+                }
+            });
+        });
     </script>
 </body>
 </html>
