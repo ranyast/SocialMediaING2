@@ -153,6 +153,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
 ?>
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -161,38 +162,27 @@ function respondToFriendRequest($request_id, $response, $conn) {
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        #nav{}
-        #footer{}
-        #wrapper{}
-        #section{}
-    </style>
 </head>
 <body>
 <div id="wrapper">
-    <div id="nav">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-1" id="logo">
+            <div class="row align-items-center">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
-                </div>
-                <div class="col-sm-9" id="logos">
-                    <nav>
-                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="125" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
-                        <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
+                <div class="col-sm-8" id="logos">
+                    <nav class="d-flex justify-content-center">
+                        <a class="nav-link" href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
+                        <a class="nav-link" href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
+                        <a class="nav-link" href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
+                        <a class="nav-link" href="notifications.php"><img src="logo/notification2.jpg" height="70" width="125" alt="Notifications"></a>
+                        <a class="nav-link" href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
+                        <a class="nav-link" href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
+                        <a class="nav-link" href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                     </nav>
                 </div>
             </div>
         </div>
-    </div>
     <div id="section">
         <div class="container-fluid">
             <div class="row">
