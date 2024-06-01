@@ -31,7 +31,6 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -43,7 +42,6 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
-
 <body>
     <div id="container">
         <div id="wrapper">
@@ -203,6 +201,8 @@ $conn->close();
             const usermsg = document.getElementById('usermsg').value;
             const isGroup = document.getElementById('isGroup').value;
 
+
+           
             if (!recipientId || !usermsg) return;
 
             const formData = new FormData();
@@ -219,7 +219,6 @@ $conn->close();
                 loadMessages();
             });
         }
-
         // Code pour gérer les groupes
         document.getElementById('creerGroupe').addEventListener('click', function() {
             document.getElementById('groupModal').style.display = 'block';

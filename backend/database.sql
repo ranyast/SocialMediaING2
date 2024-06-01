@@ -86,15 +86,17 @@ CREATE TABLE IF NOT EXISTS likes (
 -- Correction de la structure de la table messages
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
-  id int NOT NULL AUTO_INCREMENT,
-  sender varchar(255) NOT NULL,
-  recipient varchar(255) NOT NULL,
-  message text,
-  timestamp timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  INDEX sender (sender(250)),
-  INDEX recipient (recipient(250))
-) ENGINE=InnoDB;
+  id_message int NOT NULL AUTO_INCREMENT,
+  id_groupe int NOT NULL,
+  id_user int NOT NULL,
+  message TEXT NOT NULL,
+  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_message),
+  INDEX id_groupe (id_groupe),
+  INDEX id_user (id_user),
+  FOREIGN KEY (id_groupe) REFERENCES groups(id_groupe) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 -- Correction de la structure de la table posts
 DROP TABLE IF EXISTS posts;
