@@ -340,6 +340,21 @@ nav a img:hover {
 .nav-link img {
     transition: transform 0.3s ease;
 }
+<<<<<<< HEAD
+=======
+
+.nav-link img:hover {
+    transform: scale(1.1);
+}
+
+.notification-item {
+    background-color: #4d5156;
+    color: black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+>>>>>>> e050a9c8662ff6d8bdb408e56518dd5162eed21e
 
 .nav-link img:hover {
     transform: scale(1.1);
