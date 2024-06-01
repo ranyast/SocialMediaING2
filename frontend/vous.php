@@ -120,11 +120,8 @@ $conn->close();
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1" id="logo">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
-                </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
                 </div>
                 <div class="col-sm-9" id="logos">
                     <nav>
@@ -134,41 +131,46 @@ $conn->close();
                         <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
-                        <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                     </nav>
+                </div>
+                <div class="col-sm-2" id="logo">
+                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="rightcolumn">
-        <h3>A Propos de nous:</h3>
-        <p>
-            ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
-        </p>
-        <p>
-            Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
-        </p>
-        <ul>
-            <li>
-                Poster différentes choses
-            </li>
-            <li>
-                Postuler à des offres d'emploi diverses
-            </li>
-            <li>
-                Développement de votre réseau
-            </li>
-            <li>
-                Discuter en live avec vos amis !
-            </li>
-            <li>
-                Et bien d'autres ...
-            </li>
-        </ul>
-        <p>
-            N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous !
-        </p>
+        <h3><font size="5">A Propos de nous:</font></h3>
+        <font size="3">
+            <p>
+                ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.
+            </p>
+            <p>
+                Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:
+            </p>
+            <ul>
+                <li>
+                    Poster différentes choses
+                </li>
+                <li>
+                    Postuler à des offres d'emploi diverses
+                </li>
+                <li>
+                    Développement de votre réseau
+                </li>
+                <li>
+                    Discuter en live avec vos amis !
+                </li>
+                <li>
+                    Et bien d'autres ...
+                </li>
+            </ul>
+            <p>
+                N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!
+            </p>
+        </font>
+
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
@@ -183,21 +185,23 @@ $conn->close();
             </div>
             <div class="media-body">
                 <br><br><br><br>
-                <h2 class="media-heading"><?php echo htmlspecialchars($prenom ?? '') . ' ' . htmlspecialchars($nom ?? ''); ?></h2>
-                <p style="color: gray;"><?php echo htmlspecialchars($statut ?? ''); ?></p>
+                <h2 class="media-heading"><font size="6"> <?php echo htmlspecialchars($prenom ?? '') . ' ' . htmlspecialchars($nom ?? ''); ?></font></h2>
+                <p style="color: gray;"><font size="3"><?php echo htmlspecialchars($statut ?? ''); ?></font></p>
             </div>
         </div>
         <br>
         <br>
-        <div class="container-fluid">
+        <div class="container-fluid" >
             <div class="row">
+                <font size="3">
                 <form method="post" action="">
                     <div id="infoprofil">
                         <div class="col-sm-8 case3" id="description">
                             <h3>Description</h3>
                             <p><?php echo htmlspecialchars($description ?? ''); ?></p>
+
                         </div>
-                        <div class="col-sm-3 case3">
+                        <div class="col-sm-8 case3">
                             <h3>Informations Personnelles</h3>
                             <p>Sexe: <?php echo htmlspecialchars($sexe ?? ''); ?></p>
                             <p>Niveau d'études: <?php echo htmlspecialchars($etudes ?? ''); ?></p>
@@ -269,45 +273,50 @@ $conn->close();
                         <br>
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-primary" value="validation">Enregistrer</button>
+                    </font>
+                    <button type="submit" class="btn btn-primary" value="validation"><font size="3"> Enregistrer</font></button>
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
                 <form method="post" action="cv/cv.php">
-                    <button type="submit" class="btn btn-primary">Générer mon CV</button>
+                    <button type="submit" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
                 </form>
             </div>
+
         </div>
+    </div>
+    <br>
+    <br>
+    <div id="footer">
+        <footer>
+            <h3>Nous Contacter: </h3>
+            <table>
+                <td style="padding-right:350px;padding-left:210px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.372438613096!2d2.285962676518711!
+                    3d48.85110800121897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b486bb253%3A0x61e9cc6979f93f
+                    ae!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1716991235930!5m2!1sfr!2sfr"
+                            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </td>
+
+                <td style="font-size: 18px; text-align: center; padding :20px;">
+                    <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
+                    <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
+                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
+            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
+            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
+                </td>
+            </table>
+
+
+            <p>ECE In Corporation &copy; 2024</p>
+
+
+        </footer>
     </div>
 </div>
 </div>
-<div id="footer">
-    <footer>
-        <h3>Nous Contacter: </h3>
-        <table>
-            <td style="padding-right:350px;padding-left:210px;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.372438613096!2d2.285962676518711!
-                    3d48.85110800121897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b486bb253%3A0x61e9cc6979f93f
-                    ae!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1716991235930!5m2!1sfr!2sfr"
-                        width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </td>
 
-            <td style="font-size: 18px; text-align: center; padding :20px;">
-                <p>Par Mail: <a href="mailto : ECEIN@ece.fr"> ECEIN@ece.fr</a></p>
-                <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
-                <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/
-            @48.851108,2.2859627,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6701b486bb253:0x61e9cc6979f93fae!8m2!3d48.
-            8511045!4d2.2885376!16s%2Fg%2F11bw3xcdpj?entry=ttu">10 Rue Sextius Michel, 75015 Paris</a></p>
-            </td>
-        </table>
-
-
-        <p>ECE In Corporation &copy; 2024</p>
-
-
-    </footer>
-</div>
 </body>
 </html>

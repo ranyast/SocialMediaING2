@@ -53,6 +53,7 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <script type="text/javascript" src="carrousel.js"></script>
     <script type="text/javascript" src="carrousel2.js"></script>
     <script type="text/javascript" src="carrousel3.js"></script>
@@ -64,13 +65,10 @@ $conn->close();
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-1" id="logo">
+                <div class="col-sm-2" id="logo">
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
-                <div class="col-sm-2" id="recherche" style="text-align: right">
-                    <p>Recherche</p>
-                </div>
-                <div class="col-sm-9" id="logos">
+                <div class="col-sm-8" id="logos">
                     <nav>
                         <a href="accueil.php"><img src="logo/accueil2.jpg" height="70" width="125" alt="Accueil"></a>
                         <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
@@ -78,9 +76,12 @@ $conn->close();
                         <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
-                        <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                     </nav>
                 </div>
+                <div class="col-sm-2" id="logo">
+                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
+                </div>
+
 
             </div>
         </div>
@@ -125,7 +126,7 @@ $conn->close();
     <div id="section">
         <h4>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h4>
         <div id="carrousel" align="center">
-            <h3>Evènements de la semaine</h3>
+            <h3>Evénements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -224,7 +225,6 @@ $conn->close();
         </div>
 
         <div id="carrousel2" align="center">
-            <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -292,8 +292,10 @@ $conn->close();
         </div>
 
 
-</div>
+    </div>
 
+    <br>
+    <br>
 
     <div id="footer">
         <footer>

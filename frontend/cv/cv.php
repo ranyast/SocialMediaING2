@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//verifie si l'utilisateur est connecté
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
     header("Location: connexion.html");
     exit();
@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//on recupere les donnees de l'utilisateur
+// Récupère les données de l'utilisateur
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, photo_profil, description, experience, formation, etudes, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -29,12 +29,15 @@ $stmt->bind_result($nom, $prenom, $date_naissance, $email, $photo_profil, $descr
 $stmt->fetch();
 $stmt->close();
 
-//calcul de l'age a partir de la date de naissance
+// Calcul de l'âge à partir de la date de naissance
 $birthDate = new DateTime($date_naissance);
 $today = new DateTime();
 $age = $today->diff($birthDate)->y;
 
-//generation du CV en HTML
+// Chemin complet de la photo de profil
+$photo_profil_path = !empty($photo_profil) ? '../' . $photo_profil : 'default-profile.png'; // Image par défaut si aucune photo n'est disponible
+
+// Génération du CV en HTML
 $cv_content = "
 <!DOCTYPE html>
 <html lang='fr'>
@@ -88,7 +91,7 @@ $cv_content = "
 <body>
     <div class='container'>
         <div class='header'>
-            <img src='$photo_profil' alt='Photo Profil'>
+            <img src='$photo_profil_path' alt='Photo Profil'>
             <h1>$nom</h1>
             <h2>$prenom</h2>
             <p>Âge : $age ans</p>
@@ -119,11 +122,19 @@ $cv_content = "
 </html>
 ";
 
+<<<<<<< HEAD
 // sauvegarde du cv en html
 $cv_file = 'cv_' . $nom . '.html';
 file_put_contents($cv_file, $cv_content);
 
 // redirection vers le cv en html
+=======
+// Enregistrement du contenu du CV dans un fichier HTML
+$cv_file = 'cv_' . $nom . '.html';
+file_put_contents($cv_file, $cv_content);
+
+// Redirection vers le fichier CV généré
+>>>>>>> 73ade109188ed0ff89f7c630bf336e7e79b6d13c
 header("Location: $cv_file");
 exit();
 ?>
