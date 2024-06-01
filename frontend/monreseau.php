@@ -1,26 +1,21 @@
 <?php
 session_start();
-
 // Check if user is logged in
 if (!isset($_SESSION['id_user'])) {
+    // Redirect to login page
     header("Location: connexion.html");
     exit();
 }
-
 $id_user = $_SESSION['id_user'];
-
 $servername = "localhost";
 $username = "root";
 $password_db = "";
 $dbname = "ece_in";
-
 $conn = new mysqli($servername, $username, $password_db, $dbname);
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get user information
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -29,10 +24,11 @@ $stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profi
 $stmt->fetch();
 $stmt->close();
 
-// Get mutual friends
+
 $mutuals = getMutualFriends($id_user, $conn);
 
-// Handle search query
+
+
 $searchResults = [];
 if (isset($_GET['query'])) {
     $query = $_GET['query'];
@@ -40,12 +36,14 @@ if (isset($_GET['query'])) {
 }
 
 // Handle friend request sending
+
 if (isset($_POST['sendRequest'])) {
     $receiver_email = $_POST['receiver'];
     sendFriendRequest($id_user, $receiver_email, $conn);
 }
 
 // Handle friend request response
+
 if (isset($_POST['respondRequest'])) {
     $request_id = $_POST['request_id'];
     $response = $_POST['respondRequest'];
@@ -53,6 +51,7 @@ if (isset($_POST['respondRequest'])) {
 }
 
 // Function to get mutual friends
+
 function getMutualFriends($id_user, $conn) {
     $mutualFriends = array();
     $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email 
@@ -63,15 +62,13 @@ function getMutualFriends($id_user, $conn) {
     $stmt->bind_param("iii", $id_user, $id_user, $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
-
     while ($row = $result->fetch_assoc()) {
+        // Use user id as key to ensure uniqueness
         $mutualFriends[$row['id_user']] = $row;
     }
-
     $stmt->close();
-    return array_values($mutualFriends);
+    return array_values($mutualFriends); // Convert associative array back to indexed array
 }
-
 // Function to search users
 function searchUsers($query, $id_user, $conn) {
     $searchResults = [];
@@ -81,30 +78,12 @@ function searchUsers($query, $id_user, $conn) {
     $stmt->bind_param("ssi", $query, $query, $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
-
     while ($row = $result->fetch_assoc()) {
-        // Check if the user is already a friend
-        $stmt2 = $conn->prepare("SELECT 1 FROM friends WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?) AND status = 'accepted'");
-        $stmt2->bind_param("iiii", $id_user, $row['id_user'], $row['id_user'], $id_user);
-        $stmt2->execute();
-        $stmt2->store_result();
-        if ($stmt2->num_rows > 0) {
-            // User is already a friend
-            $row['is_friend'] = true;
-        } else {
-            // User is not a friend
-            $row['is_friend'] = false;
-        }
-        $stmt2->close();
-
         $searchResults[] = $row;
     }
-
     $stmt->close();
     return $searchResults;
 }
-
-// Function to send a friend request
 function sendFriendRequest($sender_id, $receiver_email, $conn) {
     $stmt = $conn->prepare("SELECT id_user FROM utilisateur WHERE email = ?");
     $stmt->bind_param("s", $receiver_email);
@@ -112,27 +91,22 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
     $stmt->bind_result($receiver_id);
     $stmt->fetch();
     $stmt->close();
-
     if ($receiver_id) {
         $stmt = $conn->prepare("INSERT INTO friend_requests (sender, receiver, status) VALUES (?, ?, 'pending')");
         $stmt->bind_param("ii", $sender_id, $receiver_id);
         $stmt->execute();
         $stmt->close();
-
         echo "<script>alert('Demande d\'ami envoyée!');</script>";
     } else {
         echo "<script>alert('Utilisateur introuvable!');</script>";
     }
 }
-
-// Function to respond to a friend request
+// Function to respond to friend request
 function respondToFriendRequest($request_id, $response, $conn) {
     $status = $response == 'accept' ? 'accepted' : 'rejected';
-
     $stmt = $conn->prepare("UPDATE friend_requests SET status = ? WHERE id_friend_requests = ?");
     $stmt->bind_param("si", $status, $request_id);
     $stmt->execute();
-
     if ($status == 'accepted') {
         $stmt = $conn->prepare("SELECT sender, receiver FROM friend_requests WHERE id_friend_requests = ?");
         $stmt->bind_param("i", $request_id);
@@ -140,19 +114,14 @@ function respondToFriendRequest($request_id, $response, $conn) {
         $stmt->bind_result($sender_id, $receiver_id);
         $stmt->fetch();
         $stmt->close();
-
         $stmt = $conn->prepare("INSERT INTO friends (user1, user2, status) VALUES (?, ?, 'accepted')");
         $stmt->bind_param("ii", $sender_id, $receiver_id);
         $stmt->execute();
         $stmt->close();
     }
-
     echo "<script>alert('Demande d\'ami " . ($status == 'accepted' ? "acceptée" : "rejetée") . "!');</script>";
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -200,8 +169,8 @@ function respondToFriendRequest($request_id, $response, $conn) {
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-5" id="partieGauche">
-                    <h1>Mon réseau</h1>
+                <div class="col-sm-2" id="partieGauche">
+                    <h2>Mon réseau</h2>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
                     <h3>Rechercher des amis</h3>
@@ -215,13 +184,10 @@ function respondToFriendRequest($request_id, $response, $conn) {
                             <?php foreach ($searchResults as $result): ?>
                                 <li>
                                     <?= htmlspecialchars($result['prenom']) . ' ' . htmlspecialchars($result['nom']) . ' (' . htmlspecialchars($result['email']) . ')' ?>
-                                    <a href="profil.php?id_user=<?= htmlspecialchars($result['id_user']) ?>">Consulter le profil</a>
-                                    <?php if (!$result['is_friend']): ?>
-                                        <form action="monreseau.php" method="post" style="display:inline;">
-                                            <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
-                                            <button type="submit" name="sendRequest">Envoyer une demande d'ami</button>
-                                        </form>
-                                    <?php endif; ?>
+                                    <form action="monreseau.php" method="post" style="display:inline;">
+                                        <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
+                                        <button type="submit" name="sendRequest">Envoyer une demande d'ami</button>
+                                    </form>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
