@@ -222,9 +222,9 @@ function respondToFriendRequest($request_id, $response, $conn) {
                 <div class="col-sm-8" id="logos">
                     <nav class="d-flex justify-content-center">
                         <a class="nav-link" href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
-                        <a class="nav-link" href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
+                        <a class="nav-link" href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="125" alt="Réseau"></a>
                         <a class="nav-link" href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
-                        <a class="nav-link" href="notifications.php"><img src="logo/notification2.jpg" height="70" width="125" alt="Notifications"></a>
+                        <a class="nav-link" href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
                         <a class="nav-link" href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
                         <a class="nav-link" href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
                         <a class="nav-link" href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
@@ -294,6 +294,45 @@ function respondToFriendRequest($request_id, $response, $conn) {
             </div>
         </div>
     </div>
+    <div class="col-sm-12">
+                        <h1>Mes amis</h1>
+                        <ul class="list-group mb-3">
+                            <?php foreach ($mutuals as $mutual): ?>
+                                <li class="list-group mb-3">
+                                    <a href="profil.php?id_user=<?= htmlspecialchars($mutual['id_user']) ?>" class="list-group-item list-group-item-action">
+                                        <?= htmlspecialchars($mutual['prenom']) . ' ' . htmlspecialchars($mutual['nom']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+    <footer class="text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Nous Contacter:</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.372438613096!2d2.285962676518711!3d48.85110800121897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b486bb253%3A0x61e9cc6979f93fae!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1716991235930!5m2!1sfr!2sfr" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div style="font-size: 18px; margin-top: 10px;">
+                    <p>Par Mail: <a href="mailto:ECEIN@ece.fr">ECEIN@ece.fr</a></p>
+                    <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
+                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/@48.851108,2.2859627,17z">10 Rue Sextius Michel, 75015 Paris</a></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>À Propos de nous:</h3>
+                <p>ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.</p>
+                <p>Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:</p>
+                <ul>
+                    <li>Poster différentes choses</li>
+                    <li>Postuler à des offres d'emploi diverses</li>
+                    <li>Développement de votre réseau</li>
+                    <li>Discuter en live avec vos amis!</li>
+                    <li>Et bien d'autres ...</li>
+                </ul>
+                <p>N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!</p>
+                <p><small>Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</small></p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
 
