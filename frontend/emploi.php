@@ -67,24 +67,22 @@
     </div>
 
     <div id="section2">
-        <h1>Offre d'emploi</h1>
-        <p>
-            Voici toutes les offres d'emploi !
-        </p>
-        <br>
-        <br>
-
-
-        <div id="posts">
-            <h3>Actualités des membres</h3>
+            <div id="posts">
+                <h1>Offre d'emploi</h1>
+                <div id="post" align="right">
+                    <form method="post" action="">
+                        <button type="button" class="btn btn-primary" onclick="showPopup('popupEmploi')">Nouvelle Offre</button>
+                    </form>
+                </div>
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="post">';
-                    echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
+
+                    echo '<p>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' propose :</p>';
                     echo '<p>' . htmlspecialchars($row['content']) . '</p>';
                     if (!empty($row['media_path'])) {
-                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 100%;">';
+                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 30%;">';
                     }
                     echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
                     echo '</div>';
@@ -96,18 +94,21 @@
             ?>
         </div>
 
-        <div class="popup-content">
-            <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
-            <h2>Créer un Evénement</h2>
-            <form method="post" action="event.php">
-                <label for="eventDate">Date de l'événement:</label>
-                <input type="date" id="eventDate" name="eventDate">
-                <br><br>
-                <label for="eventDescription">Description:</label>
-                <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
-                <br><br>
-                <button type="submit" class="btn btn-primary">Créer</button>
-            </form>
+
+        <div id="popupEmploi" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup('popupEmploi')">&times;</span>
+                <h2>Créer une nouvelle offre d'empoi</h2>
+                <form method="post" action="newEmploi.php">
+                    <label for="emploiDate">Date de l'événement:</label>
+                    <input type="date" id="emploiDate" name="emploiDate">
+                    <br><br>
+                    <label for="emploiDescription"> Description de l'offre :</label>
+                    <textarea id="emploiDescription" name="emploiDescription" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary"> Poster </button>
+                </form>
+            </div>
         </div>
     </div>
     <br>
