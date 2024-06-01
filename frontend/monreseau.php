@@ -121,6 +121,46 @@ function respondToFriendRequest($request_id, $response, $conn) {
     }
     echo "<script>alert('Demande d\'ami " . ($status == 'accepted' ? "acceptée" : "rejetée") . "!');</script>";
 }
+
+if($sexe == "0"){
+    $sexe = "Homme";
+}
+else if ($sexe == "1"){
+    $sexe = "Femme";
+} else if ($sexe == "2"){
+    $sexe = "Autre";
+}
+
+if($etudes =='0') {
+    $etudes = 'Terminale';
+    }else if($etudes =='1') {
+        $etudes = 'Bac +1';
+    }
+    else if($etudes =='2') {
+        $etudes = 'Bac +2';
+    }
+    else if($etudes =='3') {
+        $etudes = 'Bac +3';
+    }
+    else if($etudes =='4') {
+        $etudes = 'Bac +4';
+    }
+    else if($etudes =='5') {
+        $etudes = 'Bac +5 et plus';
+    }
+    else if($etudes =='6') {
+        $etudes = 'Autre';
+    }
+
+if($statut =='0') {
+    $statut ='Administrateur';
+    }else if($statut =='1') {
+        $statut ='Professeur';
+    }
+    else if($statut =='2') {
+        $statut ='Etudiant';
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,9 +182,9 @@ function respondToFriendRequest($request_id, $response, $conn) {
                 <div class="col-sm-8" id="logos">
                     <nav>
                         <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
+                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="125" alt="Réseau"></a>
                         <a href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification2.jpg" height="70" width="125" alt="Notifications"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
                     </nav>
@@ -155,7 +195,6 @@ function respondToFriendRequest($request_id, $response, $conn) {
             </div>
         </div>
     </div>
-
     <div id="leftcolumn">
         <img src="<?php echo $photo_profil; ?>" class="img-circle" alt="Photo de profil" width="150">
         <h3><?php echo $prenom . " " . $nom; ?></h3>
@@ -164,8 +203,6 @@ function respondToFriendRequest($request_id, $response, $conn) {
         <p>Etudes: <?php echo $etudes; ?></p>
         <p>Sexe: <?php echo $sexe; ?></p>
     </div>
-
-
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
@@ -224,7 +261,6 @@ function respondToFriendRequest($request_id, $response, $conn) {
             </div>
         </div>
     </div>
-
     <div id="section2">
         <h3>Mes amis</h3>
         <?php if ($mutuals): ?>
