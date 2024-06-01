@@ -3,6 +3,7 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['id_user'])) {
+    // Redirect to login page
     header("Location: connexion.html");
     exit();
 }
@@ -21,7 +22,6 @@ if ($conn->connect_error) {
 }
 
 // Get user information
-$friendRequests = [];
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -55,7 +55,7 @@ if (isset($_POST['respondRequest'])) {
 
 // Function to get mutual friends
 function getMutualFriends($id_user, $conn) {
-    $mutualFriends = [];
+    $mutualFriends = array();
     $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email 
             FROM utilisateur u 
             INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) 
@@ -66,11 +66,12 @@ function getMutualFriends($id_user, $conn) {
     $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
+        // Use user id as key to ensure uniqueness
         $mutualFriends[$row['id_user']] = $row;
     }
 
     $stmt->close();
-    return array_values($mutualFriends);
+    return array_values($mutualFriends); // Convert associative array back to indexed array
 }
 
 // Function to search users
@@ -84,13 +85,6 @@ function searchUsers($query, $id_user, $conn) {
     $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
-        $stmt2 = $conn->prepare("SELECT 1 FROM friends WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?) AND status = 'accepted'");
-        $stmt2->bind_param("iiii", $id_user, $row['id_user'], $row['id_user'], $id_user);
-        $stmt2->execute();
-        $stmt2->store_result();
-        $row['is_friend'] = $stmt2->num_rows > 0;
-        $stmt2->close();
-
         $searchResults[] = $row;
     }
 
@@ -98,7 +92,7 @@ function searchUsers($query, $id_user, $conn) {
     return $searchResults;
 }
 
-// Function to send a friend request
+
 function sendFriendRequest($sender_id, $receiver_email, $conn) {
     $stmt = $conn->prepare("SELECT id_user FROM utilisateur WHERE email = ?");
     $stmt->bind_param("s", $receiver_email);
@@ -112,13 +106,14 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
         $stmt->bind_param("ii", $sender_id, $receiver_id);
         $stmt->execute();
         $stmt->close();
+
         echo "<script>alert('Demande d\'ami envoyée!');</script>";
     } else {
         echo "<script>alert('Utilisateur introuvable!');</script>";
     }
 }
 
-// Function to respond to a friend request
+// Function to respond to friend request
 function respondToFriendRequest($request_id, $response, $conn) {
     $status = $response == 'accept' ? 'accepted' : 'rejected';
 
@@ -142,148 +137,126 @@ function respondToFriendRequest($request_id, $response, $conn) {
 
     echo "<script>alert('Demande d\'ami " . ($status == 'accepted' ? "acceptée" : "rejetée") . "!');</script>";
 }
+
 ?>
 
+
 <!DOCTYPE html>
-<html lang="fr">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Mon réseau</title>
+    <title>ECE In</title>
+    <meta charset="utf-8"/>
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
-    <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-
+    <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #nav{}
+        #footer{}
+        #wrapper{}
+        #section{}
+    </style>
 </head>
-
 <body>
 <div id="wrapper">
     <div id="nav">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2" id="logo">
-                    <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
+                <div class="col-sm-1" id="logo">
+                    <h1><img src="logo/logo_ece.png" height="82" width="158" alt="Logo"></h1>
                 </div>
-                <div class="col-sm-8" id="logos">
+                <div class="col-sm-7" id="logos">
                     <nav>
-                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="125" alt="Réseau"></a>
-                        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
-                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
-                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
+                        <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="128" alt="Accueil"></a>
+                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="128" alt="Réseau"></a>
+                        <a href="vous.php"><img src="logo/vous.jpg" height="70" width="128" alt="Vous"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="128" alt="Notifications"></a>
+                        <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="128" alt="Messagerie"></a>
+                        <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="128" alt="Emploi"></a>
                     </nav>
                 </div>
-                <div class="col-sm-2" id="logo">
-                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
+                <div class="col-sm-1" id="deconnexion">
+                    <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="75" width="133" alt="Deconnexion"></a>
                 </div>
             </div>
         </div>
     </div>
-    <div  class="col-md-3" id="leftcolumn">
-        <h3>À Propos de nous:</h3>
-        <p>ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.</p>
-        <p>Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:</p>
-        <ul>
-            <li>Poster différentes choses</li>
-            <li>Postuler à des offres d'emploi diverses</li>
-            <li>Développement de votre réseau</li>
-            <li>Discuter en live avec vos amis!</li>
-            <li>Et bien d'autres ...</li>
-        </ul>
-        <p>N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!</p>
-        <p><small>Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</small></p>
-    </div>
-    <div id="section2">
+    <div id="section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12">
-                    <h1>Mon réseau</h1>
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Rechercher des amis</h3>
-                            <form action="monreseau.php" method="get" class="form-inline mb-3">
-                                <input type="text" name="query" placeholder="Rechercher des amis..." class="form-control mr-2">
-                                <button type="submit" class="btn btn-primary">Rechercher</button>
-                            </form>
-                            <h3>Résultats de recherche</h3>
-                            <?php if ($searchResults): ?>
-                                <ul class="list-group mb-3">
-                                    <?php foreach ($searchResults as $result): ?>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <?= htmlspecialchars($result['prenom']) . ' ' . htmlspecialchars($result['nom']) . ' (' . htmlspecialchars($result['email']) . ')' ?>
-                                            <div>
-                                                <a href="profil.php?id_user=<?= htmlspecialchars($result['id_user']) ?>" class="btn btn-link">Consulter le profil</a>
-                                                <form action="monreseau.php" method="post" class="d-inline">
-                                                    <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['id_user']) ?>">
-                                                    <button type="submit" name="sendRequest" class="btn btn-secondary">Envoyer une demande d'ami</button>
-                                                </form>
-                                            </div>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php else: ?>
-                                <p>Aucun résultat trouvé.</p>
-                            <?php endif; ?>
-                            <h3>Demandes d'amis reçues</h3>
-                            <?php if ($friendRequests): ?>
-                                <ul class="list-group mb-3">
-                                    <?php foreach ($friendRequests as $request): ?>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <?= htmlspecialchars($request['prenom']) . ' ' . htmlspecialchars($request['nom']) . ' (' . htmlspecialchars($request['email']) . ')' ?>
-                                            <div>
-                                                <form action="accept_request.php" method="post" class="d-inline">
-                                                    <input type="hidden" name="request_id" value="<?= htmlspecialchars($request['request_id']) ?>">
-                                                    <button type="submit" name="acceptRequest" class="btn btn-success">Accepter</button>
-                                                </form>
-                                                <form action="reject_request.php" method="post" class="d-inline">
-                                                    <input type="hidden" name="request_id" value="<?= htmlspecialchars($request['request_id']) ?>">
-                                                    <button type="submit" name="rejectRequest" class="btn btn-danger">Rejeter</button>
-                                                </form>
-                                            </div>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php else: ?>
-                                <p>Aucune demande d'ami reçue.</p>
-                            <?php endif; ?>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="col-sm-2" id="partieGauche">
+                    <h2>Mon réseau</h2>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12" id="section2">
-        <h1>Mes amis</h1>
-        <ul class="list-group mb-3">
-            <?php foreach ($mutuals as $mutual): ?>
-                <li class="list-group mb-3">
-                    <a href="profil.php?id_user=<?= htmlspecialchars($mutual['id_user']) ?>" class="list-group-item list-group-item-action">
-                        <?= htmlspecialchars($mutual['prenom']) . ' ' . htmlspecialchars($mutual['nom']) ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+                <div class="col-sm-7" id="partieMilieu">
+                    <h3>Rechercher des amis</h3>
+                    <form action="monreseau.php" method="get">
+                        <input type="text" name="query" placeholder="Rechercher des amis...">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                    <h3>Résultats de recherche</h3>
+                    <?php if ($searchResults): ?>
+                        <ul>
+                            <?php foreach ($searchResults as $result): ?>
+                                <li>
+                                    <?= htmlspecialchars($result['prenom']) . ' ' . htmlspecialchars($result['nom']) . ' (' . htmlspecialchars($result['email']) . ')' ?>
+                                    <form action="monreseau.php" method="post" style="display:inline;">
+                                        <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
+                                        <button type="submit" name="sendRequest">Envoyer une demande d'ami</button>
+                                    </form>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p>Aucun résultat trouvé.</p>
+                    <?php endif; ?>
+                    <h3>Demandes d'amis reçues</h3>
+                    <?php
+                    $stmt = $conn->prepare("SELECT fr.id_friend_requests, u.nom, u.prenom, u.email 
+                                            FROM friend_requests fr 
+                                            JOIN utilisateur u ON fr.sender = u.id_user 
+                                            WHERE fr.receiver = ? AND fr.status = 'pending'");
+                    $stmt->bind_param("i", $id_user);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0): ?>
+                        <ul>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <li>
+                                    <?= htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' (' . htmlspecialchars($row['email']) . ')' ?>
+                                    <form action="monreseau.php" method="post" style="display:inline;">
+                                        <input type="hidden" name="request_id" value="<?= htmlspecialchars($row['id_friend_requests']) ?>">
+                                        <button type="submit" name="respondRequest" value="accept">Accepter</button>
+                                        <button type="submit" name="respondRequest" value="reject">Rejeter</button>
+                                    </form>
+                                </li>
+                            <?php endwhile; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p>Vous n'avez aucune demande d'ami en attente.</p>
+                    <?php endif; ?>
+                    <?php $stmt->close(); ?>
+                </div>
+                <div class="col-sm-3" id="partieDroite">
+                    <h3>Mes amis</h3>
+                    <?php if ($mutuals): ?>
+                        <ul>
+                            <?php foreach ($mutuals as $friend): ?>
+                                <li>
+                                    <a href="profil.php?id_user=<?= htmlspecialchars($friend['id_user']) ?>">
+                                        <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
+                                    </a> 
+                                    (<?= htmlspecialchars($friend['email']) ?>)
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p>Vous n'avez pas encore d'amis.</p>
+                    <?php endif; ?>
+                </div>
+</div>
 
-    <div id="footer" class="mt-12">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Nous Contacter:</h3>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.372438613096!2d2.285962676518711!3d48.85110800121897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6701b486bb253%3A0x61e9cc6979f93fae!2s10%20Rue%20Sextius%20Michel%2C%2075015%20Paris!5e0!3m2!1sfr!2sfr!4v1716991235930!5m2!1sfr!2sfr" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <div style="font-size: 18px; margin-top: 10px;">
-                    <p>Par Mail: <a href="mailto:ECEIN@ece.fr">ECEIN@ece.fr</a></p>
-                    <p>Par Téléphone: <a href="tel:0144390600">01 44 39 06 00</a></p>
-                    <p>Notre Adresse: <a href="https://www.google.com/maps/place/10+Rue+Sextius+Michel,+75015+Paris/@48.851108,2.2859627,17z">10 Rue Sextius Michel, 75015 Paris</a></p>
-                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-
-                           
