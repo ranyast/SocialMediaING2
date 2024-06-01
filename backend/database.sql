@@ -1,13 +1,18 @@
 -- Correction de la structure de la table chats
-DROP TABLE IF EXISTS chats;
-CREATE TABLE IF NOT EXISTS chats (
-  id_chat int NOT NULL AUTO_INCREMENT,
-  id_user1 int NOT NULL,
-  id_user2 int NOT NULL,
-  PRIMARY KEY (id_chat),
-  INDEX id_user1 (id_user1),
-  INDEX user2_id (id_user2)
+DROP TABLE IF EXISTS messages;
+CREATE TABLE IF NOT EXISTS messages (
+  id_message int NOT NULL AUTO_INCREMENT,
+  id_groupe int NOT NULL,
+  id_user int NOT NULL,
+  message TEXT NOT NULL,
+  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_message),
+  INDEX id_group (id_groupe),
+  INDEX id_user (id_user),
+  FOREIGN KEY (id_groupe) REFERENCES groups(id_groupe) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
 
 -- Correction de la structure de la table comments
 DROP TABLE IF EXISTS comments;
