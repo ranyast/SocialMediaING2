@@ -53,7 +53,6 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <script type="text/javascript" src="carrousel.js"></script>
     <script type="text/javascript" src="carrousel2.js"></script>
     <script type="text/javascript" src="carrousel3.js"></script>
@@ -81,8 +80,6 @@ $conn->close();
                 <div class="col-sm-2" id="logo">
                     <a href="../backend/connexion/connexion.html"><img src="logo/deconnexion.jpg" height="70" width="125" alt="Deconnexion"></a>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -126,7 +123,7 @@ $conn->close();
     <div id="section">
         <h4>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h4>
         <div id="carrousel" align="center">
-            <h3>Evénements de la semaine</h3>
+            <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -225,6 +222,7 @@ $conn->close();
         </div>
 
         <div id="carrousel2" align="center">
+            <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -292,10 +290,8 @@ $conn->close();
         </div>
 
 
-    </div>
+</div>
 
-    <br>
-    <br>
 
     <div id="footer">
         <footer>

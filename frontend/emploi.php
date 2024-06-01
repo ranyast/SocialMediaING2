@@ -69,12 +69,46 @@
     <div id="section2">
         <h1>Offre d'emploi</h1>
         <p>
-            Offres d'emploi, sous forme de bullet !
+            Voici toutes les offres d'emploi !
         </p>
         <br>
         <br>
 
 
+        <div id="posts">
+            <h3>Actualités des membres</h3>
+            <?php
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '<div class="post">';
+                    echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
+                    echo '<p>' . htmlspecialchars($row['content']) . '</p>';
+                    if (!empty($row['media_path'])) {
+                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 100%;">';
+                    }
+                    echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
+                    echo '</div>';
+                    echo '<hr>';
+                }
+            } else {
+                echo '<p>Aucun post à afficher.</p>';
+            }
+            ?>
+        </div>
+
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
+            <h2>Créer un Evénement</h2>
+            <form method="post" action="event.php">
+                <label for="eventDate">Date de l'événement:</label>
+                <input type="date" id="eventDate" name="eventDate">
+                <br><br>
+                <label for="eventDescription">Description:</label>
+                <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
+                <br><br>
+                <button type="submit" class="btn btn-primary">Créer</button>
+            </form>
+        </div>
     </div>
     <br>
     <br>
