@@ -116,7 +116,7 @@ $notifications = getNotifications($conn);
         <p><small>Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</small></p>
     </div>
 
-    <div class="col-sm-8" id="section2">
+    <div  id="section2">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
