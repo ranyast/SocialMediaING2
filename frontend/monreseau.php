@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $password_db, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// Get user information
+
 $stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
 $stmt->bind_param("i", $id_user);
 $stmt->execute();
@@ -23,10 +23,11 @@ $stmt->store_result();
 $stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profil, $description, $experience, $formation, $etudes, $sexe, $competences);
 $stmt->fetch();
 $stmt->close();
-// Get mutual friends
+
+
 $mutuals = getMutualFriends($id_user, $conn);
 
-// Handle search query
+
 
 $searchResults = [];
 if (isset($_GET['query'])) {
@@ -141,9 +142,9 @@ function respondToFriendRequest($request_id, $response, $conn) {
                 <div class="col-sm-8" id="logos">
                     <nav>
                         <a href="accueil.php"><img src="logo/accueil.jpg" height="70" width="125" alt="Accueil"></a>
-                        <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
+                        <a href="monreseau.php"><img src="logo/reseau2.jpg" height="70" width="125" alt="Réseau"></a>
                         <a href="vous.php"><img src="logo/vous.jpg" height="70" width="125" alt="Vous"></a>
-                        <a href="notifications.php"><img src="logo/notification2.jpg" height="70" width="125" alt="Notifications"></a>
+                        <a href="notifications.php"><img src="logo/notification.jpg" height="70" width="125" alt="Notifications"></a>
                         <a href="messagerie.php"><img src="logo/messagerie.jpg" height="70" width="125" alt="Messagerie"></a>
                         <a href="emploi.php"><img src="logo/emploi.jpg" height="70" width="125" alt="Emploi"></a>
                     </nav>
@@ -220,27 +221,7 @@ function respondToFriendRequest($request_id, $response, $conn) {
                     <?php endif; ?>
                     <?php $stmt->close(); ?>
                 </div>
-<<<<<<< HEAD
-                <div class="col-sm-3" id="partieDroite">
-                    <h3>Mes amis</h3>
-                    <?php if ($mutuals): ?>
-                        <ul>
-                            <?php foreach ($mutuals as $friend): ?>
-                                <li>
-                                    <a href="profil.php?id_user=<?= htmlspecialchars($friend['id_user']) ?>">
-                                        <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
-                                    </a> 
-                                    (<?= htmlspecialchars($friend['email']) ?>)
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p>Vous n'avez pas encore d'amis.</p>
-                    <?php endif; ?>
-                </div>
 </div>
-=======
->>>>>>> b6784d45dc977f60f39f15aca5636b54baa56446
             </div>
         </div>
     </div>
