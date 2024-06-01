@@ -352,8 +352,6 @@ nav a img:hover {
     padding: 10px;
     margin-bottom: 10px;
 }
-
-
 .nav-link img:hover {
     transform: scale(1.1);
 }
