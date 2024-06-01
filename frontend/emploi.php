@@ -35,7 +35,7 @@ $stmt->fetch();
 $stmt->close();
 
 // Récupérer les posts depuis la base de données
-$sql = "SELECT nom, prenom, media_path, datetime, emploiNom, emploiPoste, emploiProfil, emploiDescription FROM job_offers ORDER BY datetime DESC";
+$sql = "SELECT nom, prenom, content, media_path, datetime FROM posts ORDER BY datetime DESC";
 $result = $conn->query($sql);
 
 // Fermer la connexion à la base de données
@@ -212,6 +212,7 @@ $conn->close();
                 </form>
             </div>
         </div>
+
     </div>
     <br>
     <br>
