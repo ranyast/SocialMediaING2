@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS job_offers (
     nom varchar(255) NOT NULL,
     prenom varchar(255) NOT NULL,
     emploiNom varchar(255) NOT NULL,
-    emploiPoste varchar(255) NOT NULL,
+    emploiPoste ENUM('0', '1', '2', '3') NOT NULL, //0: CDI, 1: CDD, 2: Stage, 3: Alternance
     emploiProfil text NOT NULL,
     emploiDescription text NOT NULL,
     location varchar(255) DEFAULT NULL,
@@ -135,8 +135,13 @@ DROP TABLE IF EXISTS notifications;
 CREATE TABLE IF NOT EXISTS notifications (
     id_notification INT NOT NULL AUTO_INCREMENT,
     id_user INT NOT NULL,
+    id_posts INT NOT NULL,
+    id_job_offers INT NOT NULL,
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES utilisateur(id_user),
+    FOREIGN KEY (id_posts) REFERENCES posts(id_posts),
+    FOREIGN KEY (id_job_offers) REFERENCES job_offers(id_job_offers),
     PRIMARY KEY (id_notification),
     INDEX (id_user)
 ) ENGINE=InnoDB;
