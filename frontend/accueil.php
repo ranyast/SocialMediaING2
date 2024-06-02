@@ -96,6 +96,7 @@ $conn->close();
                     <h1><img src="logo/logo_ece.png" height="80" width="146" alt="Logo"></h1>
                 </div>
                 <div class="col-sm-8" id="logos">
+                    <!-- Barre de navigation avec les boutons -->
                     <nav>
                         <a href="accueil.php"><img src="logo/accueil2.jpg" height="70" width="125" alt="Accueil"></a>
                         <a href="monreseau.php"><img src="logo/reseau.jpg" height="70" width="125" alt="Réseau"></a>
@@ -112,7 +113,7 @@ $conn->close();
         </div>
     </div>
 
-
+<!-- Barre de gauche ou on trouve les publicités ainsi que le bouton nouvelle publication -->
     <div id="leftcolumn">
         <a href="#new"><button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
         <br>
@@ -126,7 +127,7 @@ $conn->close();
         </a>
     </div>
     
-
+<!-- Barre de droite : Quelques mots sur ECE In -->
     <div id="rightcolumn">
         <h3>A Propos de nous:</h3>
         <p>
@@ -158,12 +159,13 @@ $conn->close();
         <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
     </div>
 
-
+<!-- Endroit principal, ua centre de la page -->
     <div id="section">
         <h2>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h2>
         <div id="carrousel" align="center">
             <hr>
             <h4>Evénements de la semaine</h4>
+            <!-- Carrousel de photos d'événements -->
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -176,7 +178,7 @@ $conn->close();
             <hr>
         </div>
         <br><br>
-
+        <!-- Fermeture de tous les popups (ces derniers s'ouvrent quand on clique su une des photos du carrousel) -->
         <div id="popup1" class="popup popup1">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popup1')">&times;</span>
@@ -239,7 +241,7 @@ $conn->close();
                 <img src="evenements/basket2.png" width="700" height="466">
             </div>
         </div>
-
+<!-- Affichage des publications du réseau -->
         <div id="posts">
             <h3>Actualités des membres</h3>
             <?php
@@ -277,7 +279,7 @@ $conn->close();
             <hr>
         </div>
 
-
+<!-- Boutons pour les publications -->
         <div  id="new" align="center" >
             <form method="post" action="">
                 <div style="text-align: center;">
@@ -290,7 +292,7 @@ $conn->close();
             </form>
         </div>
 
-        <!-- Popup for Media -->
+        <!-- Popup pour les Photos + Description -->
         <div id="popupMedia" class="popup">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
@@ -306,6 +308,7 @@ $conn->close();
                 </form>
             </div>
         </div>
+        <!-- Popup pour les Evénements : date + lieu + description -->
         <div id="popupEvenement" class="popup">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
@@ -326,7 +329,7 @@ $conn->close();
         </div>
 </div>
 <br>
-    
+    <!-- Barre de fin avec les coordonnées -->
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
