@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS messages (
   message TEXT NOT NULL,
   sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id_message),
-  INDEX id_group (id_groupe),
+  INDEX id_groupe (id_groupe),
   INDEX id_user (id_user),
   FOREIGN KEY (id_groupe) REFERENCES groups(id_groupe) ON DELETE CASCADE,
   FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
