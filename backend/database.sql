@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS messages (
   PRIMARY KEY (id_message),
   INDEX id_groupe (id_groupe),
   INDEX id_user (id_user),
-  FOREIGN KEY (id_groupe) REFERENCES groups(id_groupe) ON DELETE CASCADE,
+  FOREIGN KEY (id_groupe) REFERENCES 'groups'(id_groupe) ON DELETE CASCADE,
   FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -94,9 +94,9 @@ CREATE TABLE IF NOT EXISTS messages (
   PRIMARY KEY (id_message),
   INDEX id_groupe (id_groupe),
   INDEX id_user (id_user),
-  FOREIGN KEY (id_groupe) REFERENCES groups(id_groupe) ON DELETE CASCADE,
+  FOREIGN KEY (id_groupe) REFERENCES 'groups'(id_groupe) ON DELETE CASCADE,
   FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB;
 
 -- Correction de la structure de la table posts
 DROP TABLE IF EXISTS posts;
