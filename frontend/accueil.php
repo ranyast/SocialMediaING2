@@ -26,16 +26,19 @@ if ($conn->connect_error) {
 }
 
 // Préparation et exécution de la requête SQL pour récupérer les données de l'utilisateur
-$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom FROM utilisateur WHERE utilisateur.id_user = ?");
+$stmt = $conn->prepare("SELECT utilisateur.nom, utilisateur.prenom, utilisateur.photo_profil FROM utilisateur WHERE utilisateur.id_user = ?");
 $stmt->bind_param("i", $_SESSION['id_user']);
 $stmt->execute();
 $stmt->store_result();
-$stmt->bind_result($nom, $prenom);
+$stmt->bind_result($nom, $prenom, $photo_profil);
 $stmt->fetch();
 $stmt->close();
 
-// Récupérer les posts depuis la base de données
-$sql = "SELECT nom, prenom, content, media_path, datetime FROM posts ORDER BY datetime DESC";
+// Récupérer les posts depuis la base de données avec jointure pour récupérer la photo de profil
+$sql = "SELECT posts.content, posts.media_path, posts.location, posts.datetime, utilisateur.nom, utilisateur.prenom, utilisateur.photo_profil 
+        FROM posts 
+        JOIN utilisateur ON posts.id_user = utilisateur.id_user 
+        ORDER BY posts.datetime DESC";
 $result = $conn->query($sql);
 
 // Fermer la connexion à la base de données
@@ -57,6 +60,31 @@ $conn->close();
     <script type="text/javascript" src="carrousel2.js"></script>
     <script type="text/javascript" src="carrousel3.js"></script>
     <script type="text/javascript" src="popup.js"></script>
+    <style>
+    .profile-photo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .post {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .post-author {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .post-media {
+        max-width: 100%;
+        height: auto;
+    }
+    .post-datetime {
+        color: #888;
+        font-size: 0.9em;
+    }
+</style>
 
 </head>
 <body>
@@ -125,7 +153,7 @@ $conn->close();
         <h2>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h2>
         <div id="carrousel" align="center">
             <hr>
-            <h4>Evènements de la semaine</h4>
+            <h4>Evénements de la semaine</h4>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -222,11 +250,11 @@ $conn->close();
                 echo '<p>Aucun post à afficher.</p>';
             }
             ?>
+
         </div>
 
         <div id="carrousel2" align="center">
             <hr>
-            <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -275,13 +303,16 @@ $conn->close();
                 <span class="close-btn" onclick="closePopup('popupEvenement')">&times;</span>
                 <h2>Créer un Evénement</h2>
                 <form method="post" action="event.php">
-                    <label for="eventDate">Date de l'événement:</label>
-                    <input type="date" id="eventDate" name="eventDate">
+                    <label for="datetime">Date de l'événement:</label>
+                    <input type="date" id="datetime" name="datetime" required>
                     <br><br>
-                    <label for="eventDescription">Description:</label>
-                    <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
+                    <label for="location">Lieu de l'événement:</label>
+                    <input type="text" id="location" name="location" required>
                     <br><br>
-                    <button type="submit"  style="background-color: #028E98; border: none" class="btn btn-primary">Créer</button>
+                    <label for="content">Description:</label>
+                    <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+                    <br><br>
+                    <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary">Créer</button>
                 </form>
             </div>
         </div>
