@@ -54,11 +54,7 @@ if (isset($_POST['respondRequest'])) {
 
 function getMutualFriends($id_user, $conn) {
     $mutualFriends = array();
-    $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email 
-            FROM utilisateur u 
-            INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) 
-            WHERE (f.user1 = ? OR f.user2 = ?) AND u.id_user != ? AND f.status = 'accepted'";
-    $stmt = $conn->prepare($sql);
+    $sql = "SELECT DISTINCT u.id_user, u.nom, u.prenom, u.email, u.photo_profil FROM utilisateur u INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) WHERE (f.user1 = ? OR f.user2 = ?) AND u.id_user != ? AND f.status = 'accepted'";    $stmt = $conn->prepare($sql);
     $stmt->bind_param("iii", $id_user, $id_user, $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -73,7 +69,7 @@ function getMutualFriends($id_user, $conn) {
 function searchUsers($query, $id_user, $conn) {
     $searchResults = [];
     $query = "%$query%";
-    $sql = "SELECT id_user, nom, prenom, email FROM utilisateur WHERE (nom LIKE ? OR prenom LIKE ?) AND id_user != ?";
+    $sql = "SELECT id_user, nom, prenom, email, photo_profil FROM utilisateur WHERE (nom LIKE ? OR prenom LIKE ?) AND id_user != ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $query, $query, $id_user);
     $stmt->execute();
@@ -170,6 +166,17 @@ if($statut =='0') {
     <link href="ECEIn.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="logo/logo_ece.ico" type="image/x-icon" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .search-result {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .search-result img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -206,7 +213,7 @@ if($statut =='0') {
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-3" >
+                <div class="col-sm-2" id="partieGauche">
                     <h2>Mon réseau</h2>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
@@ -215,11 +222,13 @@ if($statut =='0') {
                         <input type="text" name="query" placeholder="Rechercher des amis...">
                         <button type="submit">Rechercher</button>
                     </form>
+                    <br>
                     <h3>Résultats de recherche</h3>
                     <?php if ($searchResults): ?>
                         <ul>
                             <?php foreach ($searchResults as $result): ?>
-                                <li>
+                                <li class="search-result">
+                                    <img src="<?= htmlspecialchars($result['photo_profil']) ?>" alt="Photo de profil" width="50" height="50">
                                     <?= htmlspecialchars($result['prenom']) . ' ' . htmlspecialchars($result['nom']) . ' (' . htmlspecialchars($result['email']) . ')' ?>
                                     <form action="monreseau.php" method="post" style="display:inline;">
                                         <input type="hidden" name="receiver" value="<?= htmlspecialchars($result['email']) ?>">
@@ -231,32 +240,28 @@ if($statut =='0') {
                     <?php else: ?>
                         <p>Aucun résultat trouvé.</p>
                     <?php endif; ?>
+                    <br>
                     <h3>Demandes d'amis reçues</h3>
                     <?php
-                    $stmt = $conn->prepare("SELECT fr.id_friend_requests, u.nom, u.prenom, u.email 
-                                            FROM friend_requests fr 
-                                            JOIN utilisateur u ON fr.sender = u.id_user 
-                                            WHERE fr.receiver = ? AND fr.status = 'pending'");
+                    $stmt = $conn->prepare("SELECT r.id_friend_requests, u.nom, u.prenom, u.email, u.photo_profil FROM friend_requests r JOIN utilisateur u ON r.sender = u.id_user WHERE r.receiver = ? AND r.status = 'pending'");
                     $stmt->bind_param("i", $id_user);
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    if ($result->num_rows > 0): ?>
-                        <ul>
-                            <?php while ($row = $result->fetch_assoc()): ?>
-                                <li>
-                                    <?= htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' (' . htmlspecialchars($row['email']) . ')' ?>
-                                    <form action="monreseau.php" method="post" style="display:inline;">
-                                        <input type="hidden" name="request_id" value="<?= htmlspecialchars($row['id_friend_requests']) ?>">
-                                        <button type="submit" name="respondRequest" value="accept">Accepter</button>
-                                        <button type="submit" name="respondRequest" value="reject">Rejeter</button>
-                                    </form>
-                                </li>
-                            <?php endwhile; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p>Vous n'avez aucune demande d'ami en attente.</p>
-                    <?php endif; ?>
-                    <?php $stmt->close(); ?>
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<div class='search-result'>";
+                        echo "<img src='" . $row['photo_profil'] . "' alt='Photo de profil' width='50' height='50'>";
+                        echo "<div>";
+                        echo "<p>" . $row['prenom'] . " " . $row['nom'] . " (" . $row['email'] . ")</p>";
+                        echo "<form method='post' action=''>";
+                        echo "<input type='hidden' name='request_id' value='" . $row['id_friend_requests'] . "'>";
+                        echo "<button type='submit' name='respondRequest' value='accept'>Accepter</button>";
+                        echo "<button type='submit' name='respondRequest' value='reject'>Rejeter</button>";
+                        echo "</form>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                    $stmt->close();
+                    ?>
                 </div>
             </div>
         </div>
@@ -266,12 +271,12 @@ if($statut =='0') {
         <?php if ($mutuals): ?>
             <ul>
                 <?php foreach ($mutuals as $friend): ?>
-                    <li>
+                    <li class="search-result">
+                        <img src="<?= htmlspecialchars($friend['photo_profil'] ?? 'logo/photoprofil.png') ?>" alt="Photo de profil" width="50" height="50">
                         <a href="profil.php?id_user=<?= htmlspecialchars($friend['id_user']) ?>">
                             <?= htmlspecialchars($friend['prenom']) . ' ' . htmlspecialchars($friend['nom']) ?>
                         </a>
                         (<?= htmlspecialchars($friend['email']) ?>)
-
                     </li>
                 <?php endforeach; ?>
             </ul>
