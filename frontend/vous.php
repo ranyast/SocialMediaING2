@@ -140,11 +140,9 @@ $conn->close();
     </div>
 
     <div id="leftcolumn">
-               
         <a href="https://www.opodo.fr/travel/secure/#details/16847456699/" target="_blank">
             <img src="https://th.bing.com/th/id/OIP.sMy6FwWi6JbSqdSyp6BDKAHaD4?rs=1&pid=ImgDetMain" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
         </a>
-        
         <br><br>
         
         <a href="https://www.aldi.fr/offres-et-bons-plans.html#2024-05-28" target="_blank">

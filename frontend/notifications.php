@@ -208,7 +208,6 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
         </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>

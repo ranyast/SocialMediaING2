@@ -286,7 +286,6 @@ if($statut =='0') {
     </div>
     <br>
     <br>
-    
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
