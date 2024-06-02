@@ -273,12 +273,12 @@ $conn->close();
                     </div>
                     <br>
                     </font>
-                    <button type="submit" class="btn btn-primary" value="validation"><font size="3"> Enregistrer</font></button>
+                    <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation"><font size="3"> Enregistrer</font></button>
                 </form>
             </div>
             <div class="col-sm-12" style="text-align: right">
                 <form method="post" action="cv/generercv.php">
-                    <button type="submit" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
+                    <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
                 </form>
             </div>
 

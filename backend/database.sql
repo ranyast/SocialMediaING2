@@ -31,20 +31,18 @@ CREATE TABLE IF NOT EXISTS groupe (
     PRIMARY KEY (id_groupe)
     ) ENGINE=InnoDB;
 
--- Table messages
+-- Correction de la structure de la table messages
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
-    id_message int NOT NULL AUTO_INCREMENT,
-    id_groupe int NOT NULL,
-    id_user int NOT NULL,
-    message TEXT NOT NULL,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id_message),
-    INDEX id_groupe (id_groupe),
-    INDEX id_user (id_user),
-    FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES utilisateur(id_user) ON DELETE CASCADE
-    ) ENGINE=InnoDB;
+  id int NOT NULL AUTO_INCREMENT,
+  sender varchar(255) NOT NULL,
+  recipient varchar(255) NOT NULL,
+  message text,
+  timestamp timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX sender (sender(250)),
+  INDEX recipient (recipient(250))
+) ENGINE=InnoDB;
 
 -- Table comments
 DROP TABLE IF EXISTS comments;
@@ -138,3 +136,26 @@ CREATE TABLE IF NOT EXISTS post_likes (
     PRIMARY KEY (id_post_likes),
     UNIQUE KEY id_user (id_user, id_post)
     ) ENGINE=InnoDB;
+
+-- Table notifications
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE IF NOT EXISTS notifications (
+    id_notification INT NOT NULL AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_notification),
+    INDEX (id_user)
+) ENGINE=InnoDB;
+
+-- Correction de la structure de la table chats
+DROP TABLE IF EXISTS chats;
+CREATE TABLE IF NOT EXISTS chats (
+  id_chat int NOT NULL AUTO_INCREMENT,
+  id_user1 int NOT NULL,
+  id_user2 int NOT NULL,
+  PRIMARY KEY (id_chat),
+  INDEX id_user1 (id_user1),
+  INDEX user2_id (id_user2)
+) ENGINE=InnoDB;
+
