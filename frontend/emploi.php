@@ -137,10 +137,10 @@ $conn->close();
                         }
                         echo '<div class="post-text">';
                         if (!empty($row['emploiNom'])) {
-                            echo '<p><strong>Nom de l\'entreprise :</strong> ' . htmlspecialchars($row['emploiNom']) . '</p>';
+                            echo '<p><strong>' . htmlspecialchars($row['emploiNom']) . '</strong> </p>';
                         }
                         if (!empty($row['emploiPoste'])) {
-                            echo '<p><strong>Poste à pourvoir :</strong> ' . htmlspecialchars($row['emploiPoste']) . '</p>';
+                            echo '<p> ' . htmlspecialchars($row['emploiPoste']) . '</p>';
                         }
                         if (!empty($row['emploiProfil'])) {
                             echo '<p><strong>Profil recherché :</strong> ' . htmlspecialchars($row['emploiProfil']) . '</p>';
