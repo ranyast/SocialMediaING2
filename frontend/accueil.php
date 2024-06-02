@@ -86,7 +86,7 @@ $conn->close();
 
 
     <div id="leftcolumn">
-        <a href="#post"><button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
+        <a href="#new"><button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
     </div>
 
     <div id="rightcolumn">
@@ -240,7 +240,7 @@ $conn->close();
         </div>
 
 
-        <div  align="center" >
+        <div  id="new" align="center" >
             <form method="post" action="">
                 <div style="text-align: center;">
                     <h3 style="color: #028E98">Nouvelle Publication</h3>
