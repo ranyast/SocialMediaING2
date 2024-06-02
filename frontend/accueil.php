@@ -85,7 +85,7 @@ $conn->close();
     </div>
 
     <div id="leftcolumn">
-        <a href="#post"><button type="submit" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
+        <a href="#post"><button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
     </div>
 
     <div id="rightcolumn">
@@ -121,9 +121,10 @@ $conn->close();
 
 
     <div id="section">
-        <h4>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h4>
+        <h2>Bonjour <?php echo $prenom ; ?>, Voici les actualités du jour :</h2>
         <div id="carrousel" align="center">
-            <h3>Evènements de la semaine</h3>
+            <hr>
+            <h4>Evènements de la semaine</h4>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup3')"><img src="evenements/rugby.jpeg" width="700" height="356"></a>
@@ -133,7 +134,7 @@ $conn->close();
             <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
-
+            <hr>
         </div>
         <br><br>
 
@@ -205,8 +206,9 @@ $conn->close();
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
+                    echo '<hr>';
                     echo '<div class="post">';
-                    echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
+                    echo '<h7>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h7>';
                     echo '<p>' . htmlspecialchars($row['content']) . '</p>';
                     if (!empty($row['media_path'])) {
                         echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 80%;">';
@@ -222,6 +224,7 @@ $conn->close();
         </div>
 
         <div id="carrousel2" align="center">
+            <hr>
             <h3>Evènements de la semaine</h3>
             <a href="javascript:void(0);" onclick="showPopup('popup1')"><img src="evenements/welcomeday.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup2')"><img src="evenements/RDD.jpg" width="700" height="466"></a>
@@ -232,30 +235,23 @@ $conn->close();
             <a href="javascript:void(0);" onclick="showPopup('popup7')"><img src="evenements/JPO.jpg" width="700" height="392"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup8')"><img src="evenements/soireelancement.jpeg" width="700" height="466"></a>
             <a href="javascript:void(0);" onclick="showPopup('popup9')"><img src="evenements/basket.jpeg" width="700" height="466"></a>
-
+            <hr>
         </div>
 
 
-        <div id="post" align="center">
+        <div id="post" align="center" >
             <form method="post" action="">
-                <table>
-                    <tr>
-                        <td colspan="2"><h3>Nouvelle Publication</h3></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-primary" onclick="showPopup('popupMedia')">Média</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary" onclick="showPopup('popupEvenement')">Evénement</button>
-                        </td>
-                    </tr>
-
-                </table>
-
+                <div style="text-align: center;">
+                    <h3 style="color: #028E98">Nouvelle Publication</h3>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+                    <button type="button" style="background-color: #028E98; border: none"  class="btn btn-primary" onclick="showPopup('popupMedia')">Média</button>
+                    <button type="button" style="background-color: #028E98; border: none" class="btn btn-primary" onclick="showPopup('popupEvenement')">Evénement</button>
+                </div>
             </form>
         </div>
-            <!-- Popup for Media -->
+
+        <!-- Popup for Media -->
         <div id="popupMedia" class="popup">
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup('popupMedia')">&times;</span>
@@ -267,7 +263,7 @@ $conn->close();
                     <label for="content">Description:</label>
                     <textarea id="content" name="content" rows="4" cols="50"></textarea>
                     <br><br>
-                    <button type="submit" class="btn btn-primary">Charger</button>
+                    <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary">Charger</button>
                 </form>
             </div>
         </div>
@@ -284,7 +280,7 @@ $conn->close();
                     <label for="eventDescription">Description:</label>
                     <textarea id="eventDescription" name="eventDescription" rows="4" cols="50"></textarea>
                     <br><br>
-                    <button type="submit" class="btn btn-primary">Créer</button>
+                    <button type="submit"  style="background-color: #028E98; border: none" class="btn btn-primary">Créer</button>
                 </form>
             </div>
         </div>

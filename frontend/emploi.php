@@ -121,7 +121,7 @@ $conn->close();
                 <h1>Offres d'emploi</h1>
                 <div id="post">
                     <form method="post" action="">
-                        <button type="button" class="btn btn-primary" onclick="showPopup('popupEmploi')">Nouvelle Offre</button>
+                        <button type="button" style="background-color: #028E98; border: none" class="btn btn-primary" onclick="showPopup('popupEmploi')">Nouvelle Offre</button>
                     </form>
                 </div>
                 <br>
@@ -160,7 +160,7 @@ $conn->close();
                             echo '<button type="submit" class="btn btn-danger">Supprimer</button>';
                             echo '</form>';
                         } else {
-                            echo '<button type="button" class="btn btn-primary" onclick="showPopup(\'popupPostuler\', ' . htmlspecialchars($row['id_job_offers']) . ')">Postuler</button>';
+                            echo '<button type="button" style="background-color: #028E98; border: none" class="btn btn-primary" onclick="showPopup(\'popupPostuler\', ' . htmlspecialchars($row['id_job_offers']) . ')">Postuler</button>';
                         }
                         echo '</div>';
                         echo '<hr>';
