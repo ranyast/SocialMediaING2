@@ -121,6 +121,13 @@ $conn->close();
                 </form>
             </div>
             <br><br>
+            <div style="width: 300px; height: 250px; background-color: red; border: 1px solid #ccc; text-align: center;">
+        <h2 style="color: yellow;">Publicité</h2>
+        <p style="color: yellow;">RYANAIR PRIX CHOCS !!!!</p>
+        <a href="https://www.opodo.fr/travel/secure/#details/16847456699/" target="_blank">
+            <img src="https://th.bing.com/th/id/OIP.sMy6FwWi6JbSqdSyp6BDKAHaD4?rs=1&pid=ImgDetMain" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
+        </a>
+    </div>
             <div id="footer">
                 <footer>
                     <h3>Nous Contacter: </h3>
