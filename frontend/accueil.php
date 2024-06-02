@@ -240,7 +240,7 @@ $conn->close();
         </div>
 
 
-        <div id="post" align="center" >
+        <div  align="center" >
             <form method="post" action="">
                 <div style="text-align: center;">
                     <h3 style="color: #028E98">Nouvelle Publication</h3>
