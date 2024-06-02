@@ -6,7 +6,7 @@ if (!isset($_SESSION['id_user'])) {
     exit;
 }
 
-//connexion à la bdd
+//connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password = "";

@@ -8,7 +8,7 @@ if (isset($_SESSION['id_user']) && isset($_POST['message']) && isset($_POST['rec
     $recipient_id = $_POST['recipient_id'];
     $sender_id = $_SESSION['id_user'];
 
-    //connexion à la bdd
+    //connexion à la base de données
     $servername = "localhost";
     $username = "root";
     $password_db = "";

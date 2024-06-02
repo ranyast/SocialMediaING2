@@ -7,7 +7,7 @@ if (isset($_SESSION['id_user']) && isset($_GET['friend_id'])) {
     $current_user_id = $_SESSION['id_user'];
     $friend_id = $_GET['friend_id'];
 
-    //connexion à la bdd
+    //connexion à la base de données
     $servername = "localhost";
     $username = "root";
     $password = "";
