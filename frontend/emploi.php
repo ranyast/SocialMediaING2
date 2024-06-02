@@ -259,6 +259,7 @@ $conn->close();
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <br>
         <br>
         <!--publicité-->
@@ -270,6 +271,9 @@ $conn->close();
         </a>
     </div>
     <!--footer-->
+=======
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+>>>>>>> a0dbbfbdd2f58a27fe26ff57bfed2ffecba79320
         <div id="footer">
             <footer>
                 <h3>Nous Contacter: </h3>
