@@ -206,7 +206,7 @@ if($statut =='0') {
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2" id="partieGauche">
+                <div class="col-sm-3" >
                     <h2>Mon réseau</h2>
                 </div>
                 <div class="col-sm-7" id="partieMilieu">
