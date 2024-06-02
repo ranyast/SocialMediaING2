@@ -139,6 +139,19 @@ $conn->close();
         </div>
     </div>
 
+    <div id="leftcolumn">
+               
+        <a href="https://www.opodo.fr/travel/secure/#details/16847456699/" target="_blank">
+            <img src="https://th.bing.com/th/id/OIP.sMy6FwWi6JbSqdSyp6BDKAHaD4?rs=1&pid=ImgDetMain" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
+        </a>
+        
+        <br><br>
+        
+        <a href="https://www.aldi.fr/offres-et-bons-plans.html#2024-05-28" target="_blank">
+            <img src="evenements/aldi.jpg" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
+        </a>
+    </div>
+
     <div id="rightcolumn">
         <h3><font size="5">A Propos de nous:</font></h3>
         <font size="3">
@@ -286,13 +299,7 @@ $conn->close();
     </div>
     <br>
     <br>
-    <div style="width: 300px; height: 250px; background-color: red; border: 1px solid #ccc; text-align: center;">
-        <h2 style="color: yellow;">Publicité</h2>
-        <p style="color: yellow;">RYANAIR PRIX CHOCS !!!!</p>
-        <a href="https://www.opodo.fr/travel/secure/#details/16847456699/" target="_blank">
-            <img src="https://th.bing.com/th/id/OIP.sMy6FwWi6JbSqdSyp6BDKAHaD4?rs=1&pid=ImgDetMain" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
-        </a>
-    </div>
+
     <div id="footer">
         <footer>
             <h3>Nous Contacter: </h3>
