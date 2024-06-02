@@ -1,10 +1,12 @@
 <?php
 session_start();
+//verifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
     header('Location: login.php');
     exit;
 }
 
+//connexion à la bdd
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,6 +19,7 @@ if ($conn->connect_error) {
 
 $current_user_id = $_SESSION['id_user'];
 
+//recuperer les amis de l'utilisateur
 $sql = "SELECT id_user, nom, prenom FROM utilisateur WHERE id_user != ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $current_user_id);
@@ -147,7 +150,7 @@ $conn->close();
         </div>
     </div>
 
-    <!-- Modal pour la création de groupe -->
+    <!-- creation de groupes -->
     <div class="modal" id="groupModal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -167,23 +170,23 @@ $conn->close();
     </div>
 
     <script>
+        //effet de click sur les conversations selectionnées
         document.querySelectorAll('.friend').forEach(friend => {
             friend.addEventListener('click', function() {
-                // Déselectionne tous les amis
                 document.querySelectorAll('.friend').forEach(f => f.classList.remove('selected'));
-                // Sélectionne l'ami cliqué
                 this.classList.add('selected');
-                // Charge les messages correspondants à cet ami
                 document.getElementById('recipient_id').value = this.getAttribute('data-id');
                 loadMessages();
             });
         });
 
+        //envoi de message
         document.getElementById('message_form').addEventListener('submit', function(e) {
             e.preventDefault();
             sendMessage();
         });
 
+        //fonction de chargement des messages
         function loadMessages() {
             const recipientId = document.getElementById('recipient_id').value;
             const isGroup = document.getElementById('isGroup').value;
@@ -196,6 +199,7 @@ $conn->close();
                 });
         }
 
+        //fonction pour envoyer un message
         function sendMessage() {
             const recipientId = document.getElementById('recipient_id').value;
             const usermsg = document.getElementById('usermsg').value;
@@ -219,7 +223,7 @@ $conn->close();
                 loadMessages();
             });
         }
-        // Code pour gérer les groupes
+        //creation de groupes
         document.getElementById('creerGroupe').addEventListener('click', function() {
             document.getElementById('groupModal').style.display = 'block';
         });
@@ -228,6 +232,7 @@ $conn->close();
             document.getElementById('groupModal').style.display = 'none';
         });
 
+        //sauvegarde des groupes
         document.getElementById('saveGroupButton').addEventListener('click', function() {
             const groupName = document.getElementById('groupName').value;
             const groupMembers = Array.from(document.querySelectorAll('.group-member:checked')).map(cb => cb.value);
@@ -240,6 +245,7 @@ $conn->close();
             document.getElementById('groupModal').style.display = 'none';
         });
 
+        //ajout de groupes à l'interface utilisateur
         function addGroupToUI(group) {
             const groupList = document.getElementById('groupList');
             const li = document.createElement('li');
@@ -256,6 +262,7 @@ $conn->close();
             groupList.appendChild(li);
         }
 
+        //chargement des groupes sauvegardés
         document.addEventListener('DOMContentLoaded', function() {
             Object.keys(localStorage).forEach(key => {
                 if (key.startsWith('group_')) {
