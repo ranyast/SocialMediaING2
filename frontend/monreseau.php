@@ -1,8 +1,8 @@
 <?php
 session_start();
-// Check if user is logged in
+//verifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
-    // Redirect to login page
+    
     header("Location: connexion.html");
     exit();
 }
@@ -35,14 +35,14 @@ if (isset($_GET['query'])) {
     $searchResults = searchUsers($query, $id_user, $conn);
 }
 
-// Handle friend request sending
+//envoie une demande d'ami
 
 if (isset($_POST['sendRequest'])) {
     $receiver_email = $_POST['receiver'];
     sendFriendRequest($id_user, $receiver_email, $conn);
 }
 
-// Handle friend request response
+//gere les demandes d'amis
 
 if (isset($_POST['respondRequest'])) {
     $request_id = $_POST['request_id'];
@@ -50,7 +50,7 @@ if (isset($_POST['respondRequest'])) {
     respondToFriendRequest($request_id, $response, $conn);
 }
 
-// Function to get mutual friends
+//fonction pour les amis en commun
 
 function getMutualFriends($id_user, $conn) {
     $mutualFriends = array();
@@ -59,13 +59,14 @@ function getMutualFriends($id_user, $conn) {
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
-        // Use user id as key to ensure uniqueness
+       
         $mutualFriends[$row['id_user']] = $row;
     }
     $stmt->close();
-    return array_values($mutualFriends); // Convert associative array back to indexed array
+    return array_values($mutualFriends); 
 }
-// Function to search users
+
+//fonction pour rechercher des amis
 function searchUsers($query, $id_user, $conn) {
     $searchResults = [];
     $query = "%$query%";
@@ -97,7 +98,8 @@ function sendFriendRequest($sender_id, $receiver_email, $conn) {
         echo "<script>alert('Utilisateur introuvable!');</script>";
     }
 }
-// Function to respond to friend request
+
+//fonction pour repondre aux demandes d'amis
 function respondToFriendRequest($request_id, $response, $conn) {
     $status = $response == 'accept' ? 'accepted' : 'rejected';
     $stmt = $conn->prepare("UPDATE friend_requests SET status = ? WHERE id_friend_requests = ?");
@@ -118,6 +120,8 @@ function respondToFriendRequest($request_id, $response, $conn) {
     echo "<script>alert('Demande d\'ami " . ($status == 'accepted' ? "acceptée" : "rejetée") . "!');</script>";
 }
 
+//convertir le sexe en texte 
+
 if($sexe == "0"){
     $sexe = "Homme";
 }
@@ -126,6 +130,8 @@ else if ($sexe == "1"){
 } else if ($sexe == "2"){
     $sexe = "Autre";
 }
+
+//convertir les etudes en texte
 
 if($etudes =='0') {
     $etudes = 'Terminale';
