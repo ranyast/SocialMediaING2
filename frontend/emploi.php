@@ -141,22 +141,15 @@ $conn->close();
                             echo '<p><strong>' . htmlspecialchars($row['emploiNom']) . '</strong> </p>';
                         }
                         if (!empty($row['emploiPoste'])) {
-                        
-                            switch ($row['emploiPoste']) {
-                                case '0':
-                                    $poste = "CDI";
-                                    break;
-                                case '1':
-                                    $poste = "CDD";
-                                    break;
-                                case '2':
-                                    $poste = "Stage";
-                                    break;
-                                case '3':
-                                    $poste = "Alternance";
-                                    break;
-                                default:
-                                    $poste = "Inconnu";
+                            $poste = '';
+                            if ($row['emploiPoste'] == 0) {
+                                $poste = 'CDI';
+                            } elseif ($row['emploiPoste'] == 1) {
+                                $poste = 'CDD';
+                            } elseif ($row['emploiPoste'] == 2) {
+                                $poste = 'Stage';
+                            } elseif ($row['emploiPoste'] == 3) {
+                                $poste = 'Alternance';
                             }
                             echo '<p><strong> Poste pourvu:</strong> ' . htmlspecialchars($poste) . '</p>';
 
