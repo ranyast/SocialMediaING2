@@ -106,14 +106,14 @@ function OffreEmploi($conn) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $id_offre = $row['id_job_offers'];
-            $emploiPoste = $row['emploiPoste'];
-            if ($emploiPoste == 0) {
+            $poste = $row['emploiPoste'];
+            if ($poste == 0) {
                 $poste = "CDI";
-            } elseif ($emploiPoste == 1) {
+            } elseif ($poste == 1) {
                 $poste = "CDD";
-            } elseif ($emploiPoste == 2) {
+            } elseif ($poste == 2) {
                 $poste = "Stage";
-            } else if ($emploiPoste == 3){
+            } else if ($poste == 3){
                 $poste = "Alternance";
             }
 
