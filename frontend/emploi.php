@@ -120,7 +120,7 @@ $conn->close();
         <div id="section2">
             <div id="posts">
                 <h1>Offres d'emploi</h1>
-                <div id="post">
+                <div>
                     <form method="post" action="">
                         <button type="button" style="background-color: #028E98; border: none" class="btn btn-primary" onclick="showPopup('popupEmploi')">Nouvelle Offre</button>
                     </form>
