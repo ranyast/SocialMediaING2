@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-//verifie si l'utilisateur est connecté
+// Vérifie si l'utilisateur est connecté et si friend_id est défini dans l'URL
 if (isset($_SESSION['id_user']) && isset($_GET['friend_id'])) {
-    //recupere les parametres
+    // Récupère les paramètres
     $current_user_id = $_SESSION['id_user'];
     $friend_id = $_GET['friend_id'];
 
-    //connexion à la bdd
+    // Connexion à la base de données
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -15,29 +15,28 @@ if (isset($_SESSION['id_user']) && isset($_GET['friend_id'])) {
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    //verifie la connexion
+    // Vérifie la connexion
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    //requete sql pour récupérer les messages
+    // Requête SQL pour récupérer les messages
     $stmt = $conn->prepare("
-        SELECT m.*, u1.nom as sender_nom, u1.prenom as sender_prenom, u2.nom as recipient_nom, u2.prenom as recipient_prenom
+        SELECT m.*, u.nom as sender_nom, u.prenom as sender_prenom
         FROM messages m
-        JOIN utilisateur u1 ON m.sender = u1.id_user
-        JOIN utilisateur u2 ON m.recipient = u2.id_user
-        WHERE (m.sender = ? AND m.recipient = ?) OR (m.sender = ? AND m.recipient = ?)
-        ORDER BY m.timestamp
+        JOIN utilisateur u ON m.id_user = u.id_user
+        WHERE (m.id_user = ? AND m.id_groupe = ?) OR (m.id_groupe = ?)
+        ORDER BY m.sent_at
     ");
-    //liaison des paramètres
-    $stmt->bind_param("iiii", $current_user_id, $friend_id, $friend_id, $current_user_id);
+    // Liaison des paramètres
+    $stmt->bind_param("iii", $friend_id, $current_user_id, $friend_id);
     $stmt->execute();
-    //resultat de la requete
+    // Résultat de la requête
     $result = $stmt->get_result();
 
-    //affichage des messages
+    // Affichage des messages
     while ($row = $result->fetch_assoc()) {
-        echo "<div class='msgln'><span class='chat-time'>" . date("g:i A", strtotime($row['timestamp'])) . "</span> ";
+        echo "<div class='msgln'><span class='chat-time'>" . date("g:i A", strtotime($row['sent_at'])) . "</span> ";
         echo "<b class='user-name'>" . $row['sender_nom'] . " " . $row['sender_prenom'] . "</b>: ";
         echo htmlspecialchars($row['message']) . "<br></div>";
     }
