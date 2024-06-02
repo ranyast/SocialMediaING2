@@ -1,12 +1,13 @@
 <?php
 session_start();
 
-
+//verifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
     header("Location: connexion.html");
     exit();
 }
 
+//recupere les informations de l'utilisateur
 $id_user = $_SESSION['id_user'];
 $nom = $_SESSION['nom'] ?? '';
 $prenom = $_SESSION['prenom'] ?? '';
@@ -14,7 +15,7 @@ $date_naissance = $_SESSION['date_naissance'] ?? '1970-01-01';
 $email = $_SESSION['email'] ?? '';
 $statut = $_SESSION['statut'] ?? '';
 
-
+//connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password_db = "";
@@ -26,11 +27,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
+//requete sql pour recuperer les offres d'emploi trie par date en ordre decroissant
 $sql = "SELECT id_job_offers, id_user, nom, prenom, emploiNom, emploiPoste, emploiProfil, emploiDescription, location, datetime, media_path FROM job_offers ORDER BY datetime DESC";
 $result = $conn->query($sql);
 
-
+//ferme la connexion à la base de données
 $conn->close();
 ?>
 
@@ -46,6 +47,7 @@ $conn->close();
         <script type="text/javascript" src="popup.js"></script>
     </head>
     <style>
+        /* CSS pour la page emploi.php*/
         .media-content {
             display: flex;
             align-items: center;
@@ -63,6 +65,7 @@ $conn->close();
         }
     </style>
     <body>
+    <!-- barre de navigation presente sur toutes les pages-->
     <div id="wrapper">
         <div id="nav">
             <div class="container-fluid">
@@ -86,6 +89,7 @@ $conn->close();
                 </div>
             </div>
         </div>
+        <!--section a propos de nous -->
         <div id="leftcolumn">
             <h3>A Propos de nous:</h3>
             <p>
@@ -117,6 +121,7 @@ $conn->close();
             <p><font size="-1">Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</font></p>
         </div>
 
+        <!--section des offres d'emploi-->
         <div id="section2">
             <div id="posts">
                 <h1>Offres d'emploi</h1>
@@ -128,6 +133,7 @@ $conn->close();
                 <br>
                 <br>
                 <?php
+                //affiche les offres d'emploi
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo '<div class="post">';
@@ -136,6 +142,7 @@ $conn->close();
                         if (!empty($row['media_path'])) {
                             echo '<img class="post-media" src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 30%;">';
                         }
+                        //affiche les informations de l'offre d'emploi
                         echo '<div class="post-text">';
                         if (!empty($row['emploiNom'])) {
                             echo '<p><strong>' . htmlspecialchars($row['emploiNom']) . '</strong> </p>';
@@ -154,18 +161,22 @@ $conn->close();
                             echo '<p><strong> Poste pourvu:</strong> ' . htmlspecialchars($poste) . '</p>';
 
                         }
+                        //affiche le profil recherché
                         if (!empty($row['emploiProfil'])) {
                             echo '<p><strong>Profil recherché :</strong> ' . htmlspecialchars($row['emploiProfil']) . '</p>';
                         }
+                        //affiche la description de l'offre
                         if (!empty($row['emploiDescription'])) {
                             echo '<p><strong>Description de l\'offre :</strong> ' . htmlspecialchars($row['emploiDescription']) . '</p>';
                         }
+                        //affiche la location de l'offre
                         if (!empty($row['location'])) {
                             echo '<p><strong>Lieu :</strong> ' . htmlspecialchars($row['location']) . '</p>';
                         }
                         echo '</div>';
                         echo '</div>';
                         echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
+                        //affiche les boutons pour postuler ou supprimer une offre d'emploi
                         if ($row['id_user'] == $id_user) {
                             echo '<form method="post" action="deleteEmploi.php" style="display:inline;">';
                             echo '<input type="hidden" name="id_job_offers" value="' . htmlspecialchars($row['id_job_offers']) . '">';
@@ -183,6 +194,7 @@ $conn->close();
                 ?>
             </div>
 
+            <!-- pop up pour créer une nouvelle offre d'emploi-->
             <div id="popupEmploi" class="popup">
                 <div class="popup-content">
                     <span class="close-btn" onclick="closePopup('popupEmploi')">&times;</span>
@@ -227,6 +239,7 @@ $conn->close();
                 </div>
             </div>
 
+            <!-- pop up pour postuler à une offre d'emploi-->
             <div id="popupPostuler" class="popup">
                 <div class="popup-content">
                     <span class="close-btn" onclick="closePopup('popupPostuler')">&times;</span>
@@ -248,6 +261,7 @@ $conn->close();
         </div>
         <br>
         <br>
+        <!--publicité-->
         <div style="width: 300px; height: 250px; background-color: red; border: 1px solid #ccc; text-align: center;">
         <h2 style="color: yellow;">Publicité</h2>
         <p style="color: yellow;">RYANAIR PRIX CHOCS !!!!</p>
@@ -255,6 +269,7 @@ $conn->close();
             <img src="https://th.bing.com/th/id/OIP.sMy6FwWi6JbSqdSyp6BDKAHaD4?rs=1&pid=ImgDetMain" alt="Publicité Ryanair" style="max-width: 100%; height: auto;">
         </a>
     </div>
+    <!--footer-->
         <div id="footer">
             <footer>
                 <h3>Nous Contacter: </h3>
@@ -277,6 +292,7 @@ $conn->close();
     </div>
 
     <script>
+        //fonctions pour afficher  pop ups
         function showPopup(popupId, offerId = null) {
             document.getElementById(popupId).style.display = 'block';
             if (offerId !== null) {
@@ -284,6 +300,7 @@ $conn->close();
             }
         }
 
+        //fonction pour fermer les pop ups
         function closePopup(popupId) {
             document.getElementById(popupId).style.display = 'none';
         }

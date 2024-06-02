@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+//verifie si l'utilisateur est connecté
 if (!isset($_SESSION['id_user'])) {
     header("Location: connexion.html");
     exit();
@@ -8,17 +9,20 @@ if (!isset($_SESSION['id_user'])) {
 
 $id_user = $_SESSION['id_user'];
 
+// connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password_db = "";
 $dbname = "ece_in";
 
+//connexion à la base de données
 $conn = new mysqli($servername, $username, $password_db, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// fonction pour recuperer tous les utilisateurs
 function getAllUsers($conn) {
     $sql = "SELECT id_user FROM utilisateur";
     $result = $conn->query($sql);
@@ -29,6 +33,7 @@ function getAllUsers($conn) {
     return $users;
 }
 
+// fonction pour recuperer les demandes d'amis
 function getFriendRequests($conn, $id_user) {
     $sql = "SELECT sender FROM friend_requests WHERE receiver = ? AND status = 'pending'";
     $stmt = $conn->prepare($sql);
@@ -36,7 +41,8 @@ function getFriendRequests($conn, $id_user) {
     $stmt->execute();
     $result = $stmt->get_result();
     $requests = [];
-
+    
+    //recuperer le nom et prénom de la personne faisant de la demande
     while ($row = $result->fetch_assoc()) {
         $sender = $row['sender'];
         $sql = "SELECT nom, prenom FROM utilisateur WHERE id_user = ?";
@@ -57,6 +63,7 @@ function getFriendRequests($conn, $id_user) {
     return $requests;
 }
 
+// fonction pour recuperer les nouveaux posts
 function getNewPosts($conn) {
     $sql = "SELECT id_user, content FROM posts";
     $stmt = $conn->prepare($sql);
@@ -65,6 +72,7 @@ function getNewPosts($conn) {
     $posts = [];
     $users = getAllUsers($conn);
 
+    //recuperer le contenu du post
     while ($row = $result->fetch_assoc()) {
         $content = $row['content'];
         $posts[] = "Un utilisateur a posté : $content";
@@ -83,6 +91,7 @@ function getNewPosts($conn) {
     return $posts;
 }
 
+// fonction pour recuperer les posts des amis des amis
 function getPostsOfFriendsOfFriends($conn, $id_user) {
     $sql = "SELECT p.content FROM posts p
             JOIN friends f1 ON p.id_user = f1.user2
@@ -94,6 +103,7 @@ function getPostsOfFriendsOfFriends($conn, $id_user) {
     $result = $stmt->get_result();
     $posts = [];
 
+    //recuperer le contenu du post
     while ($row = $result->fetch_assoc()) {
         $content = $row['content'];
         $posts[] = "Un ami d'un ami a posté : $content";
@@ -103,6 +113,7 @@ function getPostsOfFriendsOfFriends($conn, $id_user) {
     return $posts;
 }
 
+// fonction pour recuperer les offres d'emploi
 function OffreEmploi($conn) {
     $sql = "SELECT id_job_offers, emploiPoste FROM job_offers";
     $stmt = $conn->prepare($sql);
@@ -112,6 +123,7 @@ function OffreEmploi($conn) {
     $users = getAllUsers($conn);
     $types = ["CDI", "CDD", "Stage", "Alternance"];
 
+    //recuperer le type de l'offre d'emploi
     while ($row = $result->fetch_assoc()) {
         $id_offre = $row['id_job_offers'];
         $poste = $types[$row['emploiPoste']] ?? "Inconnu";
@@ -131,13 +143,13 @@ function OffreEmploi($conn) {
     return $offres;
 }
 
-// Récupérer les notifications pour l'utilisateur connecté
+// recuperer les notifications pour l'utilisateur connecté
 $friendRequests = getFriendRequests($conn, $id_user);
 $newPosts = getNewPosts($conn);
 $postsOfFriendsOfFriends = getPostsOfFriendsOfFriends($conn, $id_user);
 $jobOffers = OffreEmploi($conn);
 
-// Combiner toutes les notifications en une seule liste
+// combiner toutes les notifications en une seule liste
 $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriends, $jobOffers);
 ?>
 
@@ -156,6 +168,7 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
 <body>
 <div id="wrapper">
     <div id="nav">
+        <!-- barre de navigation presente sur toutes les pages-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2" id="logo">
@@ -178,6 +191,7 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
         </div>
     </div>
     <div class="col-md-3" id="leftcolumn">
+        <!-- section a propos de nous-->
         <h3>À Propos de nous:</h3>
         <p>ECE In est un site internet créé par un groupe d'étudiantes de l'ECE Paris.</p>
         <p>Sur ce site, différentes fonctionnalités ont été mises en place et pensées par nos soins afin d'avoir un site facile d'utilisation. Voici certaines de nos fonctionnalités:</p>
@@ -191,6 +205,7 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
         <p>N'hésitez pas à parcourir notre site afin d'en découvrir plus sur nous!</p>
         <p><small>Fait par: STITOU Ranya, SENOUSSI Ambrine, PUTOD Anna et DEROUICH Shaïma</small></p>
     </div>
+    <!-- section notifications-->
     <div id="section2">
         <div class="container-fluid">
             <div class="row">
@@ -209,6 +224,7 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
         </div>
     </div>
     <div id="footer">
+        <!-- footer de la page--> 
         <footer>
             <h3>Nous Contacter: </h3>
             <table>
