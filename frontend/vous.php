@@ -107,12 +107,6 @@ $conn->close();
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        #nav{}
-        #footer{}
-        #wrapper{}
-        #section{}
-    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -185,6 +179,7 @@ $conn->close();
     </div>
 
     <div id="section">
+        //affichage photo en rond+ nom/prenom/staut a partir de la bdd
         <div class="media">
             <div class="media-left">
                 <?php if (!empty($photo_profil)): ?>
@@ -201,11 +196,13 @@ $conn->close();
         </div>
         <br>
         <br>
+        //utilisation de boostrap pour les cases
         <div class="container-fluid" >
             <div class="row">
                 <font size="3">
                 <form method="post" action="">
                     <div id="infoprofil">
+                        //recup des info de la partie modif
                         <div class="col-sm-8 case3" id="description">
                             <h3>Description</h3>
                             <p><?php echo htmlspecialchars($description ?? ''); ?></p>
@@ -234,6 +231,8 @@ $conn->close();
                 </form>
             </div>
             <br>
+
+            //partie modif a remplir par utilisateur
             <div class="col-sm-12 case2" id="modifprofil">
                 <h1 style="text-align: center;">Modification</h1>
                 <br>
@@ -252,6 +251,7 @@ $conn->close();
                         <textarea name="experience"></textarea>
                     </div>
                     <div class="col-sm-4 case" id="etudes_modif">
+                        //liste selection niv
                         <h3>Études</h3>
                         <select name="etudes" required>
                             <option value="0" <?php if ($etudes == '0') echo 'selected'; ?>>Bac</option>
@@ -287,6 +287,7 @@ $conn->close();
                     <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation"><font size="3"> Enregistrer</font></button>
                 </form>
             </div>
+            //bouton generer le cv
             <div class="col-sm-12" style="text-align: right">
                 <form method="post" action="cv/generercv.php">
                     <button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary"><font size="3"> Générer mon CV</font></button>
