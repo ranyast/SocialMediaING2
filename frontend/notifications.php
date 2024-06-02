@@ -7,7 +7,6 @@ if (!isset($_SESSION['id_user'])) {
 }
 
 $id_user = $_SESSION['id_user'];
-$profil_user_id = isset($_GET['id_user']) ? intval($_GET['id_user']) : 0;
 
 $servername = "localhost";
 $username = "root";
@@ -20,24 +19,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
-$stmt = $conn->prepare("SELECT nom, prenom, date_naissance, email, statut, photo_profil, description, experience, formation, etudes, sexe, competences FROM utilisateur WHERE id_user = ?");
-$stmt->bind_param("i", $profil_user_id);
-$stmt->execute();
-$stmt->store_result();
-$stmt->bind_result($nom, $prenom, $date_naissance, $email, $statut, $photo_profil, $description, $experience, $formation, $etudes, $sexe, $competences);
-$stmt->fetch();
-$stmt->close();
-
-function AjoutAmi($conn) {
+function getFriendRequests($conn) {
     $id_user = $_SESSION['id_user'];
     $sql = "SELECT sender FROM friend_requests WHERE receiver = ? AND status = 'pending'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
-    $demande = [];
-    
+    $requests = [];
+
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $sender = $row['sender'];
@@ -46,26 +36,105 @@ function AjoutAmi($conn) {
             $stmt2->bind_param("i", $sender);
             $stmt2->execute();
             $result2 = $stmt2->get_result();
-            
             if ($result2->num_rows > 0) {
                 while ($row2 = $result2->fetch_assoc()) {
                     $nom = $row2['nom'];
                     $prenom = $row2['prenom'];
-                    $demande[] = "Vous avez reçu une demande d'ami de $nom $prenom";
+                    $requests[] = "Vous avez reçu une demande d'ami de $nom $prenom";
                 }
             }
             $stmt2->close();
         }
     }
-    
+
     $stmt->close();
-    return $demande;
+    return $requests;
+}
+
+function getNewPosts($conn) {
+    $id_user = $_SESSION['id_user'];
+    $sql = "SELECT content FROM posts WHERE id_user = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $posts = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $content = $row['content'];
+            $posts[] = "Vous avez un nouveau post : $content";
+        }
+    }
+
+    $stmt->close();
+    return $posts;
+}
+
+function getPostsOfFriendsOfFriends($conn) {
+    $id_user = $_SESSION['id_user'];
+    $sql = "SELECT p.id_posts, p.content FROM posts p
+            JOIN friends f1 ON p.id_user = f1.user2
+            JOIN friends f2 ON f1.user1 = f2.user2
+            WHERE f2.user1 = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $posts = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $content = $row['content'];
+            $posts[] = "Un ami d'un ami a posté : $content";
+        }
+    }
+
+    $stmt->close();
+    return $posts;
+}
+
+function OffreEmploi($conn) {
+    $id_user = $_SESSION['id_user'];
+    $sql = "SELECT id_job_offers, emploiNom FROM job_offers WHERE id_user = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $offres = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $id_offre = $row['id_job_offers'];
+            $titre = $row['emploiNom'];
+            $message = "Une nouvelle offre d'emploi est disponible: $titre";
+            $offres[] = $message;
+
+            
+            $sql = "INSERT INTO notifications (id_user, id_job_offers, message) VALUES (?, ?, ?)";
+            $stmt2 = $conn->prepare($sql);
+            $stmt2->bind_param("iis", $id_user, $id_offre, $message);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+    }
+
+    $stmt->close();
+    return $offres;
 }
 
 
+// Récupérer les notifications pour l'utilisateur connecté
+$friendRequests = getFriendRequests($conn);
+$newPosts = getNewPosts($conn);
+$postsOfFriendsOfFriends = getPostsOfFriendsOfFriends($conn);
+$jobOffers = OffreEmploi($conn);
 
-$demande = AjoutAmi($conn);
+// Combiner toutes les notifications en une seule liste
+$notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriends, $jobOffers);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -124,14 +193,13 @@ $demande = AjoutAmi($conn);
                 <div class="col-sm-12">
                     <h1>Notifications</h1>
                     <ul>
-                        <?php foreach ($demande as $notification) : ?>
-                        <li class="notification-item"><a href="monreseau.php"><?= htmlspecialchars($notification) ?></a></li>
-                        <?php endforeach; ?>
-                        <?php if (empty($demande)) : ?>
-                        <p>Vous n'avez pas de nouvelles notifications</p>
-                        <?php endif; ?>
-
+                        <?php foreach ($notifications as $notification): ?>
+                        <li>
+                        <a href="traitement_notification.php?notification=<?php echo urlencode($notification); ?>"><?php echo $notification; ?></a>
+                        </li>
+                    <?php endforeach; ?>
                     </ul>
+
                  <br><br><br>
                 </div>
             </div>
