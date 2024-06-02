@@ -21,7 +21,6 @@ if (isset($_SESSION['id_user']) && isset($_POST['message']) && isset($_POST['rec
         die("Connection failed: " . $conn->connect_error);
     }
 
-    //requete sql pour insérer un message
     $stmt = $conn->prepare("INSERT INTO messages (sender, recipient, message) VALUES (?, ?, ?)");
     //liaison des paramètres
     $stmt->bind_param("iis", $sender_id, $recipient_id, $message);
