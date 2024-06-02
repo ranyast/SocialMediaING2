@@ -11,7 +11,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ece_in";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -25,12 +24,10 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $current_user_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 $friends = [];
 while ($row = $result->fetch_assoc()) {
     $friends[] = $row;
 }
-
 $stmt->close();
 $conn->close();
 ?>
@@ -150,6 +147,7 @@ $conn->close();
         </div>
     </div>
 
+    <!-- Modal pour la création de groupe -->
     <!-- creation de groupes -->
     <div class="modal" id="groupModal">
         <div class="modal-content">
@@ -173,8 +171,11 @@ $conn->close();
         //effet de click sur les conversations selectionnées
         document.querySelectorAll('.friend').forEach(friend => {
             friend.addEventListener('click', function() {
+                // Déselectionne tous les amis
                 document.querySelectorAll('.friend').forEach(f => f.classList.remove('selected'));
+                // Sélectionne l'ami cliqué
                 this.classList.add('selected');
+                // Charge les messages correspondants à cet ami
                 document.getElementById('recipient_id').value = this.getAttribute('data-id');
                 loadMessages();
             });
@@ -191,7 +192,6 @@ $conn->close();
             const recipientId = document.getElementById('recipient_id').value;
             const isGroup = document.getElementById('isGroup').value;
             if (!recipientId) return;
-
             fetch(`load_messages.php?friend_id=${recipientId}&is_group=${isGroup}`)
                 .then(response => response.text())
                 .then(data => {
@@ -204,16 +204,12 @@ $conn->close();
             const recipientId = document.getElementById('recipient_id').value;
             const usermsg = document.getElementById('usermsg').value;
             const isGroup = document.getElementById('isGroup').value;
-
-
            
             if (!recipientId || !usermsg) return;
-
             const formData = new FormData();
             formData.append('message', usermsg);
             formData.append('recipient_id', recipientId);
             formData.append('is_group', isGroup);
-
             fetch('post.php', {
                 method: 'POST',
                 body: formData
@@ -223,11 +219,11 @@ $conn->close();
                 loadMessages();
             });
         }
+        // Code pour gérer les groupes
         //creation de groupes
         document.getElementById('creerGroupe').addEventListener('click', function() {
             document.getElementById('groupModal').style.display = 'block';
         });
-
         document.querySelector('.close').addEventListener('click', function() {
             document.getElementById('groupModal').style.display = 'none';
         });
@@ -237,7 +233,6 @@ $conn->close();
             const groupName = document.getElementById('groupName').value;
             const groupMembers = Array.from(document.querySelectorAll('.group-member:checked')).map(cb => cb.value);
             if (!groupName || groupMembers.length === 0) return;
-
             const groupId = `group_${Date.now()}`;
             const group = { id: groupId, name: groupName, members: groupMembers };
             localStorage.setItem(groupId, JSON.stringify(group));
