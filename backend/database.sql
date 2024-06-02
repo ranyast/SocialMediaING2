@@ -22,14 +22,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     CONSTRAINT CHK_sexe CHECK (sexe IN (0, 1, 2))
     ) ENGINE=InnoDB;
 
--- Table groupe
-DROP TABLE IF EXISTS groupe;
-CREATE TABLE IF NOT EXISTS groupe (
-   id_groupe int NOT NULL AUTO_INCREMENT,
-   nombre_personne int NOT NULL,
-   nom_groupe varchar(255) NOT NULL,
-    PRIMARY KEY (id_groupe)
-    ) ENGINE=InnoDB;
+
 
 -- Correction de la structure de la table messages
 DROP TABLE IF EXISTS messages;
