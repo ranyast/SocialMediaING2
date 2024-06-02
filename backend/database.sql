@@ -138,3 +138,15 @@ CREATE TABLE IF NOT EXISTS post_likes (
     PRIMARY KEY (id_post_likes),
     UNIQUE KEY id_user (id_user, id_post)
     ) ENGINE=InnoDB;
+
+-- Table notifications
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE IF NOT EXISTS notifications (
+    id_notification INT NOT NULL AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_notification),
+    INDEX (id_user)
+) ENGINE=InnoDB;
+
