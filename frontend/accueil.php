@@ -84,6 +84,7 @@ $conn->close();
         </div>
     </div>
 
+
     <div id="leftcolumn">
         <a href="#post"><button type="submit" style="background-color: #028E98; border: none" class="btn btn-primary" value="validation">Nouvelle Publication</button></a>
     </div>

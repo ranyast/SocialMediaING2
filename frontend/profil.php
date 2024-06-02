@@ -73,10 +73,7 @@ if($statut == '0') {
 // Get friends of the profile user
 function getFriends($profil_user_id, $conn) {
     $friends = [];
-    $sql = "SELECT u.id_user, u.nom, u.prenom 
-            FROM utilisateur u
-            INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) 
-            WHERE (f.user1 = ? OR f.user2 = ?) AND u.id_user != ? AND f.status = 'accepted'";
+    $sql = "SELECT u.id_user, u.nom, u.prenom FROM utilisateur u INNER JOIN friends f ON (u.id_user = f.user1 OR u.id_user = f.user2) WHERE (f.user1 = ? OR f.user2 = ?) AND u.id_user != ? AND f.status = 'accepted'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iii", $profil_user_id, $profil_user_id, $profil_user_id);
     $stmt->execute();
@@ -123,10 +120,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_friend'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #028E98;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-photo {
+            max-width: 100%;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -136,18 +151,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_friend'])) {
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title">Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h1>
-                    <p><strong>Nom:</strong> <?= htmlspecialchars($nom) ?></p>
-                    <p><strong>Prénom:</strong> <?= htmlspecialchars($prenom) ?></p>
-                    <p><strong>Date de naissance:</strong> <?= htmlspecialchars($date_naissance) ?></p>
-                    <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
-                    <p><strong>Statut:</strong> <?= htmlspecialchars($statut) ?></p>
-                    <p><strong>Description:</strong> <?= htmlspecialchars($description) ?></p>
-                    <p><strong>Experience:</strong> <?= htmlspecialchars($experience) ?></p>
-                    <p><strong>Formation:</strong> <?= htmlspecialchars($formation) ?></p>
-                    <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
-                    <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
-                    <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
+                    <div class="profile-header">
+                        <div class="profile-info">
+                            <h1 class="card-title">Profil de <?= htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) ?></h1>
+                            <p><strong>Nom:</strong> <?= htmlspecialchars($nom) ?></p>
+                            <p><strong>Prénom:</strong> <?= htmlspecialchars($prenom) ?></p>
+                            <p><strong>Date de naissance:</strong> <?= htmlspecialchars($date_naissance) ?></p>
+                            <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+                            <p><strong>Statut:</strong> <?= htmlspecialchars($statut) ?></p>
+                            <p><strong>Description:</strong> <?= htmlspecialchars($description) ?></p>
+                            <p><strong>Experience:</strong> <?= htmlspecialchars($experience) ?></p>
+                            <p><strong>Formation:</strong> <?= htmlspecialchars($formation) ?></p>
+                            <p><strong>Etudes:</strong> <?= htmlspecialchars($etudes) ?></p>
+                            <p><strong>Sexe:</strong> <?= htmlspecialchars($sexe) ?></p>
+                            <p><strong>Compétences:</strong> <?= htmlspecialchars($competences) ?></p>
+                        </div>
+                        <div>
+                            <?php if ($photo_profil): ?>
+                                <img src="<?= htmlspecialchars($photo_profil) ?>" alt="Photo de profil" class="profile-photo rounded-circle" style="padding-right: 25px">
+                            <?php else: ?>
+                                <img src="logo/photoprofil.png" alt="Photo de profil par défaut" class="profile-photo rounded-circle" style="padding-right: 25px">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
 
                     <?php if ($current_user_statut == 0 && $profil_user_id != $id_user && $statut != "Administrateur"): ?>
                         <form method="post" class="d-inline">
