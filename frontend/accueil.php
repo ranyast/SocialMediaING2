@@ -209,7 +209,7 @@ $conn->close();
                     echo '<h4>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' a posté:</h4>';
                     echo '<p>' . htmlspecialchars($row['content']) . '</p>';
                     if (!empty($row['media_path'])) {
-                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 100%;">';
+                        echo '<img src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 80%;">';
                     }
                     echo '<p><small>' . htmlspecialchars($row['datetime']) . '</small></p>';
                     echo '</div>';

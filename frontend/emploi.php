@@ -131,7 +131,7 @@ $conn->close();
                     echo '<p>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' propose :</p>';
                     echo '<div class="media-content">';
                     if (!empty($row['media_path'])) {
-                        echo '<img class="post-media" src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 10%;">';
+                        echo '<img class="post-media" src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 30%;">';
                     }
                     echo '<div class="post-text">';
                     if (!empty($row['emploiNom'])) {
