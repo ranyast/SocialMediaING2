@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
 
 
 
--- Correction de la structure de la table messages
+-- Table messages
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
   id int NOT NULL AUTO_INCREMENT,
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 
--- Correction de la structure de la table chats
+-- Table chats
 DROP TABLE IF EXISTS chats;
 CREATE TABLE IF NOT EXISTS chats (
   id_chat int NOT NULL AUTO_INCREMENT,

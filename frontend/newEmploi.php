@@ -22,6 +22,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+if($emploiPoste == 0){
+    $emploiPoste = "CDI";
+} elseif($emploiPoste == 1){
+    $emploiPoste = "CDD";
+} elseif($emploiPoste == 2){
+    $emploiPoste = "Stage";
+} elseif($emploiPoste == 3){
+    $emploiPoste = "Alternance";
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emploiNom = $_POST['emploiNom'];
     $emploiPoste = $_POST['emploiPoste'];
@@ -30,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $location = $_POST['location'];
     $datetime = date('Y-m-d H:i:s');
 
-    // Handle file upload
+
     if (!empty($_FILES['media_path']['name'])) {
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($_FILES['media_path']['name']);

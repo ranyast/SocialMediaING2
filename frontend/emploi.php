@@ -30,6 +30,7 @@ if ($conn->connect_error) {
 $sql = "SELECT id_job_offers, id_user, nom, prenom, emploiNom, emploiPoste, emploiProfil, emploiDescription, location, datetime, media_path FROM job_offers ORDER BY datetime DESC";
 $result = $conn->query($sql);
 
+
 $conn->close();
 ?>
 
@@ -130,7 +131,7 @@ $conn->close();
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo '<div class="post">';
-                        echo '<p>' . htmlspecialchars($row['prenom']) . ' ' . htmlspecialchars($row['nom']) . ' propose :</p>';
+                        echo '<p> On vous propose :</p>';
                         echo '<div class="media-content">';
                         if (!empty($row['media_path'])) {
                             echo '<img class="post-media" src="' . htmlspecialchars($row['media_path']) . '" alt="Post media" style="max-width: 30%;">';
@@ -140,7 +141,25 @@ $conn->close();
                             echo '<p><strong>' . htmlspecialchars($row['emploiNom']) . '</strong> </p>';
                         }
                         if (!empty($row['emploiPoste'])) {
-                            echo '<p> ' . htmlspecialchars($row['emploiPoste']) . '</p>';
+                        
+                            switch ($row['emploiPoste']) {
+                                case '0':
+                                    $poste = "CDI";
+                                    break;
+                                case '1':
+                                    $poste = "CDD";
+                                    break;
+                                case '2':
+                                    $poste = "Stage";
+                                    break;
+                                case '3':
+                                    $poste = "Alternance";
+                                    break;
+                                default:
+                                    $poste = "Inconnu";
+                            }
+                            echo '<p><strong> Poste pourvu:</strong> ' . htmlspecialchars($poste) . '</p>';
+
                         }
                         if (!empty($row['emploiProfil'])) {
                             echo '<p><strong>Profil recherché :</strong> ' . htmlspecialchars($row['emploiProfil']) . '</p>';
@@ -186,9 +205,15 @@ $conn->close();
                                 <td><textarea id="emploiNom" name="emploiNom" rows="1" cols="20"></textarea></td>
                             </tr>
                             <tr>
-                                <td><label for="emploiPoste">Poste à pourvoir :</label></td>
-                                <td><textarea id="emploiPoste" name="emploiPoste" rows="1" cols="20"></textarea></td>
-                            </tr>
+                                <td><label for="emploiPoste">Type de poste :</label></td>
+                                <td>
+                                    <select id="emploiPoste" name="emploiPoste">
+                                        <option value="0">CDI</option>
+                                        <option value="1">CDD</option>
+                                        <option value="2">Stage</option>
+                                        <option value="3">Alternance</option>
+                                    </select>
+                                </td>
                             <tr>
                                 <td><label for="emploiProfil">Profil recherché :</label></td>
                                 <td><textarea id="emploiProfil" name="emploiProfil" rows="2" cols="30"></textarea></td>
