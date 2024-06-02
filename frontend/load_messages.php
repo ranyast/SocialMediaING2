@@ -29,6 +29,7 @@ if (isset($_SESSION['id_user']) && isset($_GET['friend_id'])) {
         WHERE (m.sender = ? AND m.recipient = ?) OR (m.sender = ? AND m.recipient = ?)
         ORDER BY m.timestamp
     ");
+    //test
     //liaison des paramètres
     $stmt->bind_param("iiii", $current_user_id, $friend_id, $friend_id, $current_user_id);
     $stmt->execute();
