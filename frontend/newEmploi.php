@@ -7,7 +7,10 @@ if (!isset($_SESSION['id_user'])) {
 }
 
 $id_user = $_SESSION['id_user'];
+$nom = $_SESSION['nom'] ?? '';
+$prenom = $_SESSION['prenom'] ?? '';
 
+$id_user = $_SESSION['id_user'];
 $servername = "localhost";
 $username = "root";
 $password_db = "";
@@ -36,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $target_file = null;
     }
 
-    $stmt = $conn->prepare("INSERT INTO job_offers (id_user, emploiNom, emploiPoste, emploiProfil, emploiDescription, location, datetime, media_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssss", $id_user, $emploiNom, $emploiPoste, $emploiProfil, $emploiDescription, $location, $datetime, $target_file);
+    $stmt = $conn->prepare("INSERT INTO job_offers (id_user, nom, prenom, emploiNom, emploiPoste, emploiProfil, emploiDescription, location, datetime, media_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssss", $id_user, $nom, $prenom, $emploiNom, $emploiPoste, $emploiProfil, $emploiDescription, $location, $datetime, $target_file);
 
     if ($stmt->execute()) {
         header("Location: emploi.php");
