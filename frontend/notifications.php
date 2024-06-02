@@ -151,6 +151,7 @@ $notifications = array_merge($friendRequests, $newPosts, $postsOfFriendsOfFriend
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
 <div id="wrapper">
