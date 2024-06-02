@@ -96,7 +96,7 @@ function getPostsOfFriendsOfFriends($conn) {
 
 function OffreEmploi($conn) {
     $id_user = $_SESSION['id_user'];
-    $sql = "SELECT id_job_offers, emploiNom FROM job_offers WHERE id_user = ?";
+    $sql = "SELECT id_job_offers, emploiPoste FROM job_offers WHERE id_user = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();
@@ -106,11 +106,20 @@ function OffreEmploi($conn) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $id_offre = $row['id_job_offers'];
-            $titre = $row['emploiNom'];
-            $message = "Une nouvelle offre d'emploi est disponible: $titre";
+            $emploiPoste = $row['emploiPoste'];
+            if ($emploiPoste == 0) {
+                $poste = "CDI";
+            } elseif ($emploiPoste == 1) {
+                $poste = "CDD";
+            } elseif ($emploiPoste == 2) {
+                $poste = "Stage";
+            } else if ($emploiPoste == 3){
+                $poste = "Alternance";
+            }
+
+            $message = "Une nouvelle offre d'emploi est disponible: $poste";
             $offres[] = $message;
 
-            
             $sql = "INSERT INTO notifications (id_user, id_job_offers, message) VALUES (?, ?, ?)";
             $stmt2 = $conn->prepare($sql);
             $stmt2->bind_param("iis", $id_user, $id_offre, $message);
